@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="img/logo.png">
   <title>Tawan - Portfolio</title>
   <meta name="description"
     content="ผลงานและประสบการณ์ด้านเทคโนโลยีมีเดีย, UX/UI, Interactive Tech, และโปรเจกต์ Digital Twin ของ Tawan Tapianthong" />
@@ -17,6 +18,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Orbitron:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="img/logo.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/logo.png">
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+<!-- Manifest (สำหรับ PWA) -->
+<link rel="manifest" href="site.webmanifest">
 </head>
 
 <body>
@@ -98,8 +107,9 @@
   <h2 id="skills-title">Skills</h2>
   <div class="skills-container">
 
-    <!-- รวม Microsoft Office -->
+    <!-- Microsoft Office -->
     <div class="skill-card"><i class="fa-solid fa-file-word skill-icon"></i><span>Microsoft Office</span></div>
+
     <!-- Programming -->
     <div class="skill-card"><i class="fa-brands fa-python skill-icon"></i><span>Python</span></div>
     <div class="skill-card"><i class="fa-solid fa-microchip skill-icon"></i><span>Arduino</span></div>
@@ -108,18 +118,19 @@
     <div class="skill-card"><i class="fa-brands fa-html5 skill-icon"></i><span>HTML</span></div>
     <div class="skill-card"><i class="fa-brands fa-css3-alt skill-icon"></i><span>CSS</span></div>
     <div class="skill-card"><i class="fa-brands fa-js skill-icon"></i><span>JavaScript</span></div>
+    <div class="skill-card"><i class="fa-brands fa-node-js skill-icon"></i><span>Node.js</span></div>
+    <div class="skill-card"><i class="fa-solid fa-database skill-icon"></i><span>SQL</span></div>
+    <div class="skill-card"><i class="fa-brands fa-google skill-icon"></i><span>Firebase</span></div>
     <div class="skill-card"><i class="fa-brands fa-unity skill-icon"></i><span>Unity</span></div>
 
     <!-- Design & Multimedia -->
-<div class="skill-card">
-  <img class="themed-icon"
-       data-dark-src="img/Canva_White.png"
-       data-light-src="img/Canva_Black.png"
-       alt="Canva" loading="lazy">
-  <span>Canva</span>
-</div>
-
-
+    <div class="skill-card">
+      <img class="themed-icon"
+           data-dark-src="img/Canva_White.png"
+           data-light-src="img/Canva_Black.png"
+           alt="Canva" loading="lazy">
+      <span>Canva</span>
+    </div>
     <div class="skill-card"><i class="fa-brands fa-figma skill-icon"></i><span>Figma</span></div>
     <div class="skill-card"><i class="fa-solid fa-wand-magic-sparkles skill-icon"></i><span>Photoshop</span></div>
     <div class="skill-card"><i class="fa-solid fa-film skill-icon"></i><span>Premiere Pro</span></div>
@@ -129,8 +140,12 @@
     <div class="skill-card"><i class="fa-solid fa-sitemap skill-icon"></i><span>Fritzing/Proteus</span></div>
     <div class="skill-card"><i class="fa-solid fa-music skill-icon"></i><span>Logic Pro</span></div>
 
+    <!-- Data Analysis -->
+    <div class="skill-card"><i class="fa-solid fa-chart-line skill-icon"></i><span>SPSS</span></div>
+
   </div>
 </section>
+
 
 
     <section id="experience" class="content-section" aria-labelledby="exp-title">
@@ -366,7 +381,7 @@
          <i class="fa-solid fa-cube skill-icon" title="Blender (3D Modeling)"></i>
          <i class="fa-solid fa-file-audio" title="Audio / Sound Design"></i>
          <i class="fa-solid fa-code" title="C# Scripting"></i>
-       </div>' data-clip="https://youtu.be/4PDC5mqoZ0w">
+       </div>' data-clip="clip/ranad.mp4">
 
           <img src="img/ranad.png" alt="MR Ranad Ek" loading="lazy" />
           <div class="project-title">MR Ranad Ek</div>
@@ -455,80 +470,36 @@
 </div>
 
 <div class="project-card" 
-     data-title="Unity Mini Game"
+     data-title="To ga jok (ต้อกระจก)"
      data-description="เกมขนาดเล็กเพื่อทดสอบระบบฟิสิกส์และ UI ใน Unity"
      data-images="https://via.placeholder.com/800x500.png?text=Unity+Mini+Game+1,
                   https://via.placeholder.com/800x500.png?text=Unity+Mini+Game+2,
                   https://via.placeholder.com/800x500.png?text=Unity+Mini+Game+3">
   <img src="https://via.placeholder.com/400x250.png?text=Unity+Mini+Game" 
        alt="ภาพตัวอย่างโปรเจกต์ Unity" loading="lazy" />
-  <div class="project-title">Unity Mini Game</div>
+  <div class="project-title">ต้อกระจก</div>
 </div>
 <div class="project-card" 
-     data-title="Unity Mini Game"
+     data-title="Dirt Tester"
      data-description="เกมขนาดเล็กเพื่อทดสอบระบบฟิสิกส์และ UI ใน Unity"
      data-images="https://via.placeholder.com/800x500.png?text=Unity+Mini+Game+1,
                   https://via.placeholder.com/800x500.png?text=Unity+Mini+Game+2,
                   https://via.placeholder.com/800x500.png?text=Unity+Mini+Game+3">
   <img src="https://via.placeholder.com/400x250.png?text=Unity+Mini+Game" 
        alt="ภาพตัวอย่างโปรเจกต์ Unity" loading="lazy" />
-  <div class="project-title">Unity Mini Game</div>
+  <div class="project-title">เครื่องวัดค่าดิน</div>
 </div>
 <div class="project-card" 
-     data-title="Unity Mini Game"
+     data-title="Alcohol Breathalyzer"
      data-description="เกมขนาดเล็กเพื่อทดสอบระบบฟิสิกส์และ UI ใน Unity"
      data-images="https://via.placeholder.com/800x500.png?text=Unity+Mini+Game+1,
                   https://via.placeholder.com/800x500.png?text=Unity+Mini+Game+2,
                   https://via.placeholder.com/800x500.png?text=Unity+Mini+Game+3">
   <img src="https://via.placeholder.com/400x250.png?text=Unity+Mini+Game" 
        alt="ภาพตัวอย่างโปรเจกต์ Unity" loading="lazy" />
-  <div class="project-title">Unity Mini Game</div>
+  <div class="project-title">เครื่องเป่าแอลกอฮอล์</div>
 </div>
 
-      </div>
-    </section>
-    <section id="colorizer" class="content-section" aria-labelledby="colorizer-title">
-      <h2 id="colorizer-title">AI Image Colorizer</h2>
-      <p class="colorizer-subtitle">
-        อัปโหลดภาพขาว‑ดำ ระบบจะเติมสีอัตโนมัติ (Pix2Pix, U‑Net)
-      </p>
-
-      <div class="colorizer-wrap">
-        <!-- อัปโหลด/ลากวาง -->
-        <label class="dropzone" id="cz-dropzone">
-          <input id="cz-input" type="file" accept="image/*" hidden>
-          <div class="dz-inner">
-            <i class="fa-solid fa-upload"></i>
-            <p>ลากภาพมาวาง หรือคลิกเพื่อเลือก</p>
-            <small>รองรับ JPG/PNG • จะถูกปรับเป็น 256×256 สำหรับประมวลผล</small>
-          </div>
-        </label>
-
-        <!-- ปุ่มควบคุม -->
-        <div class="cz-controls">
-          <button id="cz-colorize" class="btn btn-primary" disabled>ลงสีภาพ</button>
-          <button id="cz-download" class="btn btn-secondary" disabled>ดาวน์โหลด</button>
-          <button id="cz-reset" class="btn btn-secondary" disabled>ล้าง</button>
-        </div>
-
-        <!-- เปรียบเทียบ before/after -->
-        <!-- เปรียบเทียบ before/after -->
-        <div class="compare-box" id="cz-compare" aria-label="ก่อน/หลัง">
-          <div class="canvas-stack" id="cz-stack">
-            <canvas id="cz-canvas-before" width="256" height="256" aria-label="ภาพต้นฉบับ"></canvas>
-            <canvas id="cz-canvas-after" width="256" height="256" aria-label="ภาพหลังลงสี"></canvas>
-            <!-- ป้าย -->
-          </div>
-          <input id="cz-slider" type="range" min="0" max="100" value="50" aria-label="เลื่อนเปรียบเทียบ">
-          <div class="slider-decor"><span></span></div>
-        </div>
-
-
-        <!-- สถานะ -->
-        <div class="cz-status" id="cz-status" role="status" aria-live="polite">
-          <i class="fa-solid fa-spinner fa-spin"></i>
-          <span id="cz-status-text">กำลังโหลดโมเดล…</span>
-        </div>
       </div>
     </section>
     <section id="contact" class="content-section" aria-labelledby="contact-title">
