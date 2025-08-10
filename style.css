@@ -1979,3 +1979,39 @@ footer {
 /* Responsive */
 @media (max-width: 992px) { .pub-split { grid-template-columns: 1fr; } .pdf-frame-wrap { height: 60vh; } }
 
+/* --- Experience Timeline: Mobile View Fix --- */
+@media (max-width: 768px) {
+
+  /* 1. ซ่อนเส้นไทม์ไลน์หลักที่วิ่งตรงกลาง */
+  .timeline-container::before {
+    display: none;
+  }
+
+  /* 2. ซ่อนลูกศรและจุดบนไทม์ไลน์ */
+  .timeline-arrow,
+  .timeline-dot {
+    display: none;
+  }
+
+  /* 3. ปรับการ์ด Experience ให้อยู่ตรงกลางและเต็มความกว้าง */
+  .timeline-container .experience-item,
+  .timeline-container .experience-item:nth-child(odd),
+  .timeline-container .experience-item:nth-child(even) {
+    width: 100%;            /* ทำให้การ์ดมีความกว้างเต็มพื้นที่ */
+    left: auto;             /* ล้างค่า left ที่เคยกำหนดไว้ */
+    transform: none;        /* ล้างค่า transform (การเลื่อนซ้าย/ขวา) */
+    margin-bottom: 25px;    /* เพิ่มระยะห่างด้านล่างของการ์ดแต่ละใบ */
+    padding: 0;
+  }
+}
+
+/* --- Hero Title: Mobile line break --- */
+@media (max-width: 768px) {
+  .highlight .lastname {
+    display: block; /* สั่งให้นามสกุลขึ้นบรรทัดใหม่ */
+  }
+
+  .hero-text h1 {
+    line-height: 1.1; /* ปรับระยะห่างระหว่างบรรทัดให้ชิดกันขึ้นเล็กน้อย */
+  }
+}

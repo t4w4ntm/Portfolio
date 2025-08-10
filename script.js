@@ -429,19 +429,21 @@ class TextScrambler {
 
 // ====== Apply to .highlight ======
 document.addEventListener("DOMContentLoaded", () => {
-  const highlightEl = document.querySelector(".highlight");
-  if (!highlightEl) return;
+    const firstNameEl = document.getElementById("firstname-scramble");
+    const lastNameEl = document.getElementById("lastname-scramble");
 
-  const finalText = highlightEl.textContent;
-  const scrambler = new TextScrambler(highlightEl, finalText);
+    if (!firstNameEl || !lastNameEl) return;
 
-  // เริ่มทำทันทีรอบแรก
-  scrambler.setText(finalText, 1000);
+    const firstNameScrambler = new TextScrambler(firstNameEl);
+    const lastNameScrambler = new TextScrambler(lastNameEl);
 
-  // ทำซ้ำทุก 7 วินาที
-  setInterval(() => {
-    scrambler.setText(finalText, 1000);
-  }, 7000);
+    const scrambleAll = () => {
+        firstNameScrambler.setText("TAWAN", 1000);
+        lastNameScrambler.setText("TAPIANTHONG", 1000);
+    };
+
+    scrambleAll(); // ทำครั้งแรก
+    setInterval(scrambleAll, 7000); // ทำซ้ำทุก 7 วินาที
 });
 
 // ================= AI Image Colorizer (stable upload once) =================
