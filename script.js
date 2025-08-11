@@ -511,3 +511,56 @@ function initializePublicationViewer() {
         }
     });
 }
+
+// กัน Ctrl + wheel ที่เป็น "zoom out"
+window.addEventListener('wheel', (e) => {
+  // ส่วนใหญ่เบราว์เซอร์จะตั้ง ctrlKey=true เมื่อ pinch/zoom บน trackpad
+  if (e.ctrlKey && e.deltaY > 0) { // deltaY > 0 = ย่อ/ซูมออก
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// กันคีย์ลัดซูมออก (Ctrl + '-' หรือ Ctrl + '0' รีเซ็ตซูม)
+window.addEventListener('keydown', (e) => {
+  if (!e.ctrlKey) return;
+  const k = e.key.toLowerCase();
+  // อนุญาตเฉพาะ Ctrl + '+' (zoom in), บล็อค Ctrl + '-' และ Ctrl + '0'
+  if (k === '-' || k === '_' || k === '0') {
+    e.preventDefault();
+  }
+});
+
+window.addEventListener('wheel', (e) => {
+  // ส่วนใหญ่เบราว์เซอร์จะตั้ง ctrlKey=true เมื่อ pinch/zoom บน trackpad
+  if (e.ctrlKey && e.deltaY < 0) { // deltaY > 0 = ย่อ/ซูมออก
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// กันคีย์ลัดซูมออก (Ctrl + '-' หรือ Ctrl + '0' รีเซ็ตซูม)
+window.addEventListener('keydown', (e) => {
+  if (!e.ctrlKey) return;
+  const k = e.key.toLowerCase();
+  // อนุญาตเฉพาะ Ctrl + '+' (zoom in), บล็อค Ctrl + '-' และ Ctrl + '0'
+  if (k === '+' || k === '_' || k === '1') {
+    e.preventDefault();
+  }
+});
+
+// กัน pinch-zoom ออกบน mobile (บางเคส)
+let lastDist = null;
+window.addEventListener('touchmove', (e) => {
+  if (e.touches && e.touches.length === 2) {
+    const [t1, t2] = e.touches;
+    const dx = t1.pageX - t2.pageX;
+    const dy = t1.pageY - t2.pageY;
+    const dist = Math.hypot(dx, dy);
+    if (lastDist && dist < lastDist) {
+      // ระยะนิ้วลดลง = แนวโน้มซูมออก → บล็อค
+      e.preventDefault();
+    }
+    lastDist = dist;
+  }
+}, { passive: false });
+
+window.addEventListener('touchend', () => { lastDist = null; });
