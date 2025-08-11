@@ -1192,3 +1192,8 @@ footer {
 html, body {
   min-width: 360px; /* แล้วแต่ดีไซน์ของคุณ */
 }
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .hero-text { text-align: center; }        /* จัดตัวอักษรให้อยู่กลาง */
+  .hero-text p { margin: 0 auto 2rem; }     /* กล่อง p อยู่กลางจริง ๆ */
+}
