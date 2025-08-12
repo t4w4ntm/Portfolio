@@ -28,6 +28,10 @@
 </head>
 
 <body>
+  <div id="preloader" aria-live="polite" aria-busy="true">
+    <div class="spinner"></div>
+    <p>Loading Portfolio...</p>
+  </div>
   <a class="skip-link" href="#home">ข้ามไปยังเนื้อหา</a>
   <div id="tsparticles" aria-hidden="true"></div>
 
@@ -137,7 +141,6 @@
   <h2 id="exp-title">Experience</h2>
   <div class="timeline-container">
 
-    <!-- ICCI -->
     <div class="experience-item" tabindex="0" aria-label="ผู้นำเสนองานวิจัย ICCI 2025">
       <div class="experience-card-inner">
         <div class="experience-front">
@@ -156,7 +159,6 @@
       <div class="timeline-arrow"></div>
       <div class="timeline-dot"></div>
     </div>
-<!-- TA Python -->
 <div class="experience-item" tabindex="0" aria-label="ผู้ช่วยสอนวิชา Python">
   <div class="experience-card-inner">
     <div class="experience-front">
@@ -175,8 +177,7 @@
   <div class="timeline-arrow"></div>
   <div class="timeline-dot"></div>
 </div>
-    <!-- Exhibition -->
-<div class="experience-item" tabindex="0" aria-label="ผู้นำเสนอ Projects Exhibition Media Technology KMUTT 2025">
+    <div class="experience-item" tabindex="0" aria-label="ผู้นำเสนอ Projects Exhibition Media Technology KMUTT 2025">
   <div class="experience-card-inner">
     <div class="experience-front">
       <h3>ผู้นำเสนอ Projects, Exhibition Media Technology KMUTT 2025</h3>
@@ -195,7 +196,6 @@
 </div>
 
 
-    <!-- Aurensia -->
     <div class="experience-item" tabindex="0" aria-label="ผู้นำเสนอโปรเจค Aurensia">
       <div class="experience-card-inner">
         <div class="experience-front">
@@ -218,7 +218,6 @@
 
 
 
-    <!-- Coffee Project -->
     <div class="experience-item" tabindex="0" aria-label="นักพัฒนาเครื่องตรวจวัดคุณภาพดิน Coffee Project">
       <div class="experience-card-inner">
         <div class="experience-front">
@@ -320,10 +319,7 @@
             <i class="fa-brands fa-figma" title="Figma (UI/Prototype)"></i>
             <i class="fa-solid fa-cubes" title="Blender (3D Modeling)"></i>
           </div>
-          <!-- <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
-            <a href="pdf/tesis.pdf" target="_blank" class="btn btn-primary" rel="noopener">Download Thesis PDF</a>
-          </div> -->
-        </div>
+          </div>
       </div>
     </section>
 
@@ -351,6 +347,7 @@
          <i class="fa-solid fa-database" title="SQL"></i>
        </div>' data-clip="clip/rawcoin.mp4">
           <img src="img/rawcoin.png" alt="RawCoin Web Game" loading="lazy" />
+          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
           <div class="project-title">RawCoin Web Game</div>
         </div>
 
@@ -370,10 +367,11 @@
          <i class="fa-solid fa-code" title="C# Scripting"></i>
        </div>' data-clip="clip/ranad.mp4">
           <img src="img/ranad.png" alt="MR Ranad Ek" loading="lazy" />
+          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
           <div class="project-title">MR Ranad Ek</div>
         </div>
-        <!-- Cataract Robot (ต้อกระจก) -->
-<div class="project-card"
+        
+        <div class="project-card"
      data-title="To ga jok — Cataract Screening Robot"
      data-description="
 
@@ -393,11 +391,10 @@
         <i class='fa-solid fa-cube' title='3D Printing'></i>
       </div>"
      data-image="img/tokajok3.jpg">
-  <img src="img/tokajok3.jpg" alt="Cataract screening robot demo" loading="lazy" />
-  <div class="project-title">หุ่นยนต์ตรวจต้อกระจก (AI)</div>
-</div>
-
-       
+      <img src="img/tokajok3.jpg" alt="Cataract screening robot demo" loading="lazy" />
+      <div class="project-overlay"><span>ดูรายละเอียด</span></div>
+      <div class="project-title">หุ่นยนต์ตรวจต้อกระจก (AI)</div>
+    </div>
 
         <div class="project-card" data-title="SchoolFit — AR Fitness App" data-description='
                <p><strong>SchoolFit</strong> แอปต้นแบบที่ผสาน <strong>Unity</strong> กับ <strong>Augmented Reality</strong> สำหรับตารางเรียน/กิจกรรม และ <strong>AR Exercise</strong> ฝึกกายบริหารซ้อนทับโลกจริง</p>
@@ -417,6 +414,7 @@
                </div>' data-clip="clip/ar.mp4"
           data-figma="https://www.figma.com/proto/RLPIshCWig3DBX42kNBouh/SchoolFit?node-id=17-2&node-type=canvas&t=rnUR6c0aBP7fThhr-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1">
           <img src="img/schoolLogo.png" alt="SchoolFit AR Fitness App" loading="lazy" />
+          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
           <div class="project-title">SchoolFit (AR Fitness)</div>
         </div>
          <div class="project-card" data-title="AI Image Colorizer (GAN)" data-description='
@@ -439,6 +437,7 @@
          <a href="pdf/project_color.pdf" target="_blank" class="btn btn-primary" rel="noopener">View PDF</a>
        </div>' data-image="img/colorz.png">
           <img src="img/colorz.png" alt="AI Image Colorizer (GAN)" loading="lazy" />
+          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
           <div class="project-title">AI Image Colorizer (GAN)</div>
         </div>
         <div class="project-card" data-title="AI & Prompt Racing — Autonomous Car Control System" data-description='
@@ -462,12 +461,10 @@
          <a href="65120501058_Report_AI_Prompt_Racing_2568.pdf" target="_blank" class="btn btn-primary" rel="noopener">View PDF</a>
        </div>' data-clip="clip/31sec.mp4">
           <img src="img/car.png" alt="AI & Prompt Racing" loading="lazy" />
+          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
           <div class="project-title">AI & Prompt Racing</div>
         </div>
 
-
-
-<!-- Dirt Tester -->
 <div class="project-card"
      data-title="Dirt Tester — Smart Soil Multi-Parameter"
      data-description="
@@ -487,10 +484,10 @@
       </div>"
      data-image="img/dirttest.png">
   <img src="img/dirttest.png" alt="เครื่องตรวจดินแบบพกพา" loading="lazy" />
+  <div class="project-overlay"><span>ดูรายละเอียด</span></div>
   <div class="project-title">เครื่องวัดค่าดิน (NPK/PH/EC)</div>
 </div>
 
-<!-- Alcohol Breathalyzer -->
 <div class="project-card"
      data-title="Alcohol Breathalyzer — Portable BAC Meter"
      data-description="
@@ -510,6 +507,7 @@
       </div>"
      data-image="img/al3.jpg">
   <img src="img/al3.jpg" alt="Alcohol breathalyzer" loading="lazy" />
+  <div class="project-overlay"><span>ดูรายละเอียด</span></div>
   <div class="project-title">เครื่องเป่าแอลกอฮอล์</div>
 </div>
 
@@ -562,7 +560,7 @@
     <i class="fa-solid fa-sun" data-icon="sun" aria-hidden="true"></i>
     <i class="fa-solid fa-moon" data-icon="moon" aria-hidden="true"></i>
   </button>
-
+  
   <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-content">
       <button class="close-button" aria-label="ปิดหน้าต่าง">&times;</button>

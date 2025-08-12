@@ -18,12 +18,25 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeTextScramble();
   initializeContactForm();
   initializePublicationViewer();
+  initializeBackToTopButton(); // เพิ่มฟังก์ชันใหม่
 });
 
 window.addEventListener('load', () => {
-  // Load particles after all other content to avoid blocking
+  // ซ่อน Preloader หลังจากทุกอย่างโหลดเสร็จ
+  handlePreloader();
+  // โหลด particles ทีหลังเพื่อไม่ให้ block content
   loadParticles();
 });
+
+// ===================================================================
+// PRELOADER
+// ===================================================================
+function handlePreloader() {
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    preloader.classList.add('loaded');
+  }
+}
 
 
 // ===================================================================
@@ -511,6 +524,7 @@ function initializePublicationViewer() {
         }
     });
 }
+
 
 // กัน Ctrl + wheel ที่เป็น "zoom out"
 window.addEventListener('wheel', (e) => {
