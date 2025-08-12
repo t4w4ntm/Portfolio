@@ -17,8 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeThesisSlideshow();
   initializeTextScramble();
   initializeContactForm();
-  initializePublicationViewer();
-  initializeBackToTopButton(); // เพิ่มฟังก์ชันใหม่
+  initializePublicationViewer(); // เพิ่มฟังก์ชันใหม่
 });
 
 window.addEventListener('load', () => {
@@ -214,7 +213,7 @@ function initializeExperienceCards() {
 
 
 // ===================================================================
-// PROJECT MODAL
+// PROJECT MODAL (รองรับแกลเลอรี/สไลด์ในโมดัล)
 // ===================================================================
 function initializeProjectModal() {
   const modal = document.getElementById('project-modal');
@@ -228,7 +227,7 @@ function initializeProjectModal() {
 
   const closeModal = () => {
     modal.style.display = 'none';
-    modalMedia.innerHTML = ''; // Clear media to stop video/audio
+    modalMedia.innerHTML = ''; // ล้างเพื่อหยุดวิดีโอ/เอา element ออก
     const oldActions = document.querySelector('.modal-actions');
     if (oldActions) oldActions.remove();
   };
@@ -240,32 +239,54 @@ function initializeProjectModal() {
       const clipUrl = card.dataset.clip || '';
       const imageUrl = card.dataset.image || '';
       const figmaUrl = card.dataset.figma || '';
-      const pdfUrl = card.getAttribute('data-pdf') || ''; // From publications
+      const pdfUrl = card.getAttribute('data-pdf') || '';
+      const galleryAttr = card.dataset.gallery || '';
 
-      // 1. Clear previous content
+      // 1) เคลียร์ของเก่า
       modalMedia.innerHTML = '';
       const oldActions = document.querySelector('.modal-actions');
       if (oldActions) oldActions.remove();
 
-      // 2. Populate new content
+      // 2) ใส่ข้อมูลใหม่
       modalTitle.textContent = title;
       modalDescription.innerHTML = description;
 
-      // 3. Set media (Video > Image)
-      if (clipUrl) {
-        const video = document.createElement('video');
-        video.controls = video.autoplay = video.playsInline = true;
-        video.preload = 'metadata';
-        video.innerHTML = `<source src="${clipUrl}" type="video/mp4">`;
-        modalMedia.appendChild(video);
+      // 3) รวมสไลด์ (รองรับ video + รูปหลายใบ)
+      let slides = [];
+      if (clipUrl) slides.push({ type: 'video', src: clipUrl });
+
+      const gallery = galleryAttr
+        ? galleryAttr.split(',').map(s => s.trim()).filter(Boolean)
+        : [];
+
+      if (gallery.length) {
+        slides = slides.concat(gallery.map(src => ({ type: 'image', src })));
       } else if (imageUrl) {
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        img.alt = title;
-        modalMedia.appendChild(img);
+        slides.push({ type: 'image', src: imageUrl });
       }
 
-      // 4. Create action buttons if links exist
+      // 4) แสดงผล: ถ้ามีหลายสไลด์ ให้ทำสไลด์โชว์ในโมดัล
+      if (slides.length > 1) {
+        buildModalSlideshow(modalMedia, slides);
+      } else if (slides.length === 1) {
+        const s = slides[0];
+        if (s.type === 'video') {
+          const video = document.createElement('video');
+          video.controls = video.autoplay = video.playsInline = true;
+          video.preload = 'metadata';
+          video.innerHTML = `<source src="${s.src}" type="video/mp4">`;
+          modalMedia.appendChild(video);
+        } else {
+          const img = document.createElement('img');
+          img.src = s.src;
+          img.alt = title || 'Project image';
+          modalMedia.appendChild(img);
+        }
+      } else {
+        // ไม่มีสื่อเลย — ไม่ทำอะไรเพื่อคงพฤติกรรมเดิม
+      }
+
+      // 5) ปุ่ม action (ถ้ามี)
       if (figmaUrl || pdfUrl) {
         const actions = document.createElement('div');
         actions.className = 'modal-actions';
@@ -278,18 +299,95 @@ function initializeProjectModal() {
         modalDescription.insertAdjacentElement('afterend', actions);
       }
 
-      // 5. Show modal
+      // 6) เปิดโมดัล
       modal.style.display = 'block';
     });
   });
 
   closeModalButton.addEventListener('click', closeModal);
   window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      closeModal();
-    }
+    if (event.target === modal) closeModal();
   });
 }
+
+// ตัวช่วยสร้างสไลด์ในโมดัล (ใช้คลาสสไลด์ที่มีอยู่แล้ว)
+function buildModalSlideshow(container, slides) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'slides-wrapper';
+
+  slides.forEach((s, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'slide';
+    if (s.type === 'video') {
+      const video = document.createElement('video');
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = 'metadata';
+      video.innerHTML = `<source src="${s.src}" type="video/mp4">`;
+      slide.appendChild(video);
+    } else {
+      const img = document.createElement('img');
+      img.src = s.src;
+      img.alt = `สไลด์ที่ ${i + 1}`;
+      slide.appendChild(img);
+    }
+    wrapper.appendChild(slide);
+  });
+
+  const prevBtn = document.createElement('button');
+  prevBtn.className = 'slide-arrow prev-slide';
+  prevBtn.setAttribute('aria-label', 'ก่อนหน้า');
+  prevBtn.innerHTML = '&#10094;';
+
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'slide-arrow next-slide';
+  nextBtn.setAttribute('aria-label', 'ถัดไป');
+  nextBtn.innerHTML = '&#10095;';
+
+  const dots = document.createElement('div');
+  dots.className = 'slide-dots';
+
+  container.appendChild(wrapper);
+  container.appendChild(prevBtn);
+  container.appendChild(nextBtn);
+  container.appendChild(dots);
+
+  let current = 0;
+  const dotEls = slides.map((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot';
+    d.setAttribute('aria-label', `ไปสไลด์ที่ ${i + 1}`);
+    d.addEventListener('click', () => goTo(i));
+    dots.appendChild(d);
+    return d;
+  });
+
+  const update = () => {
+    wrapper.style.transform = `translateX(-${current * 100}%)`;
+    dotEls.forEach((d, i) => d.classList.toggle('active', i === current));
+  };
+
+  const goTo = (i) => {
+    current = (i + slides.length) % slides.length;
+    update();
+  };
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  // รองรับปัดซ้าย/ขวาบนมือถือ
+  let startX = null;
+  wrapper.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  wrapper.addEventListener('touchend', e => {
+    if (startX == null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 30) (dx < 0 ? nextBtn : prevBtn).click();
+    startX = null;
+  }, { passive: true });
+
+  update();
+}
+
 
 // ===================================================================
 // SCROLL-TRIGGERED ANIMATIONS
