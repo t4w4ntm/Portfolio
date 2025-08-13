@@ -1270,3 +1270,63 @@ html, body {
   .hero-text { text-align: center; }        /* จัดตัวอักษรให้อยู่กลาง */
   .hero-text p { margin: 0 auto 2rem; }     /* กล่อง p อยู่กลางจริง ๆ */
 }
+
+/* ช่วยให้ปัดซ้าย-ขวาได้ โดยยังเลื่อนหน้าแนวตั้งได้ตามปกติ */
+.slides-wrapper { touch-action: pan-y; }
+.slide img { -webkit-user-drag: none; user-select: none; }
+@media (min-width: 769px) and (max-width: 1200px) {
+  .publications .pub-split { grid-template-columns: 1fr; } /* เหลือ 1 คอลัมน์ */
+  .publications .pub-left { display: none; }               /* ซ่อนตัวแสดง PDF */
+  /* (ตัวเลือก) จัดระยะด้านขวาให้พอดี */
+  .publications .pub-right { margin: 0; }
+}
+
+/* ========== Modal on Mobile only ========== */
+@media (max-width: 768px) {
+  /* กล่องโมดัลให้กินพื้นที่มากขึ้น */
+  .modal-content {
+    width: 92%;
+    max-width: none;
+    margin: 6% auto;
+    padding: 16px 16px 20px;
+    border-radius: 12px;
+  }
+
+  /* ปุ่มปิดเล็กลง ไม่บังเนื้อหา */
+  .close-button {
+    top: 8px;
+    right: 10px;
+    font-size: 28px;
+  }
+
+  /* พื้นที่รูป: สูงขึ้น ชัดขึ้น */
+  .modal-media {
+    width: 100%;
+    height: 46vh;          /* เดิมเป็น aspect-ratio: 16/9 -> ทำให้เตี้ยเกินไปบนจอสูง */
+    aspect-ratio: auto;    /* ปลดล็อกอัตราส่วนคงที่ */
+    margin-bottom: 12px;
+  }
+  .modal-media img,
+  .modal-media video,
+  .modal-media iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;     /* ถ้าต้องการเห็นภาพเต็มไม่ตัดเปลี่ยนเป็น contain */
+  }
+
+  /* หัวข้อเล็กลงให้สมส่วน */
+  #modal-title {
+    font-size: 1.4rem;     /* เดิม 2rem */
+    line-height: 1.15;
+    margin: 8px 0 6px;
+    text-shadow: none;     /* ลดเอฟเฟกต์เรืองแสงในพื้นที่แคบ */
+  }
+
+  /* เนื้อหาอ่านง่ายขึ้น และไม่จำกัดความกว้างย่อหน้า */
+  #modal-description {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  #modal-description p { max-width: none; margin-bottom: .9rem; }
+  .modal-content .tech-icons i { font-size: 1.1rem; }
+}

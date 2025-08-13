@@ -437,17 +437,17 @@ function initializeThesisSlideshow() {
   const totalSlides = slides.length;
 
   if (totalSlides <= 1) {
-      prevButton.style.display = 'none';
-      nextButton.style.display = 'none';
-      dotsContainer.style.display = 'none';
-      return;
+    prevButton.style.display = 'none';
+    nextButton.style.display = 'none';
+    dotsContainer.style.display = 'none';
+    return;
   }
 
   let currentIndex = 0;
   let dots = [];
 
   for (let i = 0; i < totalSlides; i++) {
-    const dot = document.createElement('button'); // Use button for accessibility
+    const dot = document.createElement('button');
     dot.className = 'dot';
     dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
     dot.addEventListener('click', () => goToSlide(i));
@@ -456,13 +456,11 @@ function initializeThesisSlideshow() {
   }
 
   const updateDots = () => {
-    dots.forEach((dot, idx) => {
-        dot.classList.toggle('active', idx === currentIndex);
-    });
+    dots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentIndex));
   };
 
   const goToSlide = (index) => {
-    currentIndex = (index + totalSlides) % totalSlides; // Loop around
+    currentIndex = (index + totalSlides) % totalSlides;
     wrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
     updateDots();
   };
@@ -470,7 +468,42 @@ function initializeThesisSlideshow() {
   nextButton.addEventListener('click', () => goToSlide(currentIndex + 1));
   prevButton.addEventListener('click', () => goToSlide(currentIndex - 1));
 
-  goToSlide(0); // Initialize first slide
+  // --- Swipe (mobile) ---
+  let startX = null;
+  const SWIPE_THRESHOLD = 30;
+
+  // touch
+  wrapper.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  wrapper.addEventListener('touchend', e => {
+    if (startX == null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > SWIPE_THRESHOLD) {
+      goToSlide(currentIndex + (dx < 0 ? 1 : -1));
+    }
+    startX = null;
+  }, { passive: true });
+
+  // pointer (รองรับ stylus/นิ้ว ในบางเบราว์เซอร์)
+  let pointerDown = false;
+  wrapper.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse') { pointerDown = true; startX = e.clientX; }
+  });
+  wrapper.addEventListener('pointerup', e => {
+    if (!pointerDown || startX == null) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > SWIPE_THRESHOLD) {
+      goToSlide(currentIndex + (dx < 0 ? 1 : -1));
+    }
+    pointerDown = false;
+    startX = null;
+  });
+
+  // ป้องกันลากรูป
+  wrapper.querySelectorAll('img').forEach(img => {
+    img.addEventListener('dragstart', ev => ev.preventDefault());
+  });
+
+  goToSlide(0);
 }
 
 
