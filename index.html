@@ -452,30 +452,33 @@
           <div class="project-title">SchoolFit (AR Fitness)</div>
         </div>
 
-                <div class="project-card"
-     data-title="To ga jok — Cataract Screening Robot"
-     data-description="
+                <!-- Cataract Robot — What & How -->
+<div class="project-card"
+     data-title="Cataract Screening Robot — LeNet-CNN"
+     data-description='
+      <p> หุ่นยนต์ต้นแบบสำหรับคัดกรองโรคต้อกระจก รับภาพดวงตาจากผู้ใช้ แล้วให้โปรแกรมจำแนกว่า “ปกติ” หรือ “ต้อกระจก” แบบอัตโนมัติ</p>
 
-     
-      <p><strong>แนวคิด:</strong> หุ่นยนต์ช่วยคัดกรองโรคต้อกระจกแบบกึ่งอัตโนมัติ ใช้กล้องจับภาพตาและรันโมเดล AI เพื่อประเมินระดับความขุ่นของเลนส์ตาแบบเรียลไทม์ (แนวคิดการเรียนรู้คล้ายงาน <em>AI Colorization</em> ที่ปรับให้ทำนายสเกล/ดัชนีความขุ่น)</p>
-      <p><strong>เทคโนโลยี:</strong> Python, OpenCV, PyTorch, Raspberry Pi, 3D Printing</p>
-      <ul>
-        <li>Pipeline: Camera → Preprocess (ROI ลูกตา) → CNN Inference → แสดงผลเกรดความขุ่น</li>
-        <li>ออกแบบเคส/ขาตั้ง 3D ให้จัดท่าวางหน้าและระยะกล้องคงที่</li>
+      <p> Image Processing (เลือก/ปรับ ROI ดวงตา) + โมเดล <em>LeNet-CNN</em> เปรียบเทียบกับ <em>SVM</em> (จูนพารามิเตอร์ด้วย GridSearchCV) รันบน <em>Python + OpenCV</em> และแสดงผลผ่าน GUI (Tkinter)</p>
+
+      <ul style="margin:8px 0 0 18px; line-height:1.6;">
+        <li>Pipeline: กล้อง → Preprocess/ROI → LeNet-CNN หรือ SVM → แสดงผล</li>
+        <li>ฮาร์ดแวร์: ชุดหุ่นยนต์/โครงยึดเพื่อจัดระยะและรับภาพดวงตาให้คงที่</li>
       </ul>
-      <p style='margin:12px 0 4px;'><strong>Tech Stack</strong></p>
-      <div class='tech-icons' aria-label='Tech stack' style='display:flex;gap:10px;flex-wrap:wrap;'>
-        <i class='fa-brands fa-python' title='Python'></i>
-        <i class='fa-solid fa-eye' title='OpenCV'></i>
-        <i class='fa-solid fa-brain' title='PyTorch AI Model'></i>
-        <i class='fa-solid fa-microchip' title='Raspberry Pi'></i>
-        <i class='fa-solid fa-cube' title='3D Printing'></i>
-      </div>"
+
+      <p style="margin:12px 0 4px;"><strong>Tech Stack</strong></p>
+      <div class="tech-icons" aria-label="Tech stack" style="display:flex;gap:10px;flex-wrap:wrap;">
+        <i class="fa-brands fa-python" title="Python"></i>
+        <i class="fa-solid fa-eye" title="OpenCV"></i>
+        <i class="fa-solid fa-brain" title="LeNet-CNN"></i>
+        <i class="fa-solid fa-diagram-project" title="SVM / GridSearchCV"></i>
+        <i class="fa-regular fa-window-maximize" title="Tkinter GUI"></i>
+      </div>'
      data-image="img/tokajok3.jpg">
-      <img src="img/tokajok3.jpg" alt="Cataract screening robot demo" loading="lazy" />
-      <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-      <div class="project-title">หุ่นยนต์ตรวจต้อกระจก (AI)</div>
-    </div>
+  <img src="img/tokajok3.jpg" alt="Cataract screening robot demo" loading="lazy" />
+  <div class="project-overlay"><span>ดูรายละเอียด</span></div>
+  <div class="project-title">หุ่นยนต์ตรวจต้อกระจก (AI)</div>
+</div>
+
 
          <div class="project-card" data-title="AI Image Colorizer (GAN)" data-description='
        <p><strong>AI Image Colorizer</strong> ระบบเติมสีอัตโนมัติให้ภาพขาว-ดำด้วย Deep Learning (Pix2Pix GAN). โมเดลรับช่อง <em>L</em> (ความสว่าง) แล้วสร้างช่อง <em>a,b</em> เพื่อคืนภาพสีในปริภูมิ LAB เหมาะกับการฟื้นฟูภาพเก่าและงานกราฟิก</p>
