@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeThesisSlideshow();
   initializeTextScramble();
   initializeContactForm();
-  initializePublicationViewer(); // เพิ่มฟังก์ชันใหม่
+  initializePublicationViewer();
+  initializeProjectFilter(); // เพิ่มฟังก์ชันใหม่
 });
 
 window.addEventListener('load', () => {
@@ -308,6 +309,32 @@ function initializeProjectModal() {
   window.addEventListener('click', (event) => {
     if (event.target === modal) closeModal();
   });
+  // === Tech Stack บนหน้าปกของโมดัล ===
+let modalTech = modal.querySelector('#modal-tech');
+if (!modalTech) {
+  modalTech = document.createElement('div');
+  modalTech.id = 'modal-tech';
+  modalTech.className = 'modal-tech';
+  // วางใต้หัวข้อ
+  modalTitle.insertAdjacentElement('afterend', modalTech);
+}
+
+// ดึง .tech-icons จาก description แล้วไปวางไว้บน cover
+modalTech.innerHTML = '';
+try {
+  const temp = document.createElement('div');
+  temp.innerHTML = description || '';
+  const icons = temp.querySelector('.tech-icons');
+  if (icons) {
+    modalTech.appendChild(icons.cloneNode(true));
+    // ลบชุดเดิมในรายละเอียดเพื่อไม่ให้ซ้ำ
+    const dup = modalDescription.querySelector('.tech-icons');
+    if (dup) dup.remove();
+  }
+} catch (err) {
+  // เงียบ ๆ ถ้า parse ไม่ได้
+}
+
 }
 
 // ตัวช่วยสร้างสไลด์ในโมดัล (ใช้คลาสสไลด์ที่มีอยู่แล้ว)
@@ -634,26 +661,26 @@ function initializeContactForm() {
 // PUBLICATION VIEWER LOGIC
 // ===================================================================
 function initializePublicationViewer() {
-    const pubArticle = document.querySelector('.pub-split');
-    if (!pubArticle) return;
+  const pubArticle = document.querySelector('.pub-split');
+  if (!pubArticle) return;
 
-    const btn = pubArticle.querySelector('.btn-copy-cite');
-    btn?.addEventListener('click', async () => {
-        const citationElement = pubArticle.querySelector('.pub-cite');
-        const citationText = citationElement?.innerText.replace(/^\s*Citation \(APA\)\s*/i, '').trim();
+  const btn = pubArticle.querySelector('.btn-copy-cite');
+  btn?.addEventListener('click', async () => {
+    const citationElement = pubArticle.querySelector('.pub-cite');
+    const citationText = citationElement?.innerText.replace(/^\s*Citation \(APA\)\s*/i, '').trim();
 
-        if (!citationText) return;
+    if (!citationText) return;
 
-        try {
-            await navigator.clipboard.writeText(citationText);
-            const originalText = btn.textContent;
-            btn.textContent = 'Copied ✔';
-            setTimeout(() => { btn.textContent = originalText; }, 1500);
-        } catch (err) {
-            console.error('Failed to copy citation:', err);
-            // Fallback could be implemented here if needed
-        }
-    });
+    try {
+      await navigator.clipboard.writeText(citationText);
+      const originalText = btn.textContent;
+      btn.textContent = 'Copied ✔';
+      setTimeout(() => { btn.textContent = originalText; }, 1500);
+    } catch (err) {
+      console.error('Failed to copy citation:', err);
+      // Fallback could be implemented here if needed
+    }
+  });
 }
 
 
@@ -709,3 +736,345 @@ window.addEventListener('touchmove', (e) => {
 }, { passive: false });
 
 window.addEventListener('touchend', () => { lastDist = null; });
+
+function initializeProjectFilter() {
+  const bar = document.getElementById('projects-filter');
+  const cards = Array.from(document.querySelectorAll('#projects .project-card'));
+  if (!bar || cards.length === 0) return;
+
+  const setActive = (btn) => {
+    bar.querySelectorAll('.filter-btn').forEach(b => {
+      const active = b === btn;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  };
+
+  const applyFilter = (value) => {
+    const v = (value || 'all').toLowerCase();
+    cards.forEach(card => {
+      const cats = (card.dataset.cats || '').toLowerCase().split(',').map(s => s.trim());
+      const show = v === 'all' || cats.includes(v);
+      card.hidden = !show;      // ใช้ hidden ให้แค่นเลย์เอาต์ได้พอดี
+    });
+  };
+
+  // คลิกปุ่ม
+  bar.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-filter]');
+    if (!btn) return;
+    setActive(btn);
+    applyFilter(btn.dataset.filter);
+  });
+
+  // เริ่มต้น: 'all' หรืออ่านจาก hash เช่น #cat=ai
+  const m = location.hash.match(/cat=([a-z]+)/i);
+  const start = m ? m[1].toLowerCase() : 'all';
+  const startBtn = bar.querySelector(`[data-filter="${start}"]`) || bar.querySelector('[data-filter="all"]');
+  setActive(startBtn);
+  applyFilter(start);
+}
+
+// ===================================================================
+// LIGHTWEIGHT ANALYTICS & SMALL SECURITY WINS
+// ===================================================================
+function initializeSmallSecurity() {
+  // Add rel=noopener,noreferrer to all external links that open in a new tab
+  document.querySelectorAll('a[target="_blank"]').forEach(a => {
+    const rel = (a.getAttribute('rel') || '').toLowerCase();
+    if (!rel.includes('noopener')) a.setAttribute('rel', (rel + ' noopener').trim());
+    if (!rel.includes('noreferrer')) a.setAttribute('rel', (rel + ' noreferrer').trim());
+    // A little referrer hygiene
+    if (!a.hasAttribute('referrerpolicy')) a.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+  });
+}
+
+function initializeImageDecodingHints() {
+  // Help the browser parallelize image decoding
+  document.querySelectorAll('img').forEach(img => {
+    if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+    // Lazy images are low-priority fetches
+    if (img.loading === 'lazy' && !img.hasAttribute('fetchpriority')) {
+      img.setAttribute('fetchpriority', 'low');
+    }
+  });
+}
+
+// Deep-link: #project=<slug> to open modal directly; update hash when opening
+function slugify(str) {
+  return String(str).toLowerCase().normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function initializeProjectDeepLink() {
+  const cards = Array.from(document.querySelectorAll('#projects .project-card'));
+  const titleToCard = new Map(cards.map(c => [slugify(c.dataset.title || ''), c]));
+
+  function openByHash() {
+    const m = location.hash.match(/project=([a-z0-9\-]+)/i);
+    if (!m) return;
+    const slug = m[1];
+    const card = titleToCard.get(slug);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    }
+  }
+  window.addEventListener('hashchange', () => {
+    // Close modal if hash cleared
+    if (!/#/.test(location.hash)) {
+      const modal = document.getElementById('project-modal');
+      if (modal && modal.style.display === 'block') {
+        const closeBtn = modal.querySelector('.modal-close');
+        if (closeBtn) closeBtn.click();
+      }
+    } else {
+      openByHash();
+    }
+  });
+
+  // Hook into modal open to update hash
+  document.addEventListener('open-project-modal', (e) => {
+    const title = e.detail && e.detail.title ? e.detail.title : '';
+    const slug = slugify(title);
+    if (slug) history.replaceState(null, '', `#project=${slug}`);
+  });
+  // Hook into modal close to clear hash
+  document.addEventListener('close-project-modal', () => {
+    if (/project=/.test(location.hash)) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+  });
+
+  // If URL already has hash, try to open that project on load
+  openByHash();
+}
+
+// Optional PWA: register service worker if present at /sw.js (safe no-op if missing)
+function tryRegisterSW() {
+  if ('serviceWorker' in navigator) {
+    fetch('sw.js', { method: 'HEAD' }).then(res => {
+      if (res.ok) navigator.serviceWorker.register('sw.js').catch(() => {});
+    }).catch(() => {});
+  }
+}
+
+// Minimal Web Vitals-ish measurement (LCP, CLS, FID) + simple event analytics
+function initializeAnalytics() {
+  const storeKey = 'portfolio_metrics_v1';
+  const metrics = JSON.parse(localStorage.getItem(storeKey) || '{}');
+
+  // LCP
+  try {
+    const po = new PerformanceObserver((list) => {
+      const last = list.getEntries().pop();
+      if (last) {
+        metrics.LCP = Math.round(last.startTime);
+        localStorage.setItem(storeKey, JSON.stringify(metrics));
+        console.log('[Metrics] LCP:', metrics.LCP, 'ms');
+      }
+    });
+    po.observe({ type: 'largest-contentful-paint', buffered: true });
+  } catch {}
+
+  // CLS
+  try {
+    let cls = 0;
+    const po = new PerformanceObserver((list) => {
+      for (const e of list.getEntries()) {
+        if (!e.hadRecentInput) cls += e.value;
+      }
+      metrics.CLS = Number(cls.toFixed(4));
+      localStorage.setItem(storeKey, JSON.stringify(metrics));
+    });
+    po.observe({ type: 'layout-shift', buffered: true });
+  } catch {}
+
+  // FID (first input delay)
+  try {
+    const po = new PerformanceObserver((list) => {
+      const first = list.getEntries()[0];
+      if (first) {
+        metrics.FID = Math.round(first.processingStart - first.startTime);
+        localStorage.setItem(storeKey, JSON.stringify(metrics));
+        console.log('[Metrics] FID:', metrics.FID, 'ms');
+      }
+    });
+    po.observe({ type: 'first-input', buffered: true });
+  } catch {}
+
+  // Track filter usage & modal opens
+  const bar = document.getElementById('projects-filter');
+  if (bar) {
+    bar.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-filter]');
+      if (!btn) return;
+      metrics.filters = metrics.filters || {};
+      metrics.filters[btn.dataset.filter] = (metrics.filters[btn.dataset.filter] || 0) + 1;
+      localStorage.setItem(storeKey, JSON.stringify(metrics));
+    });
+  }
+  document.addEventListener('open-project-modal', (e) => {
+    const title = e.detail && e.detail.title;
+    metrics.modals = metrics.modals || {};
+    if (title) metrics.modals[title] = (metrics.modals[title] || 0) + 1;
+    localStorage.setItem(storeKey, JSON.stringify(metrics));
+  });
+}
+
+// Hook our additions into existing init sequence
+(function () {
+  // Run after the main DOMContentLoaded initializers (queue microtask)
+  queueMicrotask(() => {
+    try {
+      initializeSmallSecurity();
+      initializeImageDecodingHints();
+      initializeProjectDeepLink();
+      initializeAnalytics();
+      tryRegisterSW();
+    } catch (e) { console.warn('Enhancements init failed:', e); }
+  });
+})();
+
+// ===================================================================
+// Lightweight Analytics, Security headers for links, PWA opt-in, Deep-link
+// ===================================================================
+function initializeSmallSecurity() {
+  document.querySelectorAll('a[target="_blank"]').forEach(a => {
+    const rel = (a.getAttribute('rel') || '').toLowerCase();
+    if (!rel.includes('noopener')) a.setAttribute('rel', (rel + ' noopener').trim());
+    if (!rel.includes('noreferrer')) a.setAttribute('rel', (rel + ' noreferrer').trim());
+    if (!a.hasAttribute('referrerpolicy')) a.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+  });
+}
+function initializeImageDecodingHints() {
+  document.querySelectorAll('img').forEach(img => {
+    if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+    if (img.loading === 'lazy' && !img.hasAttribute('fetchpriority')) img.setAttribute('fetchpriority', 'low');
+  });
+}
+// Deep-link handling for project modal
+function slugify(str) {
+  return String(str).toLowerCase().normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+function initializeProjectDeepLink() {
+  const cards = Array.from(document.querySelectorAll('#projects .project-card'));
+  const titleToCard = new Map(cards.map(c => [slugify(c.dataset.title || ''), c]));
+  function openByHash() {
+    const m = location.hash.match(/project=([a-z0-9\-]+)/i);
+    if (!m) return;
+    const card = titleToCard.get(m[1]);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    }
+  }
+  window.addEventListener('hashchange', () => {
+    if (!/#/.test(location.hash)) {
+      const modal = document.getElementById('project-modal');
+      if (modal && modal.style.display === 'block') {
+        const closeBtn = modal.querySelector('.modal-close');
+        if (closeBtn) closeBtn.click();
+      }
+    } else openByHash();
+  });
+  document.addEventListener('open-project-modal', (e) => {
+    const title = e.detail && e.detail.title ? e.detail.title : '';
+    const slug = slugify(title);
+    if (slug) history.replaceState(null, '', `#project=${slug}`);
+  });
+  document.addEventListener('close-project-modal', () => {
+    if (/project=/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
+  });
+  openByHash();
+}
+// Register SW if available
+function tryRegisterSW() {
+  if ('serviceWorker' in navigator) {
+    fetch('sw.js', { method: 'HEAD' }).then(res => {
+      if (res.ok) navigator.serviceWorker.register('sw.js').catch(()=>{});
+    }).catch(()=>{});
+  }
+}
+// Minimal metrics: LCP/CLS/FID and UI events
+function initializeAnalytics() {
+  const storeKey = 'portfolio_metrics_v1';
+  const metrics = JSON.parse(localStorage.getItem(storeKey) || '{}');
+  try {
+    const po = new PerformanceObserver((list)=>{
+      const last = list.getEntries().pop();
+      if (last) { metrics.LCP = Math.round(last.startTime); localStorage.setItem(storeKey, JSON.stringify(metrics)); }
+    });
+    po.observe({ type: 'largest-contentful-paint', buffered: true });
+  } catch {}
+  try {
+    let cls = 0;
+    const po = new PerformanceObserver((list)=>{
+      for (const e of list.getEntries()) if (!e.hadRecentInput) cls += e.value;
+      metrics.CLS = Number(cls.toFixed(4));
+      localStorage.setItem(storeKey, JSON.stringify(metrics));
+    });
+    po.observe({ type: 'layout-shift', buffered: true });
+  } catch {}
+  try {
+    const po = new PerformanceObserver((list)=>{
+      const first = list.getEntries()[0];
+      if (first) { metrics.FID = Math.round(first.processingStart - first.startTime); localStorage.setItem(storeKey, JSON.stringify(metrics)); }
+    });
+    po.observe({ type: 'first-input', buffered: true });
+  } catch {}
+  const bar = document.getElementById('projects-filter');
+  if (bar) {
+    bar.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button[data-filter]');
+      if (!btn) return;
+      metrics.filters = metrics.filters || {};
+      metrics.filters[btn.dataset.filter] = (metrics.filters[btn.dataset.filter] || 0) + 1;
+      localStorage.setItem(storeKey, JSON.stringify(metrics));
+    });
+  }
+  document.addEventListener('open-project-modal', (e)=>{
+    const title = e.detail && e.detail.title;
+    metrics.modals = metrics.modals || {};
+    if (title) metrics.modals[title] = (metrics.modals[title] || 0) + 1;
+    localStorage.setItem(storeKey, JSON.stringify(metrics));
+  });
+}
+// Keyboard close & focus trap for modal (a11y)
+function enhanceModalA11y() {
+  const modal = document.getElementById('project-modal');
+  if (!modal) return;
+  const trap = (e) => {
+    if (e.key === 'Escape') {
+      const closeBtn = modal.querySelector('.modal-close'); 
+      if (closeBtn) closeBtn.click();
+    }
+    if (e.key === 'Tab') {
+      const focusables = modal.querySelectorAll('a, button, textarea, input, [tabindex]:not([tabindex="-1"])');
+      if (!focusables.length) return;
+      const first = focusables[0], last = focusables[focusables.length-1];
+      if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+    }
+  };
+  modal.addEventListener('keydown', trap);
+  document.addEventListener('open-project-modal', ()=>{
+    const first = modal.querySelector('button, a, [tabindex]'); 
+    (first || modal).focus({preventScroll:true});
+  });
+}
+
+// Hook 
+queueMicrotask(()=>{
+  try {
+    initializeSmallSecurity();
+    initializeImageDecodingHints();
+    initializeProjectDeepLink();
+    initializeAnalytics();
+    tryRegisterSW();
+    enhanceModalA11y();
+  } catch(e){ console.warn('Enhancements init failed', e); }
+});

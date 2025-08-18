@@ -67,6 +67,7 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -158,6 +159,7 @@ h4 {
     transform: rotate(360deg);
   }
 }
+
 /* --- END: Preloader Styles --- */
 
 
@@ -374,9 +376,20 @@ nav {
 }
 
 @keyframes pulse {
-  0% { transform: scale(.9); opacity: .7 }
-  50% { transform: scale(1.1); opacity: 1 }
-  100% { transform: scale(.9); opacity: .7 }
+  0% {
+    transform: scale(.9);
+    opacity: .7
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1
+  }
+
+  100% {
+    transform: scale(.9);
+    opacity: .7
+  }
 }
 
 .pulsing-glow {
@@ -630,7 +643,20 @@ nav {
   gap: 30px;
   perspective: 1000px;
 }
+@media (min-width: 1200px) {
+  /* ขยายความกว้างเฉพาะ Section Projects ให้พอวาง 3 ใบแบบขนาดเดิม */
+  #projects.content-section {
+    max-width: 1500px;        /* จากเดิม 1000px */
+    padding-left: 5%;         /* ลด padding ข้างลงเล็กน้อยให้มีพื้นที่จริงมากขึ้น */
+    padding-right: 5%;
+  }
 
+  /* บังคับ 3 คอลัมน์บนเดสก์ท็อป */
+  #projects .projects-grid {
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
+    /* gap: 30px;  <- คงค่าเดิมไว้ ไม่ต้องใส่ซ้ำถ้ามีอยู่แล้ว */
+  }
+}
 .project-card {
   background: var(--card-bg-color);
   border: 1px solid var(--border-color);
@@ -639,7 +665,8 @@ nav {
   cursor: pointer;
   transition: transform .5s, box-shadow .5s;
   transform-style: preserve-3d;
-  position: relative; /* เพิ่ม position relative */
+  position: relative;
+  /* เพิ่ม position relative */
 }
 
 .project-card:hover {
@@ -672,12 +699,14 @@ nav {
   font-weight: 600;
   opacity: 0;
   transition: opacity 0.3s ease;
-  pointer-events: none; /* ป้องกันไม่ให้ overlay บังการคลิก */
+  pointer-events: none;
+  /* ป้องกันไม่ให้ overlay บังการคลิก */
 }
 
 .project-card:hover .project-overlay {
   opacity: 1;
 }
+
 /* END: เพิ่ม Project Overlay Styles */
 
 /* --- Publications --- */
@@ -999,8 +1028,15 @@ footer {
 }
 
 @keyframes slide-down {
-  from { transform: translateY(-50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .close-button {
@@ -1037,7 +1073,7 @@ footer {
   margin-bottom: 20px;
   overflow: hidden;
   border-radius: 8px;
-   position: relative;
+  position: relative;
 }
 
 .modal-media video,
@@ -1109,9 +1145,17 @@ footer {
   font-size: 1.15rem;
 }
 
-.theme-toggle-fixed [data-icon="sun"] { display: none; }
-:root[data-theme="light"] .theme-toggle-fixed [data-icon="sun"] { display: inline-block; }
-:root[data-theme="light"] .theme-toggle-fixed [data-icon="moon"] { display: none; }
+.theme-toggle-fixed [data-icon="sun"] {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-toggle-fixed [data-icon="sun"] {
+  display: inline-block;
+}
+
+:root[data-theme="light"] .theme-toggle-fixed [data-icon="moon"] {
+  display: none;
+}
 
 
 
@@ -1181,22 +1225,27 @@ footer {
     flex-direction: column;
     text-align: center;
   }
+
   .hero-text,
   .hero-image-container {
     align-items: center;
     text-align: center;
   }
+
   .hero-buttons,
   .hero-stats {
     justify-content: center;
   }
+
   .pulsing-glow {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
   .pub-split {
     grid-template-columns: 1fr;
   }
+
   .pdf-frame-wrap {
     height: 60vh;
   }
@@ -1211,6 +1260,7 @@ footer {
   .nav-toggle {
     display: block;
   }
+
   .nav-links {
     position: absolute;
     top: 64px;
@@ -1223,6 +1273,7 @@ footer {
     flex-direction: column;
     gap: 12px;
   }
+
   .nav-links.open {
     display: flex;
   }
@@ -1231,10 +1282,12 @@ footer {
   .highlight .lastname {
     display: block;
   }
+
   .hero-text p {
     max-width: 100%;
     padding: 0 10px;
   }
+
   .hero-text h1 {
     line-height: 1.1;
     font-size: 2.8rem;
@@ -1262,27 +1315,56 @@ footer {
     padding: 0;
   }
 }
-html, body {
-  min-width: 360px; /* แล้วแต่ดีไซน์ของคุณ */
+
+html,
+body {
+  min-width: 360px;
+  /* แล้วแต่ดีไซน์ของคุณ */
 }
 
 @media (min-width: 769px) and (max-width: 1200px) {
-  .hero-text { text-align: center; }        /* จัดตัวอักษรให้อยู่กลาง */
-  .hero-text p { margin: 0 auto 2rem; }     /* กล่อง p อยู่กลางจริง ๆ */
+  .hero-text {
+    text-align: center;
+  }
+
+  /* จัดตัวอักษรให้อยู่กลาง */
+  .hero-text p {
+    margin: 0 auto 2rem;
+  }
+
+  /* กล่อง p อยู่กลางจริง ๆ */
 }
 
 /* ช่วยให้ปัดซ้าย-ขวาได้ โดยยังเลื่อนหน้าแนวตั้งได้ตามปกติ */
-.slides-wrapper { touch-action: pan-y; }
-.slide img { -webkit-user-drag: none; user-select: none; }
+.slides-wrapper {
+  touch-action: pan-y;
+}
+
+.slide img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
 @media (min-width: 769px) and (max-width: 1200px) {
-  .publications .pub-split { grid-template-columns: 1fr; } /* เหลือ 1 คอลัมน์ */
-  .publications .pub-left { display: none; }               /* ซ่อนตัวแสดง PDF */
+  .publications .pub-split {
+    grid-template-columns: 1fr;
+  }
+
+  /* เหลือ 1 คอลัมน์ */
+  .publications .pub-left {
+    display: none;
+  }
+
+  /* ซ่อนตัวแสดง PDF */
   /* (ตัวเลือก) จัดระยะด้านขวาให้พอดี */
-  .publications .pub-right { margin: 0; }
+  .publications .pub-right {
+    margin: 0;
+  }
 }
 
 /* ========== Modal on Mobile only ========== */
 @media (max-width: 768px) {
+
   /* กล่องโมดัลให้กินพื้นที่มากขึ้น */
   .modal-content {
     width: 92%;
@@ -1302,24 +1384,30 @@ html, body {
   /* พื้นที่รูป: สูงขึ้น ชัดขึ้น */
   .modal-media {
     width: 100%;
-    height: 46vh;          /* เดิมเป็น aspect-ratio: 16/9 -> ทำให้เตี้ยเกินไปบนจอสูง */
-    aspect-ratio: auto;    /* ปลดล็อกอัตราส่วนคงที่ */
+    height: 46vh;
+    /* เดิมเป็น aspect-ratio: 16/9 -> ทำให้เตี้ยเกินไปบนจอสูง */
+    aspect-ratio: auto;
+    /* ปลดล็อกอัตราส่วนคงที่ */
     margin-bottom: 12px;
   }
+
   .modal-media img,
   .modal-media video,
   .modal-media iframe {
     width: 100%;
     height: 100%;
-    object-fit: cover;     /* ถ้าต้องการเห็นภาพเต็มไม่ตัดเปลี่ยนเป็น contain */
+    object-fit: cover;
+    /* ถ้าต้องการเห็นภาพเต็มไม่ตัดเปลี่ยนเป็น contain */
   }
 
   /* หัวข้อเล็กลงให้สมส่วน */
   #modal-title {
-    font-size: 1.4rem;     /* เดิม 2rem */
+    font-size: 1.4rem;
+    /* เดิม 2rem */
     line-height: 1.15;
     margin: 8px 0 6px;
-    text-shadow: none;     /* ลดเอฟเฟกต์เรืองแสงในพื้นที่แคบ */
+    text-shadow: none;
+    /* ลดเอฟเฟกต์เรืองแสงในพื้นที่แคบ */
   }
 
   /* เนื้อหาอ่านง่ายขึ้น และไม่จำกัดความกว้างย่อหน้า */
@@ -1327,26 +1415,138 @@ html, body {
     font-size: 1rem;
     line-height: 1.6;
   }
-  #modal-description p { max-width: none; margin-bottom: .9rem; }
-  .modal-content .tech-icons i { font-size: 1.1rem; }
+
+  #modal-description p {
+    max-width: none;
+    margin-bottom: .9rem;
+  }
+
+  .modal-content .tech-icons i {
+    font-size: 1.1rem;
+  }
 }
+
 /* ===== Modal: move close button above image (mobile only) ===== */
 @media (max-width: 768px) {
   .modal-content {
-    padding: 12px 16px 20px;       /* เว้นระยะหัว */
+    padding: 12px 16px 20px;
+    /* เว้นระยะหัว */
   }
 
   .close-button {
-    position: static;              /* เลิก absolute เพื่อให้อยู่ใน flow */
+    position: static;
+    /* เลิก absolute เพื่อให้อยู่ใน flow */
     display: block;
-    float: right;                  /* ชิดขวา */
-    margin: 0 0 8px 12px;          /* เว้นจากรูป */
-    font-size: 28px;               /* ขนาดพอดีมือถือ */
+    float: right;
+    /* ชิดขวา */
+    margin: 0 0 8px 12px;
+    /* เว้นจากรูป */
+    font-size: 28px;
+    /* ขนาดพอดีมือถือ */
     line-height: 1;
-    z-index: 3;                    /* เผื่อมีชั้นซ้อน */
+    z-index: 3;
+    /* เผื่อมีชั้นซ้อน */
   }
 
   .modal-media {
-    clear: both;                   /* ให้รูปลงมาต่อใต้ปุ่ม X */
+    clear: both;
+    /* ให้รูปลงมาต่อใต้ปุ่ม X */
   }
+}
+
+/* ===== Projects Filter ===== */
+.projects-filter {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: -10px 0 26px; /* ติดหัวข้อเล็กน้อย */
+}
+
+.filter-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg-color);
+  color: var(--text-color);
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .15s ease, background .2s ease, border-color .2s ease;
+}
+
+.filter-btn:hover,
+.filter-btn:focus-visible {
+  transform: translateY(-1px);
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.filter-btn.is-active {
+  background: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}
+
+/* ===== Modal: Tech stack bar on cover ===== */
+.modal-tech {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 12px;
+}
+
+.modal-tech .tech-icons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-tech .tech-icons i {
+  font-size: 1.2rem;
+}
+
+/* Tech stack icons under card title (inline) */
+.project-card .project-tech-inline{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:6px;
+  opacity:.9;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+.project-card .project-tech-inline i{
+  font-size:1.1rem;   /* ปรับขนาดไอคอนได้ตามชอบ */
+}
+
+/* === Card cover images (ก่อนเปิดโมดัล): Lock ratio 1107:534 === */
+.project-card > img{
+  width: 100%;
+  aspect-ratio: 1107 / 534; /* คุมให้สูงเท่ากันทุกใบ */
+  height: auto;
+  display: block;
+  object-fit: cover;         /* ครอปเบา ๆ ให้เติมเฟรม ไม่บิดรูป */
+  border-bottom: 1px solid var(--border-color); /* (ทางเลือก) เส้นคั่นรูป-ไตเติล */
+}
+
+/* === Added: Performance & A11y helpers === */
+section.content-section, header, footer { content-visibility: auto; contain-intrinsic-size: 600px; }
+.projects-grid { contain: content; }
+.project-card img { aspect-ratio: 16 / 9; object-fit: cover; }
+:where(a, button):focus-visible { outline: 2px solid var(--accent, #8be9fd); outline-offset: 3px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+/* Reserve space for lazy images to reduce CLS */
+img[loading="lazy"] { contain-intrinsic-size: 300px 169px; }
+/* คุมความสูงบรรทัดในเนื้อหาโมดัล */
+#project-modal .modal-body,
+#project-modal .modal-body p,
+#project-modal .modal-body li {
+  line-height: 1.6 !important;
+}
+#project-modal .modal-body ul {
+  margin: 8px 0 0 18px !important;
+  list-style: disc;
 }
