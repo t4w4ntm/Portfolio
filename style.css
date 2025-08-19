@@ -1551,3 +1551,88 @@ img[loading="lazy"] { contain-intrinsic-size: 300px 169px; }
   list-style: disc;
 }
 
+/* ===== Contact form polish ===== */
+.contact-form{
+  max-width: 720px;
+  margin-inline: auto;
+  display: grid;
+  gap: 12px;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea{
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  background: #fff;
+  color: #111;
+  line-height: 1.5;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+
+.contact-form textarea{
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Focus state ที่เด่นและเข้าถึงได้ */
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible{
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.25);
+}
+
+/* สถานะผิดพลาด */
+.contact-form .is-invalid{
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239,68,68,.18) !important;
+}
+
+/* ปุ่มส่ง: ขนาด, โฟกัส, กำลังส่ง */
+.contact-form .btn.btn-primary{
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.contact-form .btn.btn-primary:disabled{
+  opacity: .7;
+  cursor: not-allowed;
+}
+.contact-form .btn.btn-primary.is-loading{
+  position: relative;
+  pointer-events: none;
+}
+.contact-form .btn.btn-primary.is-loading::after{
+  content: "";
+  position: absolute;
+  inset-inline-end: 12px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* สถานะข้อความผลลัพธ์ */
+.contact-form .form-status{
+  font-size: .95rem;
+}
+.contact-form .form-status.ok{ color: #16a34a; }    /* เขียว */
+.contact-form .form-status.err{ color: #ef4444; }   /* แดง */
+
+/* รองรับโหมดมืดถ้าเว็บใช้ data-theme="dark" */
+[data-theme="dark"] .contact-form input[type="text"],
+[data-theme="dark"] .contact-form input[type="email"],
+[data-theme="dark"] .contact-form textarea{
+  background: #121f32;
+  border-color: #0d215a;
+  color: #eee;
+}

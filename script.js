@@ -174,43 +174,63 @@ function initializeNavigation() {
 // ===================================================================
 // INTERACTIVE CARDS (Experience Section)
 // ===================================================================
+// คลิก = พลิกทันที (toggle), โฮเวอร์ = เอียงตามเมาส์ (เฉพาะตอนยังไม่พลิก)
 function initializeExperienceCards() {
-  const experienceItems = document.querySelectorAll('.experience-item');
-  const enableTilt = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = document.querySelectorAll('.experience-item');
+  if (!items.length) return;
 
-  experienceItems.forEach(item => {
+  const supportsHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  items.forEach(item => {
     const inner = item.querySelector('.experience-card-inner');
     if (!inner) return;
 
-    // Card flip on click/enter
-    const toggleFlip = () => item.classList.toggle('is-flipped');
-    item.addEventListener('click', toggleFlip);
-    item.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleFlip();
+    let flipped = false;
+
+    // ----- Tilt on hover (เฉพาะยังไม่พลิก) -----
+    const onMove = (e) => {
+      if (!supportsHover || flipped) return;
+      const rect = item.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;   // 0..1
+      const py = (e.clientY - rect.top) / rect.height;  // 0..1
+      const rY = (px - 0.5) * 20;   // ซ้าย(-) ขวา(+)
+      const rX = -(py - 0.5) * 12;  // บน(+) ล่าง(-)
+      inner.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg) translateZ(12px)`;
+    };
+
+    const onLeave = () => {
+      if (flipped) return;          // ขณะพลิก ปล่อยให้สไตล์ของการพลิกคุมอยู่
+      inner.style.transform = '';    // กลับสู่ค่าปกติ (ไม่ทับ CSS อื่น)
+    };
+
+    // ----- Flip toggle (คลิก/คีย์บอร์ด) -----
+    const toggleFlip = () => {
+      flipped = !flipped;
+      item.classList.toggle('is-flipped', flipped);
+
+      if (flipped) {
+        // บังคับให้ "หมุน 180°" ด้วย inline style เพื่อชนะ :hover/กฎอื่น -> พลิกทันที
+        inner.style.transform = 'rotateY(180deg)';
+      } else {
+        // เลิกพลิก → คืนสิทธิ์ให้เอียงตามเมาส์อีกครั้ง
+        inner.style.transform = '';
       }
+    };
+
+    // mouse / keyboard
+    item.addEventListener('click', (e) => { e.preventDefault(); toggleFlip(); });
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFlip(); }
     });
 
-    // 3D tilt effect on hover (if not reduced motion)
-    if (enableTilt) {
-      const maxRotate = 10;
-      item.addEventListener('mousemove', (e) => {
-        if (item.classList.contains('is-flipped')) return;
-        const rect = item.getBoundingClientRect();
-        const relX = (e.clientX - rect.left) / rect.width;
-        const relY = (e.clientY - rect.top) / rect.height;
-        const rotY = (relX - 0.5) * (maxRotate * 2);
-        const rotX = -(relY - 0.5) * (maxRotate * 2);
-        inner.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(12px)`;
-      });
-
-      const resetTransform = () => { inner.style.transform = ''; };
-      item.addEventListener('mouseleave', resetTransform);
-      item.addEventListener('click', resetTransform); // Reset tilt when flipping
+    // tilt events (เฉพาะอุปกรณ์ที่มี hover จริง)
+    if (supportsHover) {
+      item.addEventListener('mousemove', onMove);
+      item.addEventListener('mouseleave', onLeave);
     }
   });
 }
+
 
 
 // ===================================================================
@@ -1133,3 +1153,72 @@ queueMicrotask(()=>{
     enhanceModalA11y();
   } catch(e){ console.warn('Enhancements init failed', e); }
 });
+
+// ===== Contact form submit (Formspree) =====
+(function initContactForm(){
+  const form = document.querySelector('form.contact-form');
+  if (!form) return;
+
+  const btn = form.querySelector('button[type="submit"]');
+  const statusEl = form.querySelector('.form-status');
+  const nameEl = form.querySelector('input[name="name"]');
+  const emailEl = form.querySelector('input[name="email"]');
+  const msgEl = form.querySelector('textarea[name="message"]');
+
+  // helper: แสดงสถานะ
+  const setStatus = (text, ok=false) => {
+    statusEl.textContent = text;
+    statusEl.classList.remove('ok','err');
+    statusEl.classList.add(ok ? 'ok' : 'err');
+  };
+
+  // helper: ตรวจค่าขั้นพื้นฐาน
+  const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+  // live remove error style เมื่อพิมพ์
+  [nameEl, emailEl, msgEl].forEach(el=>{
+    el.addEventListener('input', ()=> el.classList.remove('is-invalid'));
+  });
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    statusEl.textContent = '';
+
+    // validate
+    let hasError = false;
+    if (!nameEl.value.trim()){ nameEl.classList.add('is-invalid'); hasError = true; }
+    if (!isEmail(emailEl.value.trim())){ emailEl.classList.add('is-invalid'); hasError = true; }
+    if (!msgEl.value.trim()){ msgEl.classList.add('is-invalid'); hasError = true; }
+
+    if (hasError){
+      setStatus('กรุณากรอกข้อมูลให้ครบถ้วนและตรวจสอบอีเมลอีกครั้ง');
+      return;
+    }
+
+    // ส่ง
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+
+    try{
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+
+      if (res.ok){
+        form.reset();
+        setStatus('ส่งข้อความเรียบร้อย ขอบคุณครับ/ค่ะ 🙏', true);
+      }else{
+        const data = await res.json().catch(()=> ({}));
+        const msg = data?.errors?.[0]?.message || 'ส่งไม่สำเร็จ โปรดลองใหม่อีกครั้งภายหลัง';
+        setStatus(msg);
+      }
+    }catch(err){
+      setStatus('เครือข่ายขัดข้อง โปรดตรวจการเชื่อมต่ออินเทอร์เน็ตแล้วลองใหม่');
+    }finally{
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
+    }
+  });
+})();

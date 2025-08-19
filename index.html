@@ -976,15 +976,16 @@
           <span>GitHub</span>
         </a> -->
       </div>
-      <form action="https://formspree.io/f/xnnzowgg" method="POST" class="contact-form" novalidate>
-        <input type="text" name="name" placeholder="ชื่อของคุณ" required>
-        <input type="email" name="email" placeholder="อีเมลของคุณ" required>
-        <textarea name="message" placeholder="ข้อความ" rows="5" required></textarea>
-        <input type="text" name="_gotcha" style="display:none">
-        <input type="hidden" name="_subject" value="New message from portfolio site">
-        <button type="submit" class="btn btn-primary">ส่งข้อความ</button>
-        <p class="form-status" aria-live="polite" style="margin-top:10px;"></p>
-      </form>
+ <form action="https://formspree.io/f/xnnzowgg" method="POST" class="contact-form" autocomplete="on">
+  <input type="text"   name="name"  placeholder="ชื่อของคุณ"   autocomplete="name" required>
+  <input type="email"  name="email" placeholder="อีเมลของคุณ" autocomplete="email" inputmode="email" spellcheck="false" required>
+  <textarea name="message" placeholder="ข้อความ" rows="5" maxlength="2000" required></textarea>
+  <input type="text" name="_gotcha" style="display:none">
+  <input type="hidden" name="_subject" value="New message from portfolio site">
+  <button type="submit" class="btn btn-primary">ส่งข้อความ</button>
+  <p class="form-status" aria-live="polite" style="margin-top:10px;"></p>
+</form>
+
     </section>
   </main>
 
