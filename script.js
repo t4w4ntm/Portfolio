@@ -224,6 +224,11 @@ function initializeProjectModal() {
   const modalDescription = document.getElementById('modal-description');
   const modalMedia = document.getElementById('modal-media');
 
+  // --- START: Added for a11y and UX improvements ---
+  const mainContent = document.querySelector('main');
+  const navContent = document.querySelector('nav');
+  // --- END: Added for a11y and UX improvements ---
+
   if (!modal || projectCards.length === 0 || !closeModalButton) return;
 
   const closeModal = () => {
@@ -231,6 +236,12 @@ function initializeProjectModal() {
     modalMedia.innerHTML = ''; // ล้างเพื่อหยุดวิดีโอ/เอา element ออก
     const oldActions = document.querySelector('.modal-actions');
     if (oldActions) oldActions.remove();
+
+    // --- START: Restore background accessibility and scrolling ---
+    mainContent?.setAttribute('aria-hidden', 'false');
+    navContent?.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = '';
+    // --- END: Restore background accessibility and scrolling ---
   };
 
   projectCards.forEach(card => {
@@ -251,22 +262,37 @@ function initializeProjectModal() {
       // 2) ใส่ข้อมูลใหม่
       modalTitle.textContent = title;
       modalDescription.innerHTML = description;
+      
+      // (ส่วนโค้ดจัดการ tech-stack icons บน cover)
+      let modalTech = modal.querySelector('#modal-tech');
+      if (!modalTech) {
+        modalTech = document.createElement('div');
+        modalTech.id = 'modal-tech';
+        modalTech.className = 'modal-tech';
+        modalTitle.insertAdjacentElement('afterend', modalTech);
+      }
+      modalTech.innerHTML = '';
+      const tempDesc = document.createElement('div');
+      tempDesc.innerHTML = description;
+      const icons = tempDesc.querySelector('.tech-icons');
+      if (icons) {
+        modalTech.appendChild(icons.cloneNode(true));
+        const dup = modalDescription.querySelector('.tech-icons');
+        if (dup) dup.remove();
+      }
 
-      // 3) รวมสไลด์ (รองรับ video + รูปหลายใบ)
+
+      // 3) รวมสไลด์
       let slides = [];
       if (clipUrl) slides.push({ type: 'video', src: clipUrl });
-
-      const gallery = galleryAttr
-        ? galleryAttr.split(',').map(s => s.trim()).filter(Boolean)
-        : [];
-
+      const gallery = galleryAttr ? galleryAttr.split(',').map(s => s.trim()).filter(Boolean) : [];
       if (gallery.length) {
         slides = slides.concat(gallery.map(src => ({ type: 'image', src })));
       } else if (imageUrl) {
         slides.push({ type: 'image', src: imageUrl });
       }
 
-      // 4) แสดงผล: ถ้ามีหลายสไลด์ ให้ทำสไลด์โชว์ในโมดัล
+      // 4) แสดงผล
       if (slides.length > 1) {
         buildModalSlideshow(modalMedia, slides);
       } else if (slides.length === 1) {
@@ -283,11 +309,9 @@ function initializeProjectModal() {
           img.alt = title || 'Project image';
           modalMedia.appendChild(img);
         }
-      } else {
-        // ไม่มีสื่อเลย — ไม่ทำอะไรเพื่อคงพฤติกรรมเดิม
       }
 
-      // 5) ปุ่ม action (ถ้ามี)
+      // 5) ปุ่ม action
       if (figmaUrl || pdfUrl) {
         const actions = document.createElement('div');
         actions.className = 'modal-actions';
@@ -299,42 +323,73 @@ function initializeProjectModal() {
         }
         modalDescription.insertAdjacentElement('afterend', actions);
       }
-
+      
       // 6) เปิดโมดัล
       modal.style.display = 'block';
+      
+      // --- START: Hide background for a11y and prevent scrolling ---
+      mainContent?.setAttribute('aria-hidden', 'true');
+      navContent?.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = 'hidden';
+      // --- END: Hide background for a11y and prevent scrolling ---
+      
+      // Focus on the modal or its first focusable element for accessibility
+      const firstFocusable = modal.querySelector('button, a, [tabindex]:not([tabindex="-1"])');
+      (firstFocusable || modal).focus();
     });
   });
 
   closeModalButton.addEventListener('click', closeModal);
+
   window.addEventListener('click', (event) => {
     if (event.target === modal) closeModal();
   });
-  // === Tech Stack บนหน้าปกของโมดัล ===
-let modalTech = modal.querySelector('#modal-tech');
-if (!modalTech) {
-  modalTech = document.createElement('div');
-  modalTech.id = 'modal-tech';
-  modalTech.className = 'modal-tech';
-  // วางใต้หัวข้อ
-  modalTitle.insertAdjacentElement('afterend', modalTech);
-}
 
-// ดึง .tech-icons จาก description แล้วไปวางไว้บน cover
-modalTech.innerHTML = '';
-try {
-  const temp = document.createElement('div');
-  temp.innerHTML = description || '';
-  const icons = temp.querySelector('.tech-icons');
-  if (icons) {
-    modalTech.appendChild(icons.cloneNode(true));
-    // ลบชุดเดิมในรายละเอียดเพื่อไม่ให้ซ้ำ
-    const dup = modalDescription.querySelector('.tech-icons');
-    if (dup) dup.remove();
-  }
-} catch (err) {
-  // เงียบ ๆ ถ้า parse ไม่ได้
-}
+  // --- START: Enhanced Keyboard Controls for Modal ---
+  window.addEventListener('keydown', (e) => {
+    if (modal.style.display !== 'block') return; // Do nothing if modal is hidden
 
+    // 1. Escape key to close
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+
+    // 2. Arrow keys for slideshow navigation
+    const prevBtn = modal.querySelector('.prev-slide');
+    const nextBtn = modal.querySelector('.next-slide');
+    if (e.key === 'ArrowLeft' && prevBtn) {
+      e.preventDefault(); // Prevent browser horizontal scroll
+      prevBtn.click();
+    }
+    if (e.key === 'ArrowRight' && nextBtn) {
+      e.preventDefault(); // Prevent browser horizontal scroll
+      nextBtn.click();
+    }
+
+    // 3. Tab key for focus trapping
+    if (e.key === 'Tab') {
+      const focusables = Array.from(modal.querySelectorAll(
+        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      ));
+      if (focusables.length === 0) return;
+
+      const firstElement = focusables[0];
+      const lastElement = focusables[focusables.length - 1];
+      
+      if (e.shiftKey) { // Shift + Tab
+        if (document.activeElement === firstElement) {
+          lastElement.focus();
+          e.preventDefault();
+        }
+      } else { // Tab
+        if (document.activeElement === lastElement) {
+          firstElement.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  });
+  // --- END: Enhanced Keyboard Controls for Modal ---
 }
 
 // ตัวช่วยสร้างสไลด์ในโมดัล (ใช้คลาสสไลด์ที่มีอยู่แล้ว)

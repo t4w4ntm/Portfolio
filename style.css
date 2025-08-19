@@ -639,14 +639,14 @@ nav {
 /* --- Projects --- */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
   perspective: 1000px;
 }
 @media (min-width: 1200px) {
   /* ขยายความกว้างเฉพาะ Section Projects ให้พอวาง 3 ใบแบบขนาดเดิม */
   #projects.content-section {
-    max-width: 1500px;        /* จากเดิม 1000px */
+    max-width: 1200px;        /* จากเดิม 1000px */
     padding-left: 5%;         /* ลด padding ข้างลงเล็กน้อยให้มีพื้นที่จริงมากขึ้น */
     padding-right: 5%;
   }
@@ -670,7 +670,7 @@ nav {
 }
 
 .project-card:hover {
-  transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+  transform: rotateY(5deg) rotateX(5deg) scale(1.05);
   box-shadow: 0 10px 30px rgba(0, 170, 255, .25);
 }
 
@@ -1532,7 +1532,7 @@ body {
 
 /* === Added: Performance & A11y helpers === */
 section.content-section, header, footer { content-visibility: auto; contain-intrinsic-size: 600px; }
-.projects-grid { contain: content; }
+
 .project-card img { aspect-ratio: 16 / 9; object-fit: cover; }
 :where(a, button):focus-visible { outline: 2px solid var(--accent, #8be9fd); outline-offset: 3px; border-radius: 6px; }
 @media (prefers-reduced-motion: reduce) {
@@ -1550,3 +1550,4 @@ img[loading="lazy"] { contain-intrinsic-size: 300px 169px; }
   margin: 8px 0 0 18px !important;
   list-style: disc;
 }
+
