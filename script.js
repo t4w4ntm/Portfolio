@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeTextScramble();
   initializeContactForm();
   initializePublicationViewer();
-  initializeProjectFilter(); // เพิ่มฟังก์ชันใหม่
+  initializeProjectFilter();
+  initializeAiColorization(); // เพิ่มฟังก์ชันใหม่
 });
 
 window.addEventListener('load', () => {
@@ -1222,3 +1223,192 @@ queueMicrotask(()=>{
     }
   });
 })();
+
+// === ฟังก์ชันใหม่ ===
+function initializeAiColorization() {
+  // === เปลี่ยนเป็น URL ของ Space/Backend คุณ ===
+  const API_BASE = "https://tawannn-ai-color.hf.space"; // <— แก้ให้ตรงของคุณถ้าจำเป็น
+
+  // อ้างอิง element
+  const dropzone = document.getElementById('color-dropzone');
+  const fileInput = document.getElementById('color-file');
+  const pickBtn = document.getElementById('pick-file');
+  const runBtn = document.getElementById('run-colorize');
+  const clearBtn = document.getElementById('clear-colorize');
+  const inputImg = document.getElementById('color-input-preview');
+  const outputImg = document.getElementById('color-output-preview');
+  const statusEl = document.getElementById('color-status');
+
+  if (!dropzone || !fileInput || !pickBtn || !runBtn || !inputImg || !outputImg || !statusEl) {
+    console.warn('[AI Colorization] Missing DOM elements. Skipping init.');
+    return;
+  }
+
+  // ===== Config ฝั่ง client =====
+  const MAX_UPLOAD_PX = 2048;     // ลดด้านยาวสุดให้ไม่เกินค่านี้ (0 = ปิด)
+  const ACCEPT_TYPES = ['image/jpeg','image/png','image/webp','image/bmp'];
+
+  let currentFile = null;
+  let outputObjectUrl = null; 
+
+  // ===== Helpers =====
+  const setStatus = (msg, isError=false) => {
+    statusEl.textContent = msg || '';
+    statusEl.style.color = isError ? '#ff7b7b' : 'var(--muted-text)';
+  };
+
+  const isAcceptType = (file) => {
+    if (!file || !file.type) return false;
+    return ACCEPT_TYPES.includes(file.type) || file.type.startsWith('image/');
+  };
+
+  const fileToDataURL = (file) => new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(fr.result);
+    fr.onerror = reject;
+    fr.readAsDataURL(file);
+  });
+
+  // ลดขนาดภาพด้วย canvas (คงสัดส่วน) เพื่ออัปโหลดเร็วขึ้น
+  async function downscaleIfNeeded(file, maxPx = MAX_UPLOAD_PX) {
+    if (!maxPx || maxPx <= 0) return file; // ปิดฟีเจอร์
+    const imgURL = await fileToDataURL(file);
+    const img = new Image();
+    img.src = imgURL;
+    await img.decode();
+
+    const { naturalWidth: w, naturalHeight: h } = img;
+    const longSide = Math.max(w, h);
+    if (longSide <= maxPx) return file; // ไม่ต้องลด
+
+    const scale = maxPx / longSide;
+    const tw = Math.round(w * scale);
+    const th = Math.round(h * scale);
+
+    const canvas = document.createElement('canvas');
+    canvas.width = tw;
+    canvas.height = th;
+    const ctx = canvas.getContext('2d');
+    // ค่า imageSmoothing ช่วยให้คมขึ้นตอนย่อ
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, tw, th);
+
+    // ใช้ชนิดไฟล์เดิมถ้าเป็น jpeg/png/webp; เดฟอลต์เป็น image/png
+    const mime = file.type && file.type.startsWith('image/') ? file.type : 'image/png';
+    const blob = await new Promise((res) => canvas.toBlob(res, mime, 0.92));
+    return new File([blob], file.name.replace(/\.(\w+)$/i, '') + '_scaled.' + (mime.split('/')[1] || 'png'), { type: mime });
+  }
+
+  function enableRun(enabled) {
+    runBtn.disabled = !enabled;
+    runBtn.ariaDisabled = (!enabled).toString();
+  }
+  function updateClearState() {
+    const hasSomething = !!currentFile || !!inputImg.getAttribute('src') || !!outputImg.getAttribute('src');
+    clearBtn.disabled = !hasSomething;
+    clearBtn.ariaDisabled = (!hasSomething).toString();
+  }
+function previewFile(file) {
+  fileToDataURL(file).then((dataUrl) => {
+    inputImg.src = dataUrl;
+    dropzone.classList.add('has-image');  
+    updateClearState();
+  });
+}
+
+  async function handlePickedFile(file) {
+    if (!file) return;
+    if (!isAcceptType(file)) {
+      setStatus('ไฟล์ไม่รองรับ กรุณาเลือกภาพ (.jpg .png .webp .bmp)', true);
+      enableRun(false);
+      return;
+    }
+    currentFile = file;
+    previewFile(file);
+    enableRun(true);
+    setStatus('');
+    // เคลียร์ผลลัพธ์เดิม
+    outputImg.removeAttribute('src');
+  }
+
+ async function doColorize() {
+  if (!currentFile) return;
+  try {
+    enableRun(false);
+    setStatus('กำลังลงสีภาพ…');
+
+    const fileToSend = await downscaleIfNeeded(currentFile);
+
+    const form = new FormData();
+    form.append('file', fileToSend, fileToSend.name);
+
+    const resp = await fetch(`${API_BASE}/api/colorize`, { method: 'POST', body: form });
+    if (!resp.ok) throw new Error(`ลงสีไม่สำเร็จ (HTTP ${resp.status})`);
+
+    const blob = await resp.blob();
+
+    // ใช้ URL (พิมพ์ใหญ่) และไม่ใช้ชื่อแปร url เพื่อตัดปัญหา scope
+    if (outputObjectUrl) URL.revokeObjectURL(outputObjectUrl);
+    const URL_API = (window.URL || window.webkitURL);
+    outputObjectUrl = URL_API.createObjectURL(blob);
+
+    outputImg.src = outputObjectUrl;
+    setStatus('เสร็จแล้ว ✓');
+  } catch (err) {
+    console.error(err);
+    setStatus((err && err.message) ? err.message : String(err), true);
+  } finally {
+    enableRun(true);
+    updateClearState();
+  }
+}
+
+  function clearSelection() {
+    if (outputObjectUrl) { URL.revokeObjectURL(outputObjectUrl); outputObjectUrl = null; }
+    inputImg.removeAttribute('src');
+    outputImg.removeAttribute('src');
+    fileInput.value = '';
+    currentFile = null;
+    enableRun(false);
+    setStatus('เคลียร์แล้ว • เลือกรูปหรือลากมาวาง');
+    dropzone.classList.remove('has-image');
+    updateClearState();
+    dropzone?.focus();
+  }
+  // ===== Events =====
+  // ปุ่มเลือกไฟล์
+  pickBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', (e) => {
+    const f = e.target.files && e.target.files[0];
+    handlePickedFile(f);
+  });
+
+  // ลาก-วาง
+const stopDefaults = (e) => { e.preventDefault(); e.stopPropagation(); };
+['dragenter','dragover','dragleave','drop'].forEach(ev =>
+  dropzone.addEventListener(ev, stopDefaults)
+);
+['dragenter','dragover'].forEach(ev =>
+  dropzone.addEventListener(ev, () => dropzone.classList.add('is-dragover'))
+);
+['dragleave','drop'].forEach(ev =>
+  dropzone.addEventListener(ev, () => dropzone.classList.remove('is-dragover'))
+);
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+  dropzone.addEventListener('drop', (e) => {
+    const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    handlePickedFile(f);
+  });
+
+  // ปุ่ม “ลงสี”
+  runBtn.addEventListener('click', doColorize);
+  clearBtn.addEventListener('click', clearSelection); 
+
+  // เริ่มต้น
+  enableRun(false);
+  setStatus('พร้อมใช้งาน • เลือกรูปหรือลากมาวาง');
+  updateClearState();
+}

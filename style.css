@@ -1636,3 +1636,191 @@ img[loading="lazy"] { contain-intrinsic-size: 300px 169px; }
   border-color: #0d215a;
   color: #eee;
 }
+/* ปรับแถบควบคุม: เหลือเฉพาะปุ่ม */
+#ai-color .ai-color-controls{
+  margin-bottom: 14px;
+}
+#ai-color .upload-chooser{
+  display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+}
+#ai-color .upload-chooser .btn[data-variant="danger"]{
+  background:#e54848; border-color:#e54848; color:#fff;
+}
+#ai-color .upload-chooser .btn[data-variant="danger"]:disabled{
+  opacity:.6; cursor:not-allowed;
+}
+
+/* กริดพรีวิวสองกล่อง */
+#ai-color .ai-color-preview{
+  display:grid; gap:18px; grid-template-columns:1fr;
+}
+@media (min-width:900px){
+  #ai-color .ai-color-preview{ grid-template-columns:1fr 1fr; gap:20px; }
+}
+
+/* กล่องพรีวิวทั่วไป (ขวา) */
+#ai-color .ai-color-preview figure{
+  margin:0; background:var(--card-bg-color);
+  border:1px solid var(--border-color); border-radius:12px; overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+#ai-color .ai-color-preview img{
+  display:block; width:100%; height:clamp(220px, 45vh, 420px); object-fit:contain;
+  /* checkerboard เบาๆ */
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,.06) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,.06) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255,255,255,.06) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.06) 75%);
+  background-size:20px 20px; background-position:0 0, 0 10px, 10px -10px, -10px 0px;
+}
+#ai-color .ai-color-preview figcaption{
+  padding:10px 12px; font-size:.95rem; color:var(--muted-text);
+  text-align:center; border-top:1px solid var(--border-color);
+  background:rgba(0,0,0,.06);
+}
+
+/* กล่องซ้าย (Dropzone + ต้นฉบับ รวมเป็นกล่องเดียว) */
+#ai-color .preview-dropzone{
+  position:relative;
+  border:2px dashed var(--border-color);
+  border-radius:12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02)),
+    var(--card-bg-color);
+  box-shadow:0 8px 28px rgba(0,0,0,.12);
+  overflow:hidden;
+  transition:border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+
+/* ใช้ figure/รูปแบบเดียวกับกล่องขวา */
+#ai-color .preview-dropzone figure{ margin:0; }
+#ai-color .preview-dropzone img{
+  display:block; width:100%; height:clamp(220px, 45vh, 420px); object-fit:contain;
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,.06) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,.06) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255,255,255,.06) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.06) 75%);
+  background-size:20px 20px; background-position:0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* ฮินต์ลาก–วางซ้อนทับบนรูป (หายไปเมื่อมีรูป) */
+#ai-color .preview-dropzone .dz-hint{
+  position:absolute; inset:0; display:grid; place-items:center; gap:6px;
+  text-align:center; color:var(--muted-text); user-select:none;
+  transition:opacity .2s ease;
+}
+#ai-color .preview-dropzone .dz-hint i{ font-size:2.6rem; opacity:.9; }
+#ai-color .preview-dropzone.has-image .dz-hint{ opacity:0; pointer-events:none; }
+
+/* เอฟเฟกต์ตอนลากค้าง + ออร่าที่ต้องการ */
+#ai-color .preview-dropzone.is-dragover{
+  border-color:var(--primary-color); box-shadow:0 8px 28px rgba(0,170,255,.22);
+  transform:translateY(-2px);
+}
+#ai-color .preview-dropzone:focus-visible{
+  outline:3px dashed var(--primary-color); outline-offset:4px;
+}
+/* ออร่าไล่แสงเหมือนเดิม */
+#ai-color .preview-dropzone::after{
+  content:''; position:absolute; inset:-200% -40%;
+  background:radial-gradient(closest-side, rgba(0,170,255,.15), transparent 65%);
+  transform:translateY(-60%) rotate(15deg);
+  animation:sweep 6.5s linear infinite; pointer-events:none;
+}
+@keyframes sweep{
+  0%{ transform:translateY(-60%) rotate(15deg); opacity:0; }
+  35%{ opacity:1; }
+  70%{ transform:translateY(60%) rotate(15deg); opacity:0; }
+  100%{ transform:translateY(60%) rotate(15deg); opacity:0; }
+}
+
+/* สถานะ */
+#ai-color .ai-color-status{ margin-top:10px; text-align:center; font-size:.95rem; color:var(--muted-text); }
+
+/* --- Fix: ไม่ให้โชว์ไอคอนรูปแตก/alt เมื่อยังไม่มี src --- */
+#ai-color img:not([src]),
+#ai-color img[src=""],
+#ai-color img[src="about:blank"]{
+  display: none;             /* ซ่อนไปเลยจนกว่าจะมีรูปจริง */
+}
+
+/* --- กล่องพรีวิวให้คงสัดส่วน/ลายตารางเอง --- */
+#ai-color .ai-color-preview figure,
+#ai-color .preview-dropzone{
+  /* ความสูงขั้นต่ำของพื้นที่พรีวิว */
+  min-height: clamp(220px, 45vh, 420px);
+
+  /* จัดกึ่งกลางคอนเทนต์ */
+  display: grid;
+  place-items: center;
+
+  /* พื้นหลังลายหมากรุกจาง ๆ (ย้ายจาก img มาอยู่ที่กล่องแทน) */
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,.06) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,.06) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255,255,255,.06) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.06) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* รูปที่มี src แล้ว ให้ย่อ/ขยายพอดีกล่องแบบสวย ๆ */
+#ai-color .ai-color-preview figure > img,
+#ai-color .preview-dropzone figure > img{
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ให้ figcaption ยังดูเป็นฐานกล่องเหมือนเดิม */
+#ai-color .ai-color-preview figcaption,
+#ai-color .preview-dropzone figcaption{
+  padding: 10px 12px;
+  font-size: .95rem;
+  color: var(--muted-text);
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  background: rgba(0,0,0,.06);
+}
+/* ====== Fix: ไม่ให้มีสี่เหลี่ยมซ้อนในกล่องต้นฉบับ ====== */
+
+/* ให้ figure ด้านใน dropzone กินเต็มพื้นที่ และตัดกรอบ/เงาทิ้ง */
+#ai-color .preview-dropzone figure{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: none;            /* ตัดกรอบของ figure */
+  box-shadow: none;        /* ตัดเงาของ figure */
+  background: transparent; /* ไม่ต้องมีพื้นหลังซ้อน */
+  display: flex;
+  flex-direction: column;
+}
+
+/* รูปให้ยืดหยุ่นเต็มพื้นที่ figure */
+#ai-color .preview-dropzone figure > img{
+  flex: 1 1 auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* คงสไตล์ฐาน caption ไว้ได้เหมือนเดิม */
+#ai-color .preview-dropzone figcaption{
+  padding: 10px 12px;
+  font-size: .95rem;
+  color: var(--muted-text);
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  background: rgba(0,0,0,.06);
+}
+
+/* (ทางเลือก) เมื่อมีภาพแล้ว เปลี่ยนกรอบจาก dashed เป็นเส้นทึบเพื่อดูเนียนขึ้น */
+#ai-color .preview-dropzone.has-image{
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.12); /* คงออร่าไว้ */
+}

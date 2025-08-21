@@ -949,6 +949,56 @@
       </div>
     </section>
 
+<!-- ② Section ใหม่: วางต่อจาก #projects -->
+<section id="ai-color" class="content-section" aria-labelledby="ai-color-title">
+  <h2 id="ai-color-title">AI Image Colorizer</h2>
+
+<!-- แถบควบคุม -->
+<div class="ai-color-controls">
+  <div class="upload-chooser">
+    <input id="color-file" type="file" accept="image/*" hidden>
+    <button id="pick-file" class="btn btn-secondary" type="button">
+      <i class="fa-solid fa-file-arrow-up"></i> เลือกรูปจากเครื่อง
+    </button>
+    <button id="run-colorize" class="btn btn-primary" type="button" disabled>
+      <i class="fa-solid fa-palette"></i> ลงสี
+    </button>
+    <button id="clear-colorize" class="btn" type="button" data-variant="danger" disabled>
+      <i class="fa-solid fa-rotate-left"></i> ล้าง
+    </button>
+  </div>
+</div>
+
+<!-- พรีวิว 2 กล่อง: ซ้าย (Dropzone+ต้นฉบับ), ขวา (ผลลัพธ์) -->
+<div class="ai-color-preview">
+  <!-- กล่องซ้าย = dropzone + ภาพต้นฉบับ -->
+  <div id="color-dropzone" class="preview-dropzone dropzone" role="button" tabindex="0"
+       aria-label="ลากไฟล์มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์">
+    <figure>
+      <img id="color-input-preview" alt="ภาพต้นฉบับ (ขาวดำ)"/>
+      <figcaption>ภาพต้นฉบับ</figcaption>
+    </figure>
+
+    <!-- ฮินต์วางไฟล์ (จะแอบอัตโนมัติเมื่อมีภาพ) -->
+    <div class="dz-hint">
+      <i class="fa-regular fa-images"></i>
+      <p>ลากรูปมาวางที่นี่ หรือคลิก</p>
+      <small>รองรับ .jpg .png .webp</small>
+    </div>
+  </div>
+
+  <!-- กล่องขวา = ผลลัพธ์ -->
+  <figure>
+    <img id="color-output-preview" alt="ภาพหลังลงสี"/>
+    <figcaption>ผลลัพธ์</figcaption>
+  </figure>
+</div>
+
+<!-- สถานะ -->
+<div id="color-status" class="ai-color-status" aria-live="polite"></div>
+
+</section>
+
 
 
     <section id="contact" class="content-section" aria-labelledby="contact-title">
