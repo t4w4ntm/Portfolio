@@ -1824,3 +1824,24 @@ img[loading="lazy"] { contain-intrinsic-size: 300px 169px; }
   border-width: 1px;
   box-shadow: 0 8px 20px rgba(0,0,0,.12); /* คงออร่าไว้ */
 }
+/* โต้ตอบกับผู้ใช้: กล่องต้นฉบับ (dropzone) ลอยเมื่อชี้ + เคอร์เซอร์เป็นมือชี้ */
+#ai-color .preview-dropzone{
+  cursor: pointer;  /* รูปมือชี้ */
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  will-change: transform, box-shadow;
+}
+
+#ai-color .preview-dropzone:hover{
+  transform: translateY(-3px);                /* ลอยขึ้นนิดๆ */
+  box-shadow: 0 12px 28px rgba(0,0,0,.25);    /* เงานุ่มขึ้น */
+  border-color: var(--primary-color);         /* ขอบเด่นขึ้น */
+}
+
+#ai-color .preview-dropzone:active{
+  transform: translateY(-1px);                /* จิ้มลงนิดหน่อยขณะกด */
+}
+
+/* ให้พื้นที่ข้อความฮินต์ไม่กินอีเวนต์ เพื่อให้เคอร์เซอร์มือชี้จากกล่องหลักทำงาน */
+#ai-color .preview-dropzone .dz-hint{
+  pointer-events: none;
+}
