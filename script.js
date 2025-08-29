@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeScrollAnimations();
   initializeThesisSlideshow();
   initializeTextScramble();
-  initializeContactForm();
+  // initializeContactForm();
   initializePublicationViewer();
   initializeProjectFilter();
   initializeAiColorization(); // เพิ่มฟังก์ชันใหม่
@@ -1209,7 +1209,7 @@ queueMicrotask(()=>{
 
       if (res.ok){
         form.reset();
-        setStatus('ส่งข้อความเรียบร้อย ขอบคุณครับ/ค่ะ 🙏', true);
+        setStatus('ส่งข้อความเรียบร้อย ขอบคุณครับ 🙏', true);
       }else{
         const data = await res.json().catch(()=> ({}));
         const msg = data?.errors?.[0]?.message || 'ส่งไม่สำเร็จ โปรดลองใหม่อีกครั้งภายหลัง';
