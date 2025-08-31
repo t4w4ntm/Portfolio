@@ -1314,6 +1314,49 @@ footer {
     margin-bottom: 25px;
     padding: 0;
   }
+
+  /* --- Mobile Projects Grid: 2 Columns --- */
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .project-card {
+    transform: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .project-card:hover {
+    transform: none !important;
+    box-shadow: 0 4px 12px rgba(0, 170, 255, 0.2);
+  }
+
+  .project-card .project-title {
+    padding: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .project-card .project-tech-inline {
+    padding: 0 8px 8px;
+    gap: 4px;
+  }
+
+  .project-card .project-tech-inline i {
+    font-size: 0.8rem;
+  }
+
+  .project-overlay span {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  /* Hide tech stack icons in modal and project cards on mobile */
+  .modal-tech,
+  .project-card .project-tech-inline {
+    display: none !important;
+  }
 }
 
 html,
