@@ -26,7 +26,9 @@ window.addEventListener('load', () => {
   // ซ่อน Preloader หลังจากทุกอย่างโหลดเสร็จ
   handlePreloader();
   // โหลด particles ทีหลังเพื่อไม่ให้ block content
-  loadParticles();
+  initParticles();
+  // โหลดโมเดล 3D
+  initializeFloatingModel();
 });
 
 // ===================================================================
@@ -83,67 +85,146 @@ function initializeTheme() {
 // ===================================================================
 // TSPARTICLES BACKGROUND
 // ===================================================================
-let particlesLoaded = false;
+/**
+ * Initialize tsParticles background (supports both dark and light themes, reduced-motion aware)
+ * - 50 particles with connecting lines
+ * - Dark theme: white particles
+ * - Light theme: blue particles that match the theme colors
+ * - Speed 1, interactive hover/click effects
+ * - Auto-disabled for reduced-motion preference
+ */
+function initParticles() {
+  try {
+    // ตรวจสอบ reduced-motion preference
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
 
-function loadParticles() {
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // ตรวจสอบว่า tsParticles พร้อมใช้งาน
+    if (typeof tsParticles === 'undefined') {
+      console.warn('tsParticles library not loaded');
+      return;
+    }
 
-  const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-  const particleCount = prefersReducedMotion ? 0 : (isMobile ? 45 : 120);
+    // ป้องกันการโหลดซ้ำ
+    if (window.__particlesInitialized) {
+      return;
+    }
+    window.__particlesInitialized = true;
 
-  if (particleCount <= 0 || typeof tsParticles === 'undefined') {
-    (window.tsParticles?.dom() || []).forEach(i => i.destroy());
-    particlesLoaded = false;
-    return;
+    // ตรวจสอบธีมปัจจุบัน
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    
+    // กำหนดสีตามธีม
+    let particleColor, linkColor, particleOpacity, linkOpacity;
+    
+    if (theme === 'light') {
+      // Light theme: ใช้สีน้ำเงิน-ฟ้าที่เข้ากับธีม
+      particleColor = ['#0858d7', '#0a84ff', '#4fc3ff', '#2563eb']; // เฉดสีน้ำเงิน-ฟ้า
+      linkColor = '#0858d7'; // สีหลักของธีม light
+      particleOpacity = 0.7;
+      linkOpacity = 0.15; // ลดความเข้มเล็กน้อยเพื่อไม่ให้เด่นเกินไปบนพื้นขาว
+    } else {
+      // Dark theme: ใช้สีขาวเหมือนเดิม
+      particleColor = '#ffffff';
+      linkColor = '#ffffff';
+      particleOpacity = 0.6;
+      linkOpacity = 0.2;
+    }
+
+    // กำหนดค่าเอฟเฟกต์อนุภาค
+    const particlesConfig = {
+      fpsLimit: 60,
+      detectRetina: true,
+      background: {
+        color: 'transparent'
+      },
+      particles: {
+        number: {
+          value: 50,
+          density: {
+            enable: true,
+            area: 800
+          }
+        },
+        color: {
+          value: particleColor
+        },
+        shape: {
+          type: 'circle'
+        },
+        opacity: {
+          value: particleOpacity,
+          random: false
+        },
+        size: {
+          value: { min: 1, max: 3 },
+          random: true
+        },
+        links: {
+          enable: true,
+          distance: 120,
+          color: linkColor,
+          opacity: linkOpacity,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 1,
+          direction: 'none',
+          random: false,
+          straight: false,
+          outModes: {
+            default: 'out'
+          },
+          attract: {
+            enable: false
+          }
+        }
+      },
+      interactivity: {
+        detectsOn: 'window',
+        events: {
+          onHover: {
+            enable: true,
+            mode: 'repulse'
+          },
+          onClick: {
+            enable: true,
+            mode: 'push'
+          },
+          resize: true
+        },
+        modes: {
+          repulse: {
+            distance: 120,
+            duration: 0.4
+          },
+          push: {
+            quantity: 4
+          }
+        }
+      }
+    };
+
+    // โหลด particles
+    tsParticles.load('tsparticles', particlesConfig);
+    
+  } catch (error) {
+    console.error('Error initializing particles:', error);
   }
-
-  const bg = getComputedStyle(document.documentElement).getPropertyValue('--background-color').trim();
-
-  const starfieldOptions = {
-    background: { color: { value: bg } },
-    fpsLimit: 60,
-    particles: {
-      number: { value: particleCount, density: { enable: true, area: 900 } },
-      color: { value: '#ffffff' },
-      shape: { type: 'circle' },
-      opacity: { value: 0.45, random: true },
-      size: { value: { min: 1, max: 2.5 } },
-      move: { enable: true, speed: isMobile ? 0.7 : 1, direction: 'none', straight: false, outModes: { default: 'out' } }
-    },
-    interactivity: {
-      events: { onHover: { enable: !prefersReducedMotion, mode: 'repulse' }, onClick: { enable: !prefersReducedMotion, mode: 'push' } },
-      modes: { repulse: { distance: 100, duration: 0.35 }, push: { quantity: 4 } }
-    },
-    detectRetina: true
-  };
-
-  const pixelRainOptions = {
-    background: { color: { value: bg } },
-    fpsLimit: 60,
-    particles: {
-      number: { value: particleCount, density: { enable: true, area: 900 } },
-      color: { value: ['#0a84ff', '#4fc3ff', '#8fd3ff', '#b6c2d0'] },
-      shape: { type: 'square' },
-      opacity: { value: { min: 0.35, max: 0.35 } },
-      size: { value: { min: 4, max: 6 } },
-      move: { enable: true, speed: 1, random: false, direction: "bottom", straight: true, out_mode: "out", bounce: false },
-      links: { enable: false },
-      collisions: { enable: false }
-    },
-    interactivity: { events: { onHover: { enable: false }, onClick: { enable: false } } },
-    detectRetina: true
-  };
-
-  const options = theme === 'light' ? pixelRainOptions : starfieldOptions;
-  tsParticles.load('tsparticles', options).then(() => { particlesLoaded = true; });
 }
 
-// Expose reload function to be called by theme switcher
+// ฟังก์ชันสำหรับรีโหลด particles เมื่อเปลี่ยนธีม
 window.reloadParticles = () => {
-  (window.tsParticles?.dom() || []).forEach(instance => instance.destroy());
-  particlesLoaded = false;
-  loadParticles();
+  // ทำลาย particles ที่มีอยู่
+  if (window.tsParticles?.dom().length) {
+    window.tsParticles.dom().forEach(instance => instance.destroy());
+  }
+  
+  // รีเซ็ตสถานะและโหลดใหม่
+  window.__particlesInitialized = false;
+  initParticles();
 };
 
 
@@ -175,60 +256,113 @@ function initializeNavigation() {
 // ===================================================================
 // INTERACTIVE CARDS (Experience Section)
 // ===================================================================
-// คลิก = พลิกทันที (toggle), โฮเวอร์ = เอียงตามเมาส์ (เฉพาะตอนยังไม่พลิก)
+// เดสก์ท็อป: คลิก = พลิกทันที (toggle), โฮเวอร์ = เอียงตามเมาส์ (เฉพาะตอนยังไม่พลิก)
+// มือถือ: คลิก = ขยาย/ยุบ accordion
 function initializeExperienceCards() {
   const items = document.querySelectorAll('.experience-item');
   if (!items.length) return;
 
   const supportsHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
   items.forEach(item => {
     const inner = item.querySelector('.experience-card-inner');
     if (!inner) return;
 
     let flipped = false;
+    let expanded = false;
 
-    // ----- Tilt on hover (เฉพาะยังไม่พลิก) -----
-    const onMove = (e) => {
-      if (!supportsHover || flipped) return;
-      const rect = item.getBoundingClientRect();
-      const px = (e.clientX - rect.left) / rect.width;   // 0..1
-      const py = (e.clientY - rect.top) / rect.height;  // 0..1
-      const rY = (px - 0.5) * 20;   // ซ้าย(-) ขวา(+)
-      const rX = -(py - 0.5) * 12;  // บน(+) ล่าง(-)
-      inner.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg) translateZ(12px)`;
-    };
+    if (isMobile) {
+      // === MOBILE: Accordion Behavior ===
+      const toggleAccordion = () => {
+        expanded = !expanded;
+        item.classList.toggle('is-expanded', expanded);
+        
+        // ปิด accordion อื่นๆ (เปิดได้ทีละอันเพื่อประหยัดพื้นที่)
+        items.forEach(otherItem => {
+          if (otherItem !== item && otherItem.classList.contains('is-expanded')) {
+            otherItem.classList.remove('is-expanded');
+          }
+        });
+      };
 
-    const onLeave = () => {
-      if (flipped) return;          // ขณะพลิก ปล่อยให้สไตล์ของการพลิกคุมอยู่
-      inner.style.transform = '';    // กลับสู่ค่าปกติ (ไม่ทับ CSS อื่น)
-    };
+      // Mobile: คลิกเพื่อขยาย/ยุบ
+      item.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        toggleAccordion(); 
+      });
+      
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { 
+          e.preventDefault(); 
+          toggleAccordion(); 
+        }
+      });
 
-    // ----- Flip toggle (คลิก/คีย์บอร์ด) -----
-    const toggleFlip = () => {
-      flipped = !flipped;
-      item.classList.toggle('is-flipped', flipped);
+    } else {
+      // === DESKTOP: 3D Flip Behavior ===
+      // ----- Tilt on hover (เฉพาะยังไม่พลิก) -----
+      const onMove = (e) => {
+        if (!supportsHover || flipped) return;
+        const rect = item.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width;   // 0..1
+        const py = (e.clientY - rect.top) / rect.height;  // 0..1
+        const rY = (px - 0.5) * 20;   // ซ้าย(-) ขวา(+)
+        const rX = -(py - 0.5) * 12;  // บน(+) ล่าง(-)
+        inner.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg) translateZ(12px)`;
+      };
 
-      if (flipped) {
-        // บังคับให้ "หมุน 180°" ด้วย inline style เพื่อชนะ :hover/กฎอื่น -> พลิกทันที
-        inner.style.transform = 'rotateY(180deg)';
-      } else {
-        // เลิกพลิก → คืนสิทธิ์ให้เอียงตามเมาส์อีกครั้ง
-        inner.style.transform = '';
+      const onLeave = () => {
+        if (flipped) return;          // ขณะพลิก ปล่อยให้สไตล์ของการพลิกคุมอยู่
+        inner.style.transform = '';    // กลับสู่ค่าปกติ (ไม่ทับ CSS อื่น)
+      };
+
+      // ----- Flip toggle (คลิก/คีย์บอร์ด) -----
+      const toggleFlip = () => {
+        flipped = !flipped;
+        item.classList.toggle('is-flipped', flipped);
+
+        if (flipped) {
+          // บังคับให้ "หมุน 180°" ด้วย inline style เพื่อชนะ :hover/กฎอื่น -> พลิกทันที
+          inner.style.transform = 'rotateY(180deg)';
+        } else {
+          // เลิกพลิก → คืนสิทธิ์ให้เอียงตามเมาส์อีกครั้ง
+          inner.style.transform = '';
+        }
+      };
+
+      // Desktop: mouse / keyboard events
+      item.addEventListener('click', (e) => { e.preventDefault(); toggleFlip(); });
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFlip(); }
+      });
+
+      // tilt events (เฉพาะอุปกรณ์ที่มี hover จริง)
+      if (supportsHover) {
+        item.addEventListener('mousemove', onMove);
+        item.addEventListener('mouseleave', onLeave);
       }
-    };
-
-    // mouse / keyboard
-    item.addEventListener('click', (e) => { e.preventDefault(); toggleFlip(); });
-    item.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFlip(); }
-    });
-
-    // tilt events (เฉพาะอุปกรณ์ที่มี hover จริง)
-    if (supportsHover) {
-      item.addEventListener('mousemove', onMove);
-      item.addEventListener('mouseleave', onLeave);
     }
+  });
+
+  // Handle resize - switch behavior when screen size changes
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      // Re-initialize when screen size changes significantly
+      const newIsMobile = window.matchMedia('(max-width: 768px)').matches;
+      if (newIsMobile !== isMobile) {
+        // Clear all states and re-run initialization
+        items.forEach(item => {
+          item.classList.remove('is-flipped', 'is-expanded');
+          const inner = item.querySelector('.experience-card-inner');
+          if (inner) inner.style.transform = '';
+        });
+        // Re-initialize with new behavior
+        setTimeout(() => initializeExperienceCards(), 100);
+      }
+    }, 250);
   });
 }
 
@@ -1411,4 +1545,225 @@ const stopDefaults = (e) => { e.preventDefault(); e.stopPropagation(); };
   enableRun(false);
   setStatus('พร้อมใช้งาน • เลือกรูปหรือลากมาวาง');
   updateClearState();
+}
+
+// ===================================================================
+// 3D FLOATING MODEL IN NAVBAR
+// ===================================================================
+function initializeFloatingModel() {
+  // ตรวจสอบว่า Three.js โหลดแล้วหรือยัง
+  if (typeof THREE === 'undefined') {
+    console.warn('Three.js not loaded, skipping 3D model');
+    return;
+  }
+
+  const container = document.getElementById('navbar-model');
+  if (!container) return;
+
+  // สร้าง scene, camera, renderer
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100); // ลด FOV และปรับ near/far plane
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  
+  renderer.setSize(40, 40); // ย่อขนาด renderer ลงตาม
+  renderer.setClearColor(0x000000, 0); // โปร่งใส
+  container.appendChild(renderer.domElement);
+
+  // เพิ่มแสงให้สว่างขึ้นและดู soft
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5); // ambient ขาวจ้า
+  scene.add(ambientLight);
+
+  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x222233, 1.2); // แสงฟ้าขาวด้านบน+น้ำเงินด้านล่าง
+  hemiLight.position.set(0, 2, 0);
+  scene.add(hemiLight);
+
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+  directionalLight.position.set(2, 4, 2);
+  directionalLight.castShadow = false;
+  scene.add(directionalLight);
+
+  // เพิ่ม rim light เล็กน้อย (ขอบสว่าง)
+  const rimLight = new THREE.DirectionalLight(0xffffff, 0.7);
+  rimLight.position.set(-2, 2, 2);
+  scene.add(rimLight);
+
+  // ตัวแปรสำหรับโมเดลและแอนิเมชัน
+  let model = null;
+  let mixer = null; // สำหรับ animation mixer
+  const clock = new THREE.Clock();
+  
+  // ตัวแปรสำหรับระบบหยุด-หมุนกลับ
+  let walkState = 'walking'; // 'walking', 'pausing', 'turning'
+  let pauseStartTime = 0;
+  let currentDirection = 1; // 1 = ไปขวา, -1 = ไปซ้าย
+  
+  // โหลดโมเดล .glb
+  const loader = new THREE.GLTFLoader();
+  loader.load(
+    'model.glb',
+    function(gltf) {
+      model = gltf.scene;
+      
+      // ปรับขนาดโมเดลให้เล็กลงมาก (สำหรับ navbar)
+      const box = new THREE.Box3().setFromObject(model);
+      const size = box.getSize(new THREE.Vector3());
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const scale = 0.023 / maxDim; // ขนาดที่เหมาะสมมากขึ้น
+      model.scale.set(scale, scale, scale);
+      
+      // วางตำแหน่งให้อยู่ตรงกลาง viewport และเลื่อนลงมา
+      const center = box.getCenter(new THREE.Vector3());
+      const baseY = (-center.y * scale) - 1; // เก็บตำแหน่ง Y base ไว้
+      model.position.set(-center.x * scale, baseY, -center.z * scale);
+      model.userData.baseY = baseY; // เก็บค่า base Y ไว้ใช้ใน animate
+      
+      // จัดการ animations ถ้ามี
+      if (gltf.animations && gltf.animations.length > 0) {
+        mixer = new THREE.AnimationMixer(model);
+        
+        // เก็บ actions ไว้เพื่อควบคุม
+        model.userData.walkAction = null;
+        model.userData.idleAction = null;
+        
+        gltf.animations.forEach((clip) => {
+          const action = mixer.clipAction(clip);
+          
+          // แยกประเภท animation ตามชื่อ
+          if (clip.name.toLowerCase().includes('walk') || clip.name.toLowerCase().includes('run')) {
+            model.userData.walkAction = action;
+          } else if (clip.name.toLowerCase().includes('idle')) {
+            model.userData.idleAction = action;
+          } else {
+            // ถ้าไม่รู้ประเภท ให้เป็น walk action
+            if (!model.userData.walkAction) {
+              model.userData.walkAction = action;
+            }
+          }
+        });
+        
+        // เล่น idle เป็นเริ่มต้น
+        if (model.userData.idleAction) {
+          model.userData.idleAction.play();
+        } else if (model.userData.walkAction) {
+          model.userData.walkAction.play();
+          model.userData.walkAction.paused = true; // หยุดไว้ก่อน
+        }
+        
+        console.log('Found', gltf.animations.length, 'animations in model');
+      }
+      
+      scene.add(model);
+      console.log('3D Navbar Model loaded successfully');
+    },
+    function(progress) {
+      console.log('Loading navbar model progress:', (progress.loaded / progress.total * 100) + '%');
+    },
+    function(error) {
+      console.error('Error loading navbar 3D model:', error);
+    }
+  );
+
+  // วางกล้อง
+  camera.position.set(0, 0, 3); // ย้ายกล้องออกไปไกลขึ้น
+
+  // ฟังก์ชันแอนิเมชัน
+  function animate() {
+    requestAnimationFrame(animate);
+    
+    const deltaTime = clock.getDelta();
+    
+    if (model) {
+      const elapsedTime = clock.getElapsedTime();
+      
+      // อัปเดต animation mixer ถ้ามี
+      if (mixer) {
+        mixer.update(deltaTime);
+      }
+      
+      // แอนิเมชันเดินซ้าย-ขวาแถวๆ ชื่อ (ขยับ container) - ขยายให้เดินออกนอกจอ
+      const walkRange = 150; // ขยายระยะให้เดินออกนอกจอได้
+      const walkSpeed = 0.4;  // ลดความเร็วให้ดูสบายตา
+      const walkPosition = Math.sin(elapsedTime * walkSpeed) * walkRange;
+      container.style.right = (-50 + walkPosition) + 'px';
+      
+      // คำนวณความเร็วและทิศทางการเคลื่อนที่
+      const velocity = Math.cos(elapsedTime * walkSpeed) * walkSpeed; 
+      // อนุพันธ์ของ sin
+      
+      // กำหนดขอบเขตที่มองเห็น: -200px ถึง +200px (นอกจอแล้ว)
+      const screenBounds = 200; 
+      const isOutOfScreen = Math.abs(-50 + walkPosition) > screenBounds;
+      const isMoving = Math.abs(velocity) > 0.02; // ลด threshold ให้ไวขึ้น
+      
+      // ควบคุม animation ตามการเคลื่อนที่
+      if (model.userData.walkAction && model.userData.idleAction) {
+        if (!isOutOfScreen && isMoving) {
+          // ยังอยู่ในจอและเคลื่อนที่ = เล่น walk animation
+          if (!model.userData.walkAction.isRunning()) {
+            if (model.userData.idleAction.isRunning()) {
+              model.userData.idleAction.fadeOut(0.3);
+            }
+            model.userData.walkAction.reset().fadeIn(0.3).play();
+          }
+          // ใช้ค่าคงที่สำหรับ animation speed
+          model.userData.walkAction.setEffectiveTimeScale(1.0);
+        } else {
+          // นอกจอหรือหยุด = เล่น idle animation
+          if (!model.userData.idleAction.isRunning()) {
+            if (model.userData.walkAction.isRunning()) {
+              model.userData.walkAction.fadeOut(0.3);
+            }
+            model.userData.idleAction.reset().fadeIn(0.3).play();
+          }
+        }
+      } else if (model.userData.walkAction) {
+        // ถ้ามีแค่ walk animation
+        if (!isOutOfScreen && isMoving) {
+          model.userData.walkAction.paused = false;
+          model.userData.walkAction.setEffectiveTimeScale(1.0); // ใช้ความเร็วปกติ
+        } else {
+          model.userData.walkAction.paused = true;
+        }
+      }
+      
+      // หมุนตัวโมเดลตามทิศทางความเร็ว (ไม่ใช่ตำแหน่ง)
+      let targetRotationY = model.rotation.y; // เก็บค่าเดิมไว้
+      
+      if (isOutOfScreen) {
+        // เมื่อออกนอกจอ ให้คงทิศทางเดิม
+        // ไม่เปลี่ยนทิศทาง
+      } else if (velocity > 0.05) {
+        targetRotationY = -Math.PI/2; // เคลื่อนที่ไปขวา = หันขวา
+      } else if (velocity < -0.05) {
+        targetRotationY = Math.PI/2;  // เคลื่อนที่ไปซ้าย = หันซ้าย
+      }
+      // ถ้า velocity ใกล้ 0 และไม่ออกนอกจอ = คงทิศทางเดิมไว้
+      
+      // ใช้ lerp เพื่อให้การหมุนนุ่มนวล (ช้าลงเพื่อไม่ให้กระต่าย)
+      model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
+      
+      // ลดการเคลื่อนไหวเพิ่มเติม (ให้ animation ของโมเดลเด่นขึ้น) + รักษาตำแหน่งลงมา
+      const baseY = model.userData.baseY || 0; // ใช้ตำแหน่ง base Y
+      model.position.y = baseY + Math.sin(elapsedTime * 2) * 0.05; 
+      // รวมกับการกระดกขึ้น-ลง
+      
+      // ลดการเอียงลง
+      model.rotation.x = Math.sin(elapsedTime * 1.5) * 0.02;
+      model.rotation.z = Math.sin(elapsedTime * 1) * 0.01;
+    }
+    
+    renderer.render(scene, camera);
+  }
+
+  // เริ่มแอนิเมชัน
+  animate();
+
+  // ซ่อนโมเดลในมือถือ
+  function handleMobileVisibility() {
+    const isMobile = window.innerWidth <= 768;
+    container.style.display = isMobile ? 'none' : 'block';
+  }
+
+  handleMobileVisibility();
+  window.addEventListener('resize', handleMobileVisibility);
 }

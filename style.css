@@ -179,6 +179,8 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 5%;
+  position: relative;
+  overflow: visible; /* ให้โมเดลเดินออกนอกได้ */
 }
 
 .logo {
@@ -186,6 +188,22 @@ nav {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-color);
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-right: 120px; /* เผื่อพื้นที่สำหรับโมเดลเดิน */
+}
+
+#navbar-model {
+  position: absolute;
+  right: -50px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 10;
+  transition: right 0.1s ease-out; /* smooth movement */
 }
 
 .nav-links {
@@ -1278,6 +1296,15 @@ footer {
     display: flex;
   }
 
+  /* --- Mobile Navbar Model --- */
+  .logo {
+    padding-right: 20px; /* ลดพื้นที่ในมือถือ */
+  }
+
+  #navbar-model {
+    display: none; /* ซ่อนในมือถือ */
+  }
+
   /* --- Mobile Hero --- */
   .highlight .lastname {
     display: block;
@@ -1298,7 +1325,7 @@ footer {
     display: none;
   }
 
-  /* --- Mobile Timeline --- */
+  /* --- Mobile Timeline: Accordion Style --- */
   .timeline-container::before,
   .timeline-arrow,
   .timeline-dot {
@@ -1311,8 +1338,129 @@ footer {
     width: 100%;
     left: auto;
     transform: none;
-    margin-bottom: 25px;
+    margin-bottom: 8px; /* ลดระยะห่างให้ติดกันมากขึ้น */
     padding: 0;
+    min-height: auto; /* ให้สูงตามเนื้อหา */
+    cursor: pointer;
+    /* รีเซ็ต 3D properties สำหรับมือถือ */
+    perspective: none;
+    transform-style: flat;
+  }
+
+  /* การ์ดแบบ accordion - ซ่อน 3D effects */
+  .timeline-container .experience-item .experience-card-inner {
+    position: static; /* เปลี่ยนจาก absolute */
+    width: 100%;
+    height: auto; /* ให้สูงตามเนื้อหา */
+    transform: none !important; /* ปิด 3D transforms */
+    transition: none;
+    transform-style: flat;
+  }
+
+  /* Front content - แสดงเป็นหัวข้อย่อที่คลิกได้ */
+  .timeline-container .experience-item .experience-front {
+    position: static;
+    width: 100%;
+    height: auto;
+    backface-visibility: visible;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg-color);
+    margin-bottom: 0;
+  }
+
+  /* ซ่อน list ใน front สำหรับมือถือ */
+  .timeline-container .experience-item .experience-front ul {
+    display: none;
+  }
+
+  /* Back content - เป็นเนื้อหาที่ขยายออกมา */
+  .timeline-container .experience-item .experience-back {
+    position: static;
+    width: 100%;
+    height: auto;
+    transform: none;
+    backface-visibility: visible;
+    display: none; /* ซ่อนไว้ก่อน */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 20px;
+    margin-top: -1px; /* ให้ติดกับ front */
+    border-radius: 0 0 8px 8px;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    background: var(--card-bg-color);
+    overflow: visible;
+  }
+
+  /* เมื่อขยาย (expanded) */
+  .timeline-container .experience-item.is-expanded .experience-back {
+    display: flex;
+  }
+
+  /* ปรับ front เมื่อขยาย */
+  .timeline-container .experience-item.is-expanded .experience-front {
+    border-radius: 8px 8px 0 0;
+    border-bottom: none;
+  }
+
+  /* รูปภาพใน back สำหรับมือถือ */
+  .timeline-container .experience-item .experience-back img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+
+  /* เพิ่มเนื้อหารายละเอียดใน back */
+  .timeline-container .experience-item .experience-back .back-details {
+    flex: 1;
+  }
+
+  .timeline-container .experience-item .experience-back .back-details ul {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--text-color);
+  }
+
+  .timeline-container .experience-item .experience-back .back-details ul li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  /* Accordion toggle indicator */
+  .timeline-container .experience-item .experience-front::after {
+    content: '+';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+  }
+
+  .timeline-container .experience-item.is-expanded .experience-front::after {
+    content: '−';
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  /* เอฟเฟกต์การเปิด/ปิด */
+  .timeline-container .experience-item .experience-back {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .timeline-container .experience-item.is-expanded .experience-back {
+    max-height: 500px; /* ปรับตามความสูงที่ต้องการ */
+    padding: 20px;
   }
 
   /* --- Mobile Projects Grid: 2 Columns --- */
@@ -1350,6 +1498,34 @@ footer {
   .project-overlay span {
     font-size: 0.9rem;
     font-weight: 500;
+  }
+
+  /* --- Mobile Skills Grid: 5 Columns --- */
+  .skills-container {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  .skill-card {
+    padding: 12px 8px;
+    min-height: 80px;
+    gap: 8px;
+  }
+
+  .skill-icon {
+    font-size: 1.8rem;
+  }
+
+  .skill-card span {
+    font-size: 0.7rem;
+    font-weight: 400;
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  .themed-icon {
+    width: 28px;
+    height: 28px;
   }
 
   /* Hide tech stack icons in modal and project cards on mobile */
