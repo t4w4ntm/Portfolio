@@ -256,113 +256,61 @@ function initializeNavigation() {
 // ===================================================================
 // INTERACTIVE CARDS (Experience Section)
 // ===================================================================
-// เดสก์ท็อป: คลิก = พลิกทันที (toggle), โฮเวอร์ = เอียงตามเมาส์ (เฉพาะตอนยังไม่พลิก)
-// มือถือ: คลิก = ขยาย/ยุบ accordion
+// เดสก์ท็อป/มือถือ: คลิก = พลิกทันที (toggle), โฮเวอร์ = เอียงตามเมาส์ (เฉพาะตอนยังไม่พลิก)
 function initializeExperienceCards() {
   const items = document.querySelectorAll('.experience-item');
   if (!items.length) return;
 
   const supportsHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
   items.forEach(item => {
     const inner = item.querySelector('.experience-card-inner');
     if (!inner) return;
 
     let flipped = false;
-    let expanded = false;
 
-    if (isMobile) {
-      // === MOBILE: Accordion Behavior ===
-      const toggleAccordion = () => {
-        expanded = !expanded;
-        item.classList.toggle('is-expanded', expanded);
-        
-        // ปิด accordion อื่นๆ (เปิดได้ทีละอันเพื่อประหยัดพื้นที่)
-        items.forEach(otherItem => {
-          if (otherItem !== item && otherItem.classList.contains('is-expanded')) {
-            otherItem.classList.remove('is-expanded');
-          }
-        });
-      };
+    // === 3D Flip Behavior (ทั้งเดสก์ท็อปและมือถือ) ===
+    // ----- Tilt on hover (เฉพาะยังไม่พลิก) -----
+    const onMove = (e) => {
+      if (!supportsHover || flipped) return;
+      const rect = item.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;   // 0..1
+      const py = (e.clientY - rect.top) / rect.height;  // 0..1
+      const rY = (px - 0.5) * 20;   // ซ้าย(-) ขวา(+)
+      const rX = -(py - 0.5) * 12;  // บน(+) ล่าง(-)
+      inner.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg) translateZ(12px)`;
+    };
 
-      // Mobile: คลิกเพื่อขยาย/ยุบ
-      item.addEventListener('click', (e) => { 
-        e.preventDefault(); 
-        toggleAccordion(); 
-      });
-      
-      item.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { 
-          e.preventDefault(); 
-          toggleAccordion(); 
-        }
-      });
+    const onLeave = () => {
+      if (flipped) return;          // ขณะพลิก ปล่อยให้สไตล์ของการพลิกคุมอยู่
+      inner.style.transform = '';    // กลับสู่ค่าปกติ (ไม่ทับ CSS อื่น)
+    };
 
-    } else {
-      // === DESKTOP: 3D Flip Behavior ===
-      // ----- Tilt on hover (เฉพาะยังไม่พลิก) -----
-      const onMove = (e) => {
-        if (!supportsHover || flipped) return;
-        const rect = item.getBoundingClientRect();
-        const px = (e.clientX - rect.left) / rect.width;   // 0..1
-        const py = (e.clientY - rect.top) / rect.height;  // 0..1
-        const rY = (px - 0.5) * 20;   // ซ้าย(-) ขวา(+)
-        const rX = -(py - 0.5) * 12;  // บน(+) ล่าง(-)
-        inner.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg) translateZ(12px)`;
-      };
+    // ----- Flip toggle (คลิก/คีย์บอร์ด) -----
+    const toggleFlip = () => {
+      flipped = !flipped;
+      item.classList.toggle('is-flipped', flipped);
 
-      const onLeave = () => {
-        if (flipped) return;          // ขณะพลิก ปล่อยให้สไตล์ของการพลิกคุมอยู่
-        inner.style.transform = '';    // กลับสู่ค่าปกติ (ไม่ทับ CSS อื่น)
-      };
-
-      // ----- Flip toggle (คลิก/คีย์บอร์ด) -----
-      const toggleFlip = () => {
-        flipped = !flipped;
-        item.classList.toggle('is-flipped', flipped);
-
-        if (flipped) {
-          // บังคับให้ "หมุน 180°" ด้วย inline style เพื่อชนะ :hover/กฎอื่น -> พลิกทันที
-          inner.style.transform = 'rotateY(180deg)';
-        } else {
-          // เลิกพลิก → คืนสิทธิ์ให้เอียงตามเมาส์อีกครั้ง
-          inner.style.transform = '';
-        }
-      };
-
-      // Desktop: mouse / keyboard events
-      item.addEventListener('click', (e) => { e.preventDefault(); toggleFlip(); });
-      item.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFlip(); }
-      });
-
-      // tilt events (เฉพาะอุปกรณ์ที่มี hover จริง)
-      if (supportsHover) {
-        item.addEventListener('mousemove', onMove);
-        item.addEventListener('mouseleave', onLeave);
+      if (flipped) {
+        // บังคับให้ "หมุน 180°" ด้วย inline style เพื่อชนะ :hover/กฎอื่น -> พลิกทันที
+        inner.style.transform = 'rotateY(180deg)';
+      } else {
+        // เลิกพลิก → คืนสิทธิ์ให้เอียงตามเมาส์อีกครั้ง
+        inner.style.transform = '';
       }
+    };
+
+    // Mouse / keyboard events
+    item.addEventListener('click', (e) => { e.preventDefault(); toggleFlip(); });
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFlip(); }
+    });
+
+    // tilt events (เฉพาะอุปกรณ์ที่มี hover จริง)
+    if (supportsHover) {
+      item.addEventListener('mousemove', onMove);
+      item.addEventListener('mouseleave', onLeave);
     }
-  });
-
-  // Handle resize - switch behavior when screen size changes
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      // Re-initialize when screen size changes significantly
-      const newIsMobile = window.matchMedia('(max-width: 768px)').matches;
-      if (newIsMobile !== isMobile) {
-        // Clear all states and re-run initialization
-        items.forEach(item => {
-          item.classList.remove('is-flipped', 'is-expanded');
-          const inner = item.querySelector('.experience-card-inner');
-          if (inner) inner.style.transform = '';
-        });
-        // Re-initialize with new behavior
-        setTimeout(() => initializeExperienceCards(), 100);
-      }
-    }, 250);
   });
 }
 
@@ -641,22 +589,6 @@ function initializeScrollAnimations() {
   }, observerOptions);
 
   document.querySelectorAll('.content-section, .featured-project').forEach(el => observer.observe(el));
-
-  // Timeline-specific animation
-  const timelineContainer = document.querySelector('.timeline-container');
-  if (timelineContainer) {
-    const timelineObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          timelineContainer.classList.add('is-visible');
-          document.querySelectorAll('.experience-item').forEach((item, index) => {
-            setTimeout(() => item.classList.add('is-visible'), index * 200);
-          });
-        }
-      });
-    }, { threshold: 0.2 });
-    timelineObserver.observe(timelineContainer);
-  }
 }
 
 // ===================================================================
@@ -1767,3 +1699,75 @@ function initializeFloatingModel() {
   handleMobileVisibility();
   window.addEventListener('resize', handleMobileVisibility);
 }
+// ===== Experience: flip + tilt + keyboard =====
+function initializeExperienceCards() {
+  const items = document.querySelectorAll('.experience-item');
+
+  const supportsHover = matchMedia('(hover: hover)').matches;
+  const reduceMotion  = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  items.forEach((item) => {
+    const inner = item.querySelector('.experience-card-inner');
+
+    // ป้องกันคลิกลิงก์/ปุ่มภายในการ์ดแล้วการ์ดพลิก
+    item.addEventListener('click', (e) => {
+      const actionable = e.target.closest('a, button, input, textarea, select, label');
+      if (actionable) return;
+      inner.classList.toggle('is-flipped');
+    });
+
+    // กด Enter/Space เพื่อพลิก (focus อยู่ที่การ์ด)
+    item.addEventListener('keydown', (e) => {
+      const key = e.key || e.code;
+      if (key === 'Enter' || key === ' ') {
+        const actionable = e.target.closest('a, button, input, textarea, select, label');
+        if (actionable) return;
+        e.preventDefault();
+        inner.classList.toggle('is-flipped');
+      }
+    });
+
+    // Tilt effect (เฉพาะอุปกรณ์ที่มี hover และไม่ลด motion)
+    if (supportsHover && !reduceMotion) {
+      const setTilt = (rx, ry) => {
+        inner.style.setProperty('--rx', `${rx.toFixed(2)}deg`);
+        inner.style.setProperty('--ry', `${ry.toFixed(2)}deg`);
+      };
+
+      item.addEventListener('mousemove', (e) => {
+        const rect = item.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width;   // 0..1
+        const py = (e.clientY - rect.top)  / rect.height;  // 0..1
+        const max = 8; // องศาสูงสุด
+        const ry = (px - 0.5) * (max * 2);  // ซ้าย/ขวา
+        const rx = (0.5 - py) * (max * 2);  // บน/ล่าง
+        setTilt(rx, ry);
+      });
+
+      item.addEventListener('mouseleave', () => setTilt(0, 0));
+    }
+  });
+}
+
+// เรียกใช้งานเมื่อ DOM พร้อม
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeExperienceCards, { once: true });
+} else {
+  initializeExperienceCards();
+}
+
+// ===== Copy Citation to Clipboard + Toast =====
+(function(){
+  const toast = document.querySelector('#copy-toast');
+  function showToast(msg){
+    if(!toast) return;
+    toast.textContent = msg; toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1600);
+  }
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.copy-btn'); if(!btn) return;
+    const targetSel = btn.getAttribute('data-copy'); const node = document.querySelector(targetSel);
+    if (!node) return;
+    navigator.clipboard.writeText(node.textContent.trim()).then(() => showToast('Copied!'));
+  });
+})();
