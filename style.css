@@ -500,187 +500,172 @@ nav {
   object-fit: contain;
 }
 
-/* --- Experience Timeline --- */
-.experience-grid {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 60px 30px;
-  max-width: 1200px;
-  margin: 0 auto;
+/* --- Experience Horizontal Scroll --- */
+.experience-scroll-container {
+  overflow: hidden;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   padding: 40px 0;
-  perspective: 1500px;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  );
 }
 
-/* Timeline line (เส้น timeline กลางๆ) */
-.experience-grid::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 4px;
-  height: 100%;
-  background: var(--primary-color);
-  transform: translateX(-50%);
-  box-shadow: 0 0 10px var(--primary-color);
-  z-index: 1;
-}
-
-@media (max-width: 768px) {
-  .experience-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  
-  .experience-grid::before {
-    display: none;
-  }
-}
-
-.experience-item {
-  position: relative;
-  width: 100%;
-  height: 300px;
-  cursor: pointer;
-  opacity: 1;
-  transform-style: preserve-3d;
-  perspective: 1200px;
-  overflow: hidden;
-}
-
-/* Timeline dots และ arrows */
-.timeline-dot,
-.timeline-arrow {
-  position: absolute;
-  z-index: 2;
-}
-
-.timeline-dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: var(--background-color);
-  border: 4px solid var(--primary-color);
-  top: 20px;
-}
-
-.timeline-arrow {
-  height: 0;
-  width: 0;
-  top: 25px;
-  border: 10px solid transparent;
-}
-
-/* สำหรับการ์ดในคอลัมน์ซ้าย (รายการคี่) */
-.experience-item:nth-child(odd) .timeline-dot {
-  right: -40px;
-}
-
-.experience-item:nth-child(odd) .timeline-arrow {
-  right: -20px;
-  border-left-color: var(--primary-color);
-}
-
-/* สำหรับการ์ดในคอลัมน์ขวา (รายการคู่) */
-.experience-item:nth-child(even) .timeline-dot {
-  left: -40px;
-}
-
-.experience-item:nth-child(even) .timeline-arrow {
-  left: -20px;
-  border-right-color: var(--primary-color);
-}
-
-@media (max-width: 768px) {
-  .timeline-dot,
-  .timeline-arrow {
-    display: none;
-  }
-}
-
-.experience-card-inner {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transition: transform .8s;
-  transform-style: preserve-3d;
-  will-change: transform;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.experience-item:hover .experience-card-inner:not(.locked-tilt) {
-  transform: translateZ(12px);
-}
-
-.experience-item.is-flipped .experience-card-inner {
-  transform: rotateY(180deg);
-}
-
-.experience-front,
-.experience-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  padding: 20px 30px;
-  background: var(--card-bg-color);
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-.experience-front {
-  z-index: 2;
-  transform: rotateY(0deg);
-}
-
-.experience-back {
-  transform: rotateY(180deg);
+.experience-scroll-track {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  z-index: 1;
-  background: var(--card-bg-color);
+  gap: 30px;
+  animation: scroll-right 50s linear infinite;
+  width: fit-content;
+  padding-left: 0;
 }
 
-.experience-back img {
+/* Pause animation on hover */
+.experience-scroll-container:hover .experience-scroll-track {
+  animation-play-state: paused;
+}
+
+.experience-card {
+  flex: 0 0 300px;
+  height: 450px;
+  background: var(--card-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.experience-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(128, 90, 213, 0.2);
+}
+
+.experience-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.experience-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
-  display: block;
+  transition: transform 0.3s ease;
 }
 
-/* ซ่อน back-details (ไม่จำเป็นแล้วเพราะลบออกจาก HTML แล้ว) */
+.experience-card:hover .experience-image img {
+  transform: scale(1.05);
+}
 
-.experience-item h3 {
+.experience-content {
+  padding: 20px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.experience-content .exp-role {
   color: var(--text-color);
-  text-shadow: none;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
+  font-weight: 600;
   margin-bottom: 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.3;
 }
 
-.experience-item .date {
+.experience-content .exp-org {
   color: var(--primary-color);
-  margin-bottom: 15px;
+  font-size: 1.1rem;
   font-weight: 500;
-}
-
-.experience-item ul {
-  padding-left: 20px;
-  list-style: disc;
-}
-
-.experience-item ul li {
   margin-bottom: 6px;
+}
+
+.experience-content .exp-date {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  opacity: 0.8;
+}
+
+.experience-content .exp-points {
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.experience-content .exp-points li {
+  position: relative;
+  padding-left: 15px;
+  margin-bottom: 8px;
   line-height: 1.4;
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+
+.experience-content .exp-points li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* Scroll Animation */
+@keyframes scroll-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .experience-card {
+    flex: 0 0 280px;
+    height: 420px;
+  }
+  
+  .experience-content {
+    padding: 15px;
+    height: 220px;
+  }
+  
+  .experience-content .exp-role {
+    font-size: 1.2rem;
+  }
+  
+  .experience-scroll-track {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .experience-card {
+    flex: 0 0 260px;
+    height: 400px;
+  }
+  
+  .experience-image {
+    height: 180px;
+  }
+  
+  .experience-content {
+    height: 220px;
+  }
 }
 
 /* --- Projects --- */
@@ -1354,16 +1339,6 @@ footer {
     display: none;
   }
 
-  /* --- Mobile Experience Grid --- */
-  .experience-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .experience-item {
-    height: 250px;
-  }
-
   /* --- Mobile Projects Grid: 2 Columns --- */
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1974,87 +1949,8 @@ img[loading="lazy"] { contain-intrinsic-size: 300px 169px; }
 
 @media (min-width: 769px) {
   /* odd -> left column; even -> right column */
-  .experience-item:nth-child(odd) {
-    grid-column: 1;
-    justify-self: end;
-  }
-  .experience-item:nth-child(even) {
-    grid-column: 2;
-    justify-self: start;
-  }
 }
-/* ===== Experience (layout + timeline) ===== */
-.experience-section { padding: 64px 0; }
-.experience-section .section-title { margin-bottom: 24px; }
-
-.experience-grid {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px 40px;
-  margin-top: 24px;
-}
-
-/* เส้นไทม์ไลน์กลาง */
-.experience-grid::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 0; bottom: 0;
-  width: 2px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    var(--border-color, rgba(127,127,127,.3)) 10%,
-    var(--border-color, rgba(127,127,127,.3)) 90%,
-    transparent 100%
-  );
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
-/* วางฝั่งซ้าย/ขวา */
-.experience-item { position: relative; outline: none; }
-.experience-item:nth-child(odd) { grid-column: 1; }
-.experience-item:nth-child(even){ grid-column: 2; }
-
-/* dot + arrow */
-.timeline-dot {
-  position: absolute;
-  top: 16px;
-  width: 12px; height: 12px; border-radius: 999px;
-  background: var(--primary, #ff8a00);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary, #ff8a00) 20%, transparent);
-}
-.experience-item:nth-child(odd)  .timeline-dot { right: -22px; }
-.experience-item:nth-child(even) .timeline-dot { left:  -22px; }
-
-.timeline-arrow {
-  position: absolute;
-  top: 18px;
-  width: 0; height: 0; border: 6px solid transparent;
-}
-.experience-item:nth-child(odd)  .timeline-arrow { right: -2px; border-left-color: var(--card-border, rgba(255,255,255,.08)); }
-.experience-item:nth-child(even) .timeline-arrow { left:  -2px; border-right-color: var(--card-border, rgba(255,255,255,.08)); }
-
-/* ===== Flip card ===== */
-.experience-card-inner{
-  --rx: 0deg; --ry: 0deg; --flip: 0deg;
-  position: relative;
-  width: 100%;
-  border-radius: 16px;
-  background: var(--card-bg, rgba(255,255,255,.03));
-  border: 1px solid var(--card-border, rgba(255,255,255,.08));
-  box-shadow: 0 4px 20px rgba(0,0,0,.2);
-  transform-style: preserve-3d;
-  transform: perspective(1200px) rotateX(var(--rx)) rotateY(calc(var(--ry) + var(--flip)));
-  transition: transform .6s cubic-bezier(.2,.6,.2,1), box-shadow .3s;
-  will-change: transform;
-}
-.experience-card-inner:hover{
-  box-shadow: 0 8px 28px rgba(0,0,0,.28);
-}
-.experience-card-inner.is-flipped{ --flip: 180deg; }
+/* ===== Projects section follows ===== */
 
 .experience-front,
 .experience-back{
