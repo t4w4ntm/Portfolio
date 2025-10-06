@@ -179,7 +179,7 @@
             <ul class="exp-points">
               <li>ดูแลบูธ แนะนำหลักสูตรและผลงานนักศึกษา</li>
               <li>เดโม่ระบบ VR/เกม ให้ทดลองใช้งาน</li>
-              <li>ประสานงานกับทีมให้กิจกรรมดำเนินราบรื่น</li>
+
             </ul>
           </div>
         </div>
@@ -246,7 +246,6 @@
             <ul class="exp-points">
               <li>ดูแลบูธ แนะนำหลักสูตรและผลงานนักศึกษา</li>
               <li>เดโม่ระบบ VR/เกม ให้ทดลองใช้งาน</li>
-              <li>ประสานงานกับทีมให้กิจกรรมดำเนินราบรื่น</li>
             </ul>
           </div>
         </div>
@@ -413,15 +412,14 @@
       <div class="projects-grid">
         <!-- RawCoin — Web Game -->
         <div class="project-card" data-cats="web,game" data-title="RawCoin — Web Game" data-description='
-       <p><strong>RawCoin</strong> คือเว็บเกมแนว Casual บนเบราว์เซอร์ ที่ผู้เล่นควบคุมตัวละครเพื่อเก็บเหรียญในเวลาที่จำกัดผ่านระบบ</p>
+       <p><strong>RawCoin</strong> คือเว็บเกมแนว Casual ที่ผู้เล่นควบคุมตัวละครเพื่อเก็บเหรียญในเวลาที่จำกัด</p>
        <ul style="margin:8px 0 0 18px; line-height:1.6;">
-         <li>มีระบบ <strong>สมัคร-เข้าสู่ระบบ</strong> (via email/password) และบันทึกคะแนนตามผู้ใช้อย่างแม่นยำ</li>
-         <li>แสดง <strong>Leaderboard แบบเรียลไทม์</strong> ให้ผู้เล่นแข่งขันเพื่ออันดับสูงสุด</li>
-         <li>เกมเล่นง่าย : ใช้ปุ่มลูกศรหรือ WASD บังคับตัวละครเพื่อเก็บเหรียญก่อนหมดเวลา</li>
-         <li>ระบบคะแนนที่ทำด้วย <strong>Backend (Node.js + Express)</strong> รับ–ส่ง API ตามมาตรฐาน REST</li>
-         <li>เก็บข้อมูลผู้ใช้และคะแนนด้วย <strong>SQL Database</strong>  (MySQL)</li>
-         <li>Frontend ใช้ <strong>HTML5, CSS3, JavaScript (frameworks เบาๆ)</strong> เพื่อ UI/UX ที่ลื่นไหลและตอบสนองเร็ว</li>
-         <li>ออกแบบกราฟิกเรียบง่ายแต่น่ารัก ใช้ CSS animation พร้อมไอคอนและธีมสีสว่าง</li>
+         <li>ระบบสมัครสมาชิกและเข้าสู่ระบบ</li>
+         <li>บันทึกคะแนนและแสดง Leaderboard แบบเรียลไทม์</li>
+         <li>ควบคุมตัวละครด้วยคีย์บอร์ด (ลูกศร/WASD)</li>
+         <li>ระบบคะแนนและการแข่งขัน</li>
+         <li>UI/UX ที่ตอบสนองเร็วและใช้งานง่าย</li>
+         <li>ออกแบบกราฟิกที่น่ารักและ Animation ที่ลื่นไหล</li>
        </ul>
        
        <div class="tech-icons" aria-label="Tech stack">
@@ -446,14 +444,16 @@
         </div>
 
         <!-- TictacToe — Concert Ticketing -->
-        <div class="project-card" data-cats="web" data-title="TictTacToe — Concert Ticketing (Node.js + MySQL)"
+        <div class="project-card" data-cats="web" data-title="TictTacToe — Concert Ticketing"
           data-description='
-      <p>เว็บจอง–ซื้อ–ขายบัตรคอนเสิร์ตแบบครบวงจร มีหน้าอีเว้นต์, รายละเอียดคอนเสิร์ต, ลงประกาศขายบัตร (secondary), สมัคร/ล็อกอิน และโปรไฟล์ผู้ใช้</p>
-      <p>Front-end (HTML, CSS, JavaScript) + Back-end <em>Node.js (Express)</em> ทำ REST API เชื่อมต่อฐานข้อมูล 
-        <em>MySQL</em> ใช้ <em>Session/Bcrypt</em> สำหรับยืนยันตัวตน, <em>Multer</em> อัปโหลดโปสเตอร์, แยกเลเยอร์แบบ MVC/Service</p>
+      <p>เว็บจองและซื้อขายบัตรคอนเสิร์ตแบบครบวงจร</p>
       <ul style="margin:8px 0 0 18px; line-height:1.6;">
-        <li><strong>ฟีเจอร์หลัก</strong>: สไลด์โปรโมตอีเว้นต์ • ค้นหา/กรอง • หน้ารายละเอียดคอนเสิร์ต • สั่งซื้อ/จอง • ลงประกาศขายบัตรมือสอง • ประวัติการซื้อขาย • โปรไฟล์ผู้ใช้</li>
-        <li><strong>REST Endpoints</strong>: /api/auth (register, login, logout) • /api/events (list, detail, create* admin) • /api/tickets (sell, list) • /api/orders (create, status)</li>
+        <li>สไลด์โปรโมตอีเว้นต์และค้นหาคอนเสิร์ต</li>
+        <li>ระบบจองและซื้อบัตรออนไลน์</li>
+        <li>ตลาดซื้อขายบัตรคอนเสิร์ต</li>
+        <li>ระบบสมาชิกและโปรไฟล์ผู้ใช้</li>
+        <li>ประวัติการซื้อขายและการจัดการบัตร</li>
+        <li>ระบบอัปโหลดโปสเตอร์และรูปภาพของ admin</li>
       </ul>
       
       <div class="tech-icons" aria-label="Tech stack" style="display:flex;gap:10px;flex-wrap:wrap;">
@@ -463,8 +463,8 @@
         <i class="fa-brands fa-node" title="Node.js"></i>
         <i class="fa-solid fa-server" title="Express"></i>
         <i class="fa-solid fa-database" title="MySQL"></i>
-        <i class="fa-solid fa-lock" title="Auth (Session/Bcrypt)"></i>
-        <i class="fa-solid fa-image" title="Multer Upload"></i>
+        <i class="fa-solid fa-lock" title="Authentication"></i>
+        <i class="fa-solid fa-image" title="File Upload"></i>
       </div>' data-gallery="img/con (1).png,img/con (2).png,img/con (3).png,img/con (4).png,img/con (5).png,img/con (6).png,
      img/con (7).png,img/con (8).png,img/con (9).png,img/con (10).png">
           <img src="img/conlogo.png" alt="Tictactive — Concert Ticketing screenshots" loading="lazy" decoding="async"
@@ -478,28 +478,29 @@
             <i class="fa-brands fa-node" title="Node.js"></i>
             <i class="fa-solid fa-server" title="Express"></i>
             <i class="fa-solid fa-database" title="MySQL"></i>
-            <i class="fa-solid fa-lock" title="Session/Bcrypt"></i>
-            <i class="fa-solid fa-image" title="Multer"></i>
+            <i class="fa-solid fa-lock" title="Authentication"></i>
+            <i class="fa-solid fa-image" title="File Upload"></i>
           </div>
         </div>
 
         <!-- Money — Realtime Expense Tracker (อัปเดต: มีผู้ช่วยการเงิน AI) -->
         <div class="project-card" data-cats="web,ai" data-title="Money — Realtime Tracker" data-description='
-  <p><strong>Money</strong> คือเว็บแอปบันทึกรายรับ–รายจ่ายอัตโนมัติ: ข้อมูลเงินเข้า-ออก แล้วแปลงข้อความเป็นข้อมูลโอนเข้า/จ่ายออก บันทึกลง <strong>Google Sheets</strong> ทันที และหน้าเว็บอัปเดตสดแบบเรียลไทม์</p>
+  <p><strong>Money</strong> คือเว็บแอปบันทึกรายรับ–รายจ่ายแบบเรียลไทม์</p>
   <ul style="margin:8px 0 0 18px; line-height:1.6;">
-    <li>ดึงข้อมูลผ่าน <strong>Apps Script Web App (REST/JSON)</strong> แสดงผลแบบสดเมื่อมีรายการใหม่</li>
-    <li>ฟิลเตอร์ช่วงวันที่ / ค้นหาชื่อหรือหมวด / ปรับแก้-ลบรายการได้จากตาราง</li>
-    <li>สรุปรายวัน-รายเดือน, งบประมาณรายหมวด พร้อมแจ้งเตือนใช้เกินงบ</li>
-    <li>แดชบอร์ดกราฟ <strong>Bar + Donut</strong> อัปเดตทันที ดูภาพรวมรายจ่ายตามหมวดได้ชัดเจน</li>
+    <li>บันทึกและแสดงผลข้อมูลการเงินแบบเรียลไทม์</li>
+    <li>ฟิลเตอร์ค้นหาและจัดการรายการ</li>
+    <li>สรุปรายวัน-รายเดือน และงบประมาณตามหมวด</li>
+    <li>แดชบอร์ดกราฟแสดงภาพรวมการใช้จ่าย</li>
+    <li>ระบบแจ้งเตือนเมื่อใช้จ่ายเกินงบ</li>
   </ul>
 
   <p style="margin:12px 0 4px;"><strong>AI ผู้ช่วยการเงิน</strong></p>
   <ul style="margin:8px 0 0 18px; line-height:1.6;">
     <li><strong>ถาม–ตอบแบบแชท</strong> เฉพาะข้อมูลการเงินในเว็บ เช่น “เดือนนี้เหลือเท่าไหร่”, “หมวดไหนใช้เกินงบ”, “แนวโน้มสัปดาห์นี้เป็นอย่างไร”</li>
-    <li><strong>คำแนะนำเชิงรุก</strong> สรุปหมวดใช้จ่ายสูงผิดปกติ, เสนอปรับงบ/ตั้งเป้าการออม, เตือนเมื่อใกล้เกินงบ</li>
+    <li>วิเคราะห์และให้คำแนะนำการใช้จ่าย</li>
     <li><strong>ทำงานกับข้อมูลจริง</strong> ดึงข้อมูลจากตาราง/สรุปในระบบ แล้วสรุปผลเป็นภาษาคน (รองรับสั่งงานด้วยปุ่มฟังก์ชัน เช่น “ดูงบหมวดอาหาร”)</li>
-    <li><strong>ความเป็นส่วนตัว</strong> จำกัดขอบเขตการตอบ (เฉพาะการเงินของผู้ใช้), ไม่ส่งข้อมูลส่วนตัวออกนอกระบบโดยไม่จำเป็น, มีปุ่มลบประวัติแชท</li>
-    <li><strong>เทคนิค</strong> LLM API + ฟังก์ชันเรียกคิวรี (function calling) ไปยังข้อมูลจริง, สตรีมคำตอบ, ใส่ guardrails / rate-limit</li>
+    <li>เสนอแนะการจัดการงบประมาณ</li>
+    <li>รักษาความเป็นส่วนตัวของข้อมูล</li>
   </ul>
 
   
@@ -507,12 +508,12 @@
     <i class="fa-brands fa-html5" title="HTML5"></i>
     <i class="fa-brands fa-css3-alt" title="CSS3"></i>
     <i class="fa-brands fa-js" title="JavaScript"></i>
-    <i class="fa-solid fa-cloud" title="Google Apps Script Web App"></i>
-    <i class="fa-solid fa-file-excel" title="Google Sheets"></i>
+    <i class="fa-solid fa-cloud" title="Cloud Backend"></i>
+    <i class="fa-solid fa-file-excel" title="Data Storage"></i>
     <i class="fa-solid fa-chart-pie" title="Chart.js"></i>
     <i class="fa-solid fa-robot" title="AI Chat Assistant"></i>
-    <i class="fa-solid fa-brain" title="LLM / Function Calling"></i>
-    <i class="fa-solid fa-shield-halved" title="Privacy & Guardrails"></i>
+    <i class="fa-solid fa-brain" title="AI Integration"></i>
+    <i class="fa-solid fa-shield-halved" title="Privacy"></i>
   </div>' data-gallery="img/mon1.png,img/mon2.png,img/mon3.png,img/mon4.png">
           <img src="img/mon.png" alt="Money — Realtime Tracker" loading="lazy" decoding="async"
             fetchpriority="low" />
@@ -535,24 +536,24 @@
         <!-- CoffeeFarm -->
         <div class="project-card" data-cats="web" data-title="CoffeeFarm — ระบบบันทึกข้อมูลเกษตรกรกาแฟ (เชียงราย)"
           data-description='
-       <p><strong>CoffeeFarm</strong> คือเว็บสำหรับเกษตรกรผู้ปลูกกาแฟในจังหวัดเชียงราย ใช้กรอก/แก้ไขข้อมูลส่วนบุคคลและข้อมูลแปลง ปักหมุดพิกัด GPS อัปโหลดรูปแปลง–ผลผลิต และเรียกดูประวัติย้อนหลังได้สะดวก</p>
+       <p><strong>CoffeeFarm</strong> คือเว็บระบบบันทึกข้อมูลสำหรับเกษตรกรผู้ปลูกกาแฟในจังหวัดเชียงราย</p>
        <ul style="margin:8px 0 0 18px; line-height:1.6;">
-         <li>แบบฟอร์มแบ่งโซนชัดเจน: ข้อมูลเกษตรกร, แปลง/ดอย, พิกัด GPS, ภาพถ่ายประกอบ</li>
-         <li>เลือกพิกัดจากแผนที่ (Google Maps) หรือใช้ตำแหน่งปัจจุบัน แล้วบันทึกลงข้อมูลแปลง</li>
-         <li>อัปโหลดรูปไปที่ <strong>Cloudinary</strong> (แสดงตัวอย่าง, ปรับขนาด/แปลงฟอร์แมตอัตโนมัติ)</li>
-         <li>เก็บข้อมูลโครงสร้างใน <strong>Firebase</strong> (Firestore/Realtime) อัปเดตผลแบบเรียลไทม์</li>
-         <li>ค้นหาและกรองรายการย้อนหลังได้ (ตามแปลง/ดอย/วันที่) พร้อมหน้า Detail สำหรับแก้ไข</li>
-         <li>ปุ่มยืนยันก่อนบันทึกการแก้ไข และ <strong>Export CSV</strong> เพื่อนำข้อมูลไปใช้ต่อ</li>
+         <li>แบบฟอร์มบันทึกข้อมูลเกษตรกรและแปลงกาแฟ</li>
+         <li>ระบบแผนที่สำหรับเลือกพิกัดแปลง</li>
+         <li>อัปโหลดและจัดการรูปภาพแปลงและผลผลิต</li>
+         <li>ระบบฐานข้อมูลแบบเรียลไทม์</li>
+         <li>ค้นหาและกรองข้อมูลย้อนหลัง</li>
+         <li>Export ข้อมูลเป็นไฟล์ CSV</li>
        </ul>
        
        <div class="tech-icons" aria-label="Tech stack">
          <i class="fa-brands fa-html5" title="HTML5"></i>
          <i class="fa-brands fa-css3-alt" title="CSS3"></i>
          <i class="fa-brands fa-js" title="JavaScript"></i>
-         <i class="fa-solid fa-fire" title="Firebase"></i>
-         <i class="fa-solid fa-cloud" title="Cloudinary"></i>
-         <i class="fa-solid fa-map-location-dot" title="Google Maps JS API"></i>
-         <i class="fa-solid fa-database" title="Firestore / Realtime DB"></i>
+         <i class="fa-solid fa-fire" title="NoSQL Database"></i>
+         <i class="fa-solid fa-cloud" title="Cloud Storage"></i>
+         <i class="fa-solid fa-map-location-dot" title="Maps API"></i>
+         <i class="fa-solid fa-database" title="Realtime Database"></i>
          <i class="fa-solid fa-file-csv" title="CSV Export"></i>
        </div>'
           data-gallery="img/dirtweb (1).png,img/dirtweb (2).png,img/dirtweb (3).png,img/dirtweb (4).png,img/dirtweb (5).png">
@@ -564,11 +565,50 @@
             <i class="fa-brands fa-html5" title="HTML5"></i>
             <i class="fa-brands fa-css3-alt" title="CSS3"></i>
             <i class="fa-brands fa-js" title="JavaScript"></i>
-            <i class="fa-solid fa-fire" title="Firebase"></i>
-            <i class="fa-solid fa-cloud" title="Cloudinary"></i>
-            <i class="fa-solid fa-map-location-dot" title="Google Maps"></i>
-            <i class="fa-solid fa-database" title="Firestore/Realtime"></i>
+            <i class="fa-solid fa-fire" title="NoSQL DB"></i>
+            <i class="fa-solid fa-cloud" title="Cloud Storage"></i>
+            <i class="fa-solid fa-map-location-dot" title="Maps API"></i>
+            <i class="fa-solid fa-database" title="Realtime DB"></i>
             <i class="fa-solid fa-file-csv" title="CSV"></i>
+          </div>
+        </div>
+
+        <!-- Smart Farm IoT Dashboard -->
+        <div class="project-card" data-cats="web,hardware" data-title="Smart Farm — IoT Dashboard" data-description='
+       <p><strong>Smart Farm</strong> คือระบบ IoT สำหรับฟาร์มอัจฉริยะ มีเซนเซอร์วัดสภาพแวดล้อมและเว็บแดชบอร์ดแสดงข้อมูลแบบเรียลไทม์</p>
+       <ul style="margin:8px 0 0 18px; line-height:1.6;">
+         <li>เซนเซอร์วัดค่า N-P-K, pH, EC, ความชื้น และอุณหภูมิ</li>
+         <li>ระบบ AI Advisor ให้คำแนะนำการดูแลพืช</li>
+         <li>แดชบอร์ดแสดงค่า KPIs และกราฟแบบเรียลไทม์</li>
+         <li>ระบบแจ้งเตือนเมื่อค่าผิดปกติ</li>
+         <li>เก็บประวัติข้อมูลและส่งออกรายงาน</li>
+         <li>รองรับหลายโหนด (Multi-node) และพลังงานแสงอาทิตย์</li>
+       </ul>
+       
+       <div class="tech-icons" aria-label="Tech stack">
+         <i class="fa-brands fa-html5" title="HTML5"></i>
+         <i class="fa-brands fa-css3-alt" title="CSS3"></i>
+         <i class="fa-brands fa-js" title="JavaScript"></i>
+         <i class="fa-solid fa-microchip" title="ESP32/Arduino"></i>
+         <i class="fa-solid fa-wifi" title="WiFi/LoRa"></i>
+         <i class="fa-solid fa-chart-line" title="Real-time Charts"></i>
+         <i class="fa-solid fa-database" title="Time Series DB"></i>
+         <i class="fa-solid fa-robot" title="AI Advisor"></i>
+         <i class="fa-solid fa-solar-panel" title="Solar Power"></i>
+       </div>' data-gallery="img/smfarm (1).png,img/smfarm (2).png,img/smfarm (3).png">
+          <img src="img/smfarm (1).png" alt="Smart Farm IoT Dashboard" loading="lazy" decoding="async" fetchpriority="low" />
+          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
+          <div class="project-title">Smart Farm — IoT Dashboard</div>
+          <div class="project-tech-inline" aria-label="Tech stack">
+            <i class="fa-brands fa-html5" title="HTML5"></i>
+            <i class="fa-brands fa-css3-alt" title="CSS3"></i>
+            <i class="fa-brands fa-js" title="JavaScript"></i>
+            <i class="fa-solid fa-microchip" title="ESP32"></i>
+            <i class="fa-solid fa-wifi" title="WiFi/LoRa"></i>
+            <i class="fa-solid fa-chart-line" title="Charts"></i>
+            <i class="fa-solid fa-database" title="Database"></i>
+            <i class="fa-solid fa-robot" title="AI"></i>
+            <i class="fa-solid fa-solar-panel" title="Solar"></i>
           </div>
         </div>
 
@@ -622,7 +662,7 @@
         </div>
 
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
-          <a href="pdf/processing_jump_dodge.pdf" target="_blank" class="btn btn-primary" rel="noopener">Dev Notes (PDF)</a>
+          
         </div>' data-clip="clip/progame.mp4">
           <img src="img/progame.png" alt="Jump &amp; Dodge — Processing Game (กระโดดหลบสิ่งกีดขวาง)" loading="lazy"
             decoding="async" fetchpriority="low" />
@@ -702,21 +742,23 @@
         </div>
 
         <!-- Cataract Screening Robot -->
-        <div class="project-card" data-cats="ai,hardware" data-title="Cataract Screening Robot — LeNet-CNN"
+        <div class="project-card" data-cats="ai,hardware" data-title="Cataract Screening Robot — AI Vision"
           data-description='
       <p> หุ่นยนต์ต้นแบบสำหรับคัดกรองโรคต้อกระจก รับภาพดวงตาจากผู้ใช้ แล้วให้โปรแกรมจำแนกว่า “ปกติ” หรือ “ต้อกระจก” แบบอัตโนมัติ</p>
-      <p> Image Processing (เลือก/ปรับ ROI ดวงตา) + โมเดล <em>LeNet-CNN</em> เปรียบเทียบกับ <em>SVM</em> (จูนพารามิเตอร์ด้วย GridSearchCV) รันบน <em>Python + OpenCV</em> และแสดงผลผ่าน GUI (Tkinter)</p>
+
       <ul style="margin:8px 0 0 18px; line-height:1.6;">
-        <li>Pipeline: กล้อง → Preprocess/ROI → LeNet-CNN หรือ SVM → แสดงผล</li>
-        <li>ฮาร์ดแวร์: ชุดหุ่นยนต์/โครงยึดเพื่อจัดระยะและรับภาพดวงตาให้คงที่</li>
+        <li>ถ่ายภาพดวงตาและวิเคราะห์อัตโนมัติ</li>
+        <li>จำแนกระหว่างดวงตาปกติและต้อกระจก</li>
+        <li>อินเตอร์เฟซที่ใช้งานง่าย</li>
+        <li>ระบบฮาร์ดแวร์สำหรับจัดตำแหน่ง</li>
       </ul>
       
       <div class="tech-icons" aria-label="Tech stack" style="display:flex;gap:10px;flex-wrap:wrap;">
         <i class="fa-brands fa-python" title="Python"></i>
         <i class="fa-solid fa-eye" title="OpenCV"></i>
-        <i class="fa-solid fa-brain" title="LeNet-CNN"></i>
-        <i class="fa-solid fa-diagram-project" title="SVM / GridSearchCV"></i>
-        <i class="fa-regular fa-window-maximize" title="Tkinter GUI"></i>
+        <i class="fa-solid fa-brain" title="AI Vision"></i>
+        <i class="fa-solid fa-diagram-project" title="Machine Learning"></i>
+        <i class="fa-regular fa-window-maximize" title="GUI"></i>
       </div>' data-image="img/tokajok3.jpg">
           <img src="img/tokajok3.jpg" alt="Cataract screening robot demo" loading="lazy" decoding="async"
             fetchpriority="low" />
@@ -725,31 +767,31 @@
           <div class="project-tech-inline" aria-label="Tech stack">
             <i class="fa-brands fa-python" title="Python"></i>
             <i class="fa-solid fa-eye" title="OpenCV"></i>
-            <i class="fa-solid fa-brain" title="LeNet-CNN"></i>
-            <i class="fa-solid fa-diagram-project" title="SVM"></i>
-            <i class="fa-regular fa-window-maximize" title="Tkinter"></i>
+            <i class="fa-solid fa-brain" title="AI Vision"></i>
+            <i class="fa-solid fa-diagram-project" title="Machine Learning"></i>
+            <i class="fa-regular fa-window-maximize" title="GUI"></i>
           </div>
         </div>
 
         <!-- AI Image Colorizer (GAN) -->
         <div class="project-card" data-cats="ai" data-title="AI Image Colorizer (GAN)" data-description='
-       <p><strong>AI Image Colorizer</strong> ระบบเติมสีอัตโนมัติให้ภาพขาว-ดำด้วย Deep Learning (Pix2Pix GAN). โมเดลรับช่อง <em>L</em> (ความสว่าง) แล้วสร้างช่อง <em>a,b</em> เพื่อคืนภาพสีในปริภูมิ LAB เหมาะกับการฟื้นฟูภาพเก่าและงานกราฟิก</p>
+       <p><strong>AI Image Colorizer</strong> ระบบเติมสีอัตโนมัติให้ภาพขาว-ดำด้วย AI</p>
        <ul style="margin:8px 0 0 18px;line-height:1.6">
-         <li>Generator: U-Net (ResNet18 backbone)</li>
-         <li>Discriminator: PatchGAN</li>
-         <li>Workflow: RGB ⇄ LAB, สร้าง ab จาก L แล้วย้อนกลับเป็นสี</li>
-         <li>แนวทางต่อยอด: เพิ่มชุดข้อมูล/epochs, ใส่ Perceptual Loss, รองรับ user hints</li>
+         <li>เติมสีภาพขาว-ดำให้เป็นสีอัตโนมัติ</li>
+         <li>รองรับภาพความละเอียดสูง</li>
+         <li>ผลลัพธ์ที่สมจริงและสวยงาม</li>
+         <li>เหมาะสำหรับการฟื้นฟูภาพเก่า</li>
        </ul>
-       <p style="margin:12px 0 4px"><strong>Tech Stack</strong></p>
+    
        <div class="tech-icons" aria-label="Tech stack">
          <i class="fa-brands fa-python" title="Python"></i>
-         <i class="fa-solid fa-fire"    title="PyTorch"></i>
-         <i class="fa-solid fa-bolt"    title="fastai"></i>
-         <i class="fa-solid fa-diagram-project" title="GAN / Pix2Pix"></i>
-         <i class="fa-solid fa-network-wired"   title="U-Net"></i>
+         <i class="fa-solid fa-fire"    title="Deep Learning Framework"></i>
+         <i class="fa-solid fa-bolt"    title="AI Library"></i>
+         <i class="fa-solid fa-diagram-project" title="Generative AI"></i>
+         <i class="fa-solid fa-network-wired"   title="Neural Network"></i>
        </div>
        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
-         <a href="pdf/project_color.pdf" target="_blank" class="btn btn-primary" rel="noopener">View PDF</a>
+         
        </div>' data-image="img/colorz.png">
           <img src="img/colorz.png" alt="AI Image Colorizer (GAN)" loading="lazy" decoding="async"
             fetchpriority="low" />
@@ -757,23 +799,23 @@
           <div class="project-title">AI Image Colorizer (GAN)</div>
           <div class="project-tech-inline" aria-label="Tech stack">
             <i class="fa-brands fa-python" title="Python"></i>
-            <i class="fa-solid fa-fire" title="PyTorch"></i>
-            <i class="fa-solid fa-bolt" title="fastai"></i>
-            <i class="fa-solid fa-diagram-project" title="GAN/Pix2Pix"></i>
-            <i class="fa-solid fa-network-wired" title="U-Net"></i>
+            <i class="fa-solid fa-fire" title="Deep Learning"></i>
+            <i class="fa-solid fa-bolt" title="AI Library"></i>
+            <i class="fa-solid fa-diagram-project" title="Generative AI"></i>
+            <i class="fa-solid fa-network-wired" title="Neural Network"></i>
           </div>
         </div>
 
         <!-- AI & Prompt Racing -->
-        <div class="project-card" data-cats="ai,game" data-title="AI & Prompt Racing — Autonomous Car Control System"
+        <div class="project-card" data-cats="ai,game" data-title="AI & Prompt Racing — Autonomous Car Control"
           data-description='
-       <p><strong>AI & Prompt Racing</strong> ระบบควบคุมรถยนต์จำลองด้วย <strong>Regression Model (ResNet18)</strong> และ <strong>Prompt Engineering</strong> สำหรับขับตามเส้นกลางถนนในสนาม Unity</p>
+       <p><strong>AI & Prompt Racing</strong> ระบบควบคุมรถยนต์อัตโนมัติในสนาม Unity</p>
        <ul style="margin:8px 0 0 18px; line-height:1.6;">
-         <li>เทรนโมเดล ResNet18 แบบ Fine-tune สำหรับงาน Regression (x,y)</li>
-         <li>ใช้ Data Augmentation: Flip, Color Jitter, Rotation</li>
-         <li>เพิ่ม Logic ความมั่นใจ (Confidence) และการเคลื่อนที่ขณะเลี้ยว</li>
-         <li>ทดสอบใน Unity Car Racing Simulation</li>
-         <li>ผสานการช่วยพัฒนาโดย Generative AI (Gemini)</li>
+         <li>AI สำหรับการควบคุมรถยนต์อัตโนมัติ</li>
+         <li>ขับตามเส้นกลางถนนได้อย่างแม่นยำ</li>
+         <li>ระบบตัดสินใจอัจฉริยะ</li>
+         <li>ทดสอบในสภาพแวดล้อม Unity</li>
+         <li>พัฒนาด้วยความช่วยเหลือของ AI</li>
        </ul>
        
        <div class="tech-icons" aria-label="Tech stack" style="display:flex;gap:10px;flex-wrap:wrap;">
@@ -784,7 +826,7 @@
          <i class="fa-solid fa-code" title="Prompt Engineering"></i>
        </div>
        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
-         <a href="pdf/car.pdf" target="_blank" class="btn btn-primary" rel="noopener">View PDF</a>
+         
        </div>' data-clip="clip/31sec.mp4">
           <img src="img/car.png" alt="AI & Prompt Racing" loading="lazy" decoding="async" fetchpriority="low" />
           <div class="project-overlay"><span>ดูรายละเอียด</span></div>
@@ -1001,7 +1043,7 @@
        aria-label="ลากไฟล์มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์">
     <figure>
       <img id="color-input-preview" alt="ภาพต้นฉบับ (ขาวดำ)"/>
-      <figcaption>ภาพต้นฉบับ</figcaption>
+      <figcaption>ภาพต้นฉบับ (ขาว-ดำ)</figcaption>
     </figure>
 
     <!-- ฮินต์วางไฟล์ (จะแอบอัตโนมัติเมื่อมีภาพ) -->

@@ -530,11 +530,6 @@ nav {
   padding-left: 0;
 }
 
-/* Pause animation on hover */
-.experience-scroll-container:hover .experience-scroll-track {
-  animation-play-state: paused;
-}
-
 .experience-card {
   flex: 0 0 300px;
   height: 450px;
