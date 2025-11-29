@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // initializeContactForm();
   initializePublicationViewer();
   initializeProjectFilter();
-  initializeAiColorization(); // เพิ่มฟังก์ชันใหม่
+  initializeAiColorization();
+  initializeCustomCursor(); // Add custom cursor initialization
 });
 
 window.addEventListener('load', () => {
@@ -114,10 +115,10 @@ function initParticles() {
 
     // ตรวจสอบธีมปัจจุบัน
     const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-    
+
     // กำหนดสีตามธีม
     let particleColor, linkColor, particleOpacity, linkOpacity;
-    
+
     if (theme === 'light') {
       // Light theme: ใช้สีน้ำเงิน-ฟ้าที่เข้ากับธีม
       particleColor = ['#0858d7', '#0a84ff', '#4fc3ff', '#2563eb']; // เฉดสีน้ำเงิน-ฟ้า
@@ -209,7 +210,7 @@ function initParticles() {
 
     // โหลด particles
     tsParticles.load('tsparticles', particlesConfig);
-    
+
   } catch (error) {
     console.error('Error initializing particles:', error);
   }
@@ -221,7 +222,7 @@ window.reloadParticles = () => {
   if (window.tsParticles?.dom().length) {
     window.tsParticles.dom().forEach(instance => instance.destroy());
   }
-  
+
   // รีเซ็ตสถานะและโหลดใหม่
   window.__particlesInitialized = false;
   initParticles();
@@ -365,7 +366,7 @@ function initializeProjectModal() {
       // 2) ใส่ข้อมูลใหม่
       modalTitle.textContent = title;
       modalDescription.innerHTML = description;
-      
+
       // (ส่วนโค้ดจัดการ tech-stack icons บน cover)
       let modalTech = modal.querySelector('#modal-tech');
       if (!modalTech) {
@@ -426,16 +427,16 @@ function initializeProjectModal() {
         }
         modalDescription.insertAdjacentElement('afterend', actions);
       }
-      
+
       // 6) เปิดโมดัล
       modal.style.display = 'block';
-      
+
       // --- START: Hide background for a11y and prevent scrolling ---
       mainContent?.setAttribute('aria-hidden', 'true');
       navContent?.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = 'hidden';
       // --- END: Hide background for a11y and prevent scrolling ---
-      
+
       // Focus on the modal or its first focusable element for accessibility
       const firstFocusable = modal.querySelector('button, a, [tabindex]:not([tabindex="-1"])');
       (firstFocusable || modal).focus();
@@ -478,7 +479,7 @@ function initializeProjectModal() {
 
       const firstElement = focusables[0];
       const lastElement = focusables[focusables.length - 1];
-      
+
       if (e.shiftKey) { // Shift + Tab
         if (document.activeElement === firstElement) {
           lastElement.focus();
@@ -997,8 +998,8 @@ function initializeProjectDeepLink() {
 function tryRegisterSW() {
   if ('serviceWorker' in navigator) {
     fetch('sw.js', { method: 'HEAD' }).then(res => {
-      if (res.ok) navigator.serviceWorker.register('sw.js').catch(() => {});
-    }).catch(() => {});
+      if (res.ok) navigator.serviceWorker.register('sw.js').catch(() => { });
+    }).catch(() => { });
   }
 }
 
@@ -1018,7 +1019,7 @@ function initializeAnalytics() {
       }
     });
     po.observe({ type: 'largest-contentful-paint', buffered: true });
-  } catch {}
+  } catch { }
 
   // CLS
   try {
@@ -1031,7 +1032,7 @@ function initializeAnalytics() {
       localStorage.setItem(storeKey, JSON.stringify(metrics));
     });
     po.observe({ type: 'layout-shift', buffered: true });
-  } catch {}
+  } catch { }
 
   // FID (first input delay)
   try {
@@ -1044,7 +1045,7 @@ function initializeAnalytics() {
       }
     });
     po.observe({ type: 'first-input', buffered: true });
-  } catch {}
+  } catch { }
 
   // Track filter usage & modal opens
   const bar = document.getElementById('projects-filter');
@@ -1137,8 +1138,8 @@ function initializeProjectDeepLink() {
 function tryRegisterSW() {
   if ('serviceWorker' in navigator) {
     fetch('sw.js', { method: 'HEAD' }).then(res => {
-      if (res.ok) navigator.serviceWorker.register('sw.js').catch(()=>{});
-    }).catch(()=>{});
+      if (res.ok) navigator.serviceWorker.register('sw.js').catch(() => { });
+    }).catch(() => { });
   }
 }
 // Minimal metrics: LCP/CLS/FID and UI events
@@ -1146,31 +1147,31 @@ function initializeAnalytics() {
   const storeKey = 'portfolio_metrics_v1';
   const metrics = JSON.parse(localStorage.getItem(storeKey) || '{}');
   try {
-    const po = new PerformanceObserver((list)=>{
+    const po = new PerformanceObserver((list) => {
       const last = list.getEntries().pop();
       if (last) { metrics.LCP = Math.round(last.startTime); localStorage.setItem(storeKey, JSON.stringify(metrics)); }
     });
     po.observe({ type: 'largest-contentful-paint', buffered: true });
-  } catch {}
+  } catch { }
   try {
     let cls = 0;
-    const po = new PerformanceObserver((list)=>{
+    const po = new PerformanceObserver((list) => {
       for (const e of list.getEntries()) if (!e.hadRecentInput) cls += e.value;
       metrics.CLS = Number(cls.toFixed(4));
       localStorage.setItem(storeKey, JSON.stringify(metrics));
     });
     po.observe({ type: 'layout-shift', buffered: true });
-  } catch {}
+  } catch { }
   try {
-    const po = new PerformanceObserver((list)=>{
+    const po = new PerformanceObserver((list) => {
       const first = list.getEntries()[0];
       if (first) { metrics.FID = Math.round(first.processingStart - first.startTime); localStorage.setItem(storeKey, JSON.stringify(metrics)); }
     });
     po.observe({ type: 'first-input', buffered: true });
-  } catch {}
+  } catch { }
   const bar = document.getElementById('projects-filter');
   if (bar) {
-    bar.addEventListener('click', (e)=>{
+    bar.addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-filter]');
       if (!btn) return;
       metrics.filters = metrics.filters || {};
@@ -1178,7 +1179,7 @@ function initializeAnalytics() {
       localStorage.setItem(storeKey, JSON.stringify(metrics));
     });
   }
-  document.addEventListener('open-project-modal', (e)=>{
+  document.addEventListener('open-project-modal', (e) => {
     const title = e.detail && e.detail.title;
     metrics.modals = metrics.modals || {};
     if (title) metrics.modals[title] = (metrics.modals[title] || 0) + 1;
@@ -1191,26 +1192,26 @@ function enhanceModalA11y() {
   if (!modal) return;
   const trap = (e) => {
     if (e.key === 'Escape') {
-      const closeBtn = modal.querySelector('.modal-close'); 
+      const closeBtn = modal.querySelector('.modal-close');
       if (closeBtn) closeBtn.click();
     }
     if (e.key === 'Tab') {
       const focusables = modal.querySelectorAll('a, button, textarea, input, [tabindex]:not([tabindex="-1"])');
       if (!focusables.length) return;
-      const first = focusables[0], last = focusables[focusables.length-1];
+      const first = focusables[0], last = focusables[focusables.length - 1];
       if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
       else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
     }
   };
   modal.addEventListener('keydown', trap);
-  document.addEventListener('open-project-modal', ()=>{
-    const first = modal.querySelector('button, a, [tabindex]'); 
-    (first || modal).focus({preventScroll:true});
+  document.addEventListener('open-project-modal', () => {
+    const first = modal.querySelector('button, a, [tabindex]');
+    (first || modal).focus({ preventScroll: true });
   });
 }
 
 // Hook 
-queueMicrotask(()=>{
+queueMicrotask(() => {
   try {
     initializeSmallSecurity();
     initializeImageDecodingHints();
@@ -1218,11 +1219,11 @@ queueMicrotask(()=>{
     initializeAnalytics();
     tryRegisterSW();
     enhanceModalA11y();
-  } catch(e){ console.warn('Enhancements init failed', e); }
+  } catch (e) { console.warn('Enhancements init failed', e); }
 });
 
 // ===== Contact form submit (Formspree) =====
-(function initContactForm(){
+(function initContactForm() {
   const form = document.querySelector('form.contact-form');
   if (!form) return;
 
@@ -1233,9 +1234,9 @@ queueMicrotask(()=>{
   const msgEl = form.querySelector('textarea[name="message"]');
 
   // helper: แสดงสถานะ
-  const setStatus = (text, ok=false) => {
+  const setStatus = (text, ok = false) => {
     statusEl.textContent = text;
-    statusEl.classList.remove('ok','err');
+    statusEl.classList.remove('ok', 'err');
     statusEl.classList.add(ok ? 'ok' : 'err');
   };
 
@@ -1243,21 +1244,21 @@ queueMicrotask(()=>{
   const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
   // live remove error style เมื่อพิมพ์
-  [nameEl, emailEl, msgEl].forEach(el=>{
-    el.addEventListener('input', ()=> el.classList.remove('is-invalid'));
+  [nameEl, emailEl, msgEl].forEach(el => {
+    el.addEventListener('input', () => el.classList.remove('is-invalid'));
   });
 
-  form.addEventListener('submit', async (e)=>{
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     statusEl.textContent = '';
 
     // validate
     let hasError = false;
-    if (!nameEl.value.trim()){ nameEl.classList.add('is-invalid'); hasError = true; }
-    if (!isEmail(emailEl.value.trim())){ emailEl.classList.add('is-invalid'); hasError = true; }
-    if (!msgEl.value.trim()){ msgEl.classList.add('is-invalid'); hasError = true; }
+    if (!nameEl.value.trim()) { nameEl.classList.add('is-invalid'); hasError = true; }
+    if (!isEmail(emailEl.value.trim())) { emailEl.classList.add('is-invalid'); hasError = true; }
+    if (!msgEl.value.trim()) { msgEl.classList.add('is-invalid'); hasError = true; }
 
-    if (hasError){
+    if (hasError) {
       setStatus('กรุณากรอกข้อมูลให้ครบถ้วนและตรวจสอบอีเมลอีกครั้ง');
       return;
     }
@@ -1266,24 +1267,24 @@ queueMicrotask(()=>{
     btn.classList.add('is-loading');
     btn.disabled = true;
 
-    try{
+    try {
       const res = await fetch(form.action, {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
         body: new FormData(form)
       });
 
-      if (res.ok){
+      if (res.ok) {
         form.reset();
         setStatus('ส่งข้อความเรียบร้อย ขอบคุณครับ 🙏', true);
-      }else{
-        const data = await res.json().catch(()=> ({}));
+      } else {
+        const data = await res.json().catch(() => ({}));
         const msg = data?.errors?.[0]?.message || 'ส่งไม่สำเร็จ โปรดลองใหม่อีกครั้งภายหลัง';
         setStatus(msg);
       }
-    }catch(err){
+    } catch (err) {
       setStatus('เครือข่ายขัดข้อง โปรดตรวจการเชื่อมต่ออินเทอร์เน็ตแล้วลองใหม่');
-    }finally{
+    } finally {
       btn.classList.remove('is-loading');
       btn.disabled = false;
     }
@@ -1312,13 +1313,13 @@ function initializeAiColorization() {
 
   // ===== Config ฝั่ง client =====
   const MAX_UPLOAD_PX = 2048;     // ลดด้านยาวสุดให้ไม่เกินค่านี้ (0 = ปิด)
-  const ACCEPT_TYPES = ['image/jpeg','image/png','image/webp','image/bmp'];
+  const ACCEPT_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/bmp'];
 
   let currentFile = null;
-  let outputObjectUrl = null; 
+  let outputObjectUrl = null;
 
   // ===== Helpers =====
-  const setStatus = (msg, isError=false) => {
+  const setStatus = (msg, isError = false) => {
     statusEl.textContent = msg || '';
     statusEl.style.color = isError ? '#ff7b7b' : 'var(--muted-text)';
   };
@@ -1375,13 +1376,13 @@ function initializeAiColorization() {
     clearBtn.disabled = !hasSomething;
     clearBtn.ariaDisabled = (!hasSomething).toString();
   }
-function previewFile(file) {
-  fileToDataURL(file).then((dataUrl) => {
-    inputImg.src = dataUrl;
-    dropzone.classList.add('has-image');  
-    updateClearState();
-  });
-}
+  function previewFile(file) {
+    fileToDataURL(file).then((dataUrl) => {
+      inputImg.src = dataUrl;
+      dropzone.classList.add('has-image');
+      updateClearState();
+    });
+  }
 
   async function handlePickedFile(file) {
     if (!file) return;
@@ -1398,37 +1399,37 @@ function previewFile(file) {
     outputImg.removeAttribute('src');
   }
 
- async function doColorize() {
-  if (!currentFile) return;
-  try {
-    enableRun(false);
-    setStatus('กำลังลงสีภาพ…');
+  async function doColorize() {
+    if (!currentFile) return;
+    try {
+      enableRun(false);
+      setStatus('กำลังลงสีภาพ…');
 
-    const fileToSend = await downscaleIfNeeded(currentFile);
+      const fileToSend = await downscaleIfNeeded(currentFile);
 
-    const form = new FormData();
-    form.append('file', fileToSend, fileToSend.name);
+      const form = new FormData();
+      form.append('file', fileToSend, fileToSend.name);
 
-    const resp = await fetch(`${API_BASE}/api/colorize`, { method: 'POST', body: form });
-    if (!resp.ok) throw new Error(`ลงสีไม่สำเร็จ (HTTP ${resp.status})`);
+      const resp = await fetch(`${API_BASE}/api/colorize`, { method: 'POST', body: form });
+      if (!resp.ok) throw new Error(`ลงสีไม่สำเร็จ (HTTP ${resp.status})`);
 
-    const blob = await resp.blob();
+      const blob = await resp.blob();
 
-    // ใช้ URL (พิมพ์ใหญ่) และไม่ใช้ชื่อแปร url เพื่อตัดปัญหา scope
-    if (outputObjectUrl) URL.revokeObjectURL(outputObjectUrl);
-    const URL_API = (window.URL || window.webkitURL);
-    outputObjectUrl = URL_API.createObjectURL(blob);
+      // ใช้ URL (พิมพ์ใหญ่) และไม่ใช้ชื่อแปร url เพื่อตัดปัญหา scope
+      if (outputObjectUrl) URL.revokeObjectURL(outputObjectUrl);
+      const URL_API = (window.URL || window.webkitURL);
+      outputObjectUrl = URL_API.createObjectURL(blob);
 
-    outputImg.src = outputObjectUrl;
-    setStatus('เสร็จแล้ว ✓');
-  } catch (err) {
-    console.error(err);
-    setStatus((err && err.message) ? err.message : String(err), true);
-  } finally {
-    enableRun(true);
-    updateClearState();
+      outputImg.src = outputObjectUrl;
+      setStatus('เสร็จแล้ว ✓');
+    } catch (err) {
+      console.error(err);
+      setStatus((err && err.message) ? err.message : String(err), true);
+    } finally {
+      enableRun(true);
+      updateClearState();
+    }
   }
-}
 
   function clearSelection() {
     if (outputObjectUrl) { URL.revokeObjectURL(outputObjectUrl); outputObjectUrl = null; }
@@ -1451,16 +1452,16 @@ function previewFile(file) {
   });
 
   // ลาก-วาง
-const stopDefaults = (e) => { e.preventDefault(); e.stopPropagation(); };
-['dragenter','dragover','dragleave','drop'].forEach(ev =>
-  dropzone.addEventListener(ev, stopDefaults)
-);
-['dragenter','dragover'].forEach(ev =>
-  dropzone.addEventListener(ev, () => dropzone.classList.add('is-dragover'))
-);
-['dragleave','drop'].forEach(ev =>
-  dropzone.addEventListener(ev, () => dropzone.classList.remove('is-dragover'))
-);
+  const stopDefaults = (e) => { e.preventDefault(); e.stopPropagation(); };
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(ev =>
+    dropzone.addEventListener(ev, stopDefaults)
+  );
+  ['dragenter', 'dragover'].forEach(ev =>
+    dropzone.addEventListener(ev, () => dropzone.classList.add('is-dragover'))
+  );
+  ['dragleave', 'drop'].forEach(ev =>
+    dropzone.addEventListener(ev, () => dropzone.classList.remove('is-dragover'))
+  );
 
   dropzone.addEventListener('click', () => fileInput.click());
   dropzone.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
@@ -1471,12 +1472,77 @@ const stopDefaults = (e) => { e.preventDefault(); e.stopPropagation(); };
 
   // ปุ่ม “ลงสี”
   runBtn.addEventListener('click', doColorize);
-  clearBtn.addEventListener('click', clearSelection); 
+  clearBtn.addEventListener('click', clearSelection);
 
   // เริ่มต้น
   enableRun(false);
   setStatus('พร้อมใช้งาน • เลือกรูปหรือลากมาวาง');
   updateClearState();
+  setStatus('พร้อมใช้งาน • เลือกรูปหรือลากมาวาง');
+  updateClearState();
+}
+
+// ===================================================================
+// CUSTOM CURSOR & MAGNETIC BUTTONS
+// ===================================================================
+function initializeCustomCursor() {
+  const cursorDot = document.querySelector('[data-cursor-dot]');
+  const cursorOutline = document.querySelector('[data-cursor-outline]');
+
+  // Hide default cursor if not touch device
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.body.style.cursor = 'none';
+  } else {
+    return; // Exit if touch device
+  }
+
+  if (!cursorDot || !cursorOutline) return;
+
+  // Mouse move event
+  window.addEventListener('mousemove', (e) => {
+    const posX = e.clientX;
+    const posY = e.clientY;
+
+    // Dot follows immediately
+    cursorDot.style.left = `${posX}px`;
+    cursorDot.style.top = `${posY}px`;
+
+    // Outline follows with slight delay (using animate for smoothness)
+    cursorOutline.animate({
+      left: `${posX}px`,
+      top: `${posY}px`
+    }, { duration: 500, fill: "forwards" });
+  });
+
+  // Hover effects
+  const hoverables = document.querySelectorAll('a, button, .project-card, .image-frame, input, textarea, .skill-card');
+
+  hoverables.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      document.body.classList.add('hovering');
+    });
+
+    el.addEventListener('mouseleave', () => {
+      document.body.classList.remove('hovering');
+    });
+  });
+
+  // Magnetic Buttons
+  const magneticBtns = document.querySelectorAll('.btn, .nav-links a, .social-icon');
+
+  magneticBtns.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+
+      btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = 'translate(0px, 0px)';
+    });
+  });
 }
 
 // ===================================================================
@@ -1496,7 +1562,7 @@ function initializeFloatingModel() {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100); // ลด FOV และปรับ near/far plane
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  
+
   renderer.setSize(40, 40); // ย่อขนาด renderer ลงตาม
   renderer.setClearColor(0x000000, 0); // โปร่งใส
   container.appendChild(renderer.domElement);
@@ -1523,43 +1589,43 @@ function initializeFloatingModel() {
   let model = null;
   let mixer = null; // สำหรับ animation mixer
   const clock = new THREE.Clock();
-  
+
   // ตัวแปรสำหรับระบบหยุด-หมุนกลับ
   let walkState = 'walking'; // 'walking', 'pausing', 'turning'
   let pauseStartTime = 0;
   let currentDirection = 1; // 1 = ไปขวา, -1 = ไปซ้าย
-  
+
   // โหลดโมเดล .glb
   const loader = new THREE.GLTFLoader();
   loader.load(
     'model.glb',
-    function(gltf) {
+    function (gltf) {
       model = gltf.scene;
-      
+
       // ปรับขนาดโมเดลให้เล็กลงมาก (สำหรับ navbar)
       const box = new THREE.Box3().setFromObject(model);
       const size = box.getSize(new THREE.Vector3());
       const maxDim = Math.max(size.x, size.y, size.z);
       const scale = 0.023 / maxDim; // ขนาดที่เหมาะสมมากขึ้น
       model.scale.set(scale, scale, scale);
-      
+
       // วางตำแหน่งให้อยู่ตรงกลาง viewport และเลื่อนลงมา
       const center = box.getCenter(new THREE.Vector3());
       const baseY = (-center.y * scale) - 1; // เก็บตำแหน่ง Y base ไว้
       model.position.set(-center.x * scale, baseY, -center.z * scale);
       model.userData.baseY = baseY; // เก็บค่า base Y ไว้ใช้ใน animate
-      
+
       // จัดการ animations ถ้ามี
       if (gltf.animations && gltf.animations.length > 0) {
         mixer = new THREE.AnimationMixer(model);
-        
+
         // เก็บ actions ไว้เพื่อควบคุม
         model.userData.walkAction = null;
         model.userData.idleAction = null;
-        
+
         gltf.animations.forEach((clip) => {
           const action = mixer.clipAction(clip);
-          
+
           // แยกประเภท animation ตามชื่อ
           if (clip.name.toLowerCase().includes('walk') || clip.name.toLowerCase().includes('run')) {
             model.userData.walkAction = action;
@@ -1572,7 +1638,7 @@ function initializeFloatingModel() {
             }
           }
         });
-        
+
         // เล่น idle เป็นเริ่มต้น
         if (model.userData.idleAction) {
           model.userData.idleAction.play();
@@ -1580,17 +1646,17 @@ function initializeFloatingModel() {
           model.userData.walkAction.play();
           model.userData.walkAction.paused = true; // หยุดไว้ก่อน
         }
-        
+
         console.log('Found', gltf.animations.length, 'animations in model');
       }
-      
+
       scene.add(model);
       console.log('3D Navbar Model loaded successfully');
     },
-    function(progress) {
+    function (progress) {
       console.log('Loading navbar model progress:', (progress.loaded / progress.total * 100) + '%');
     },
-    function(error) {
+    function (error) {
       console.error('Error loading navbar 3D model:', error);
     }
   );
@@ -1601,32 +1667,32 @@ function initializeFloatingModel() {
   // ฟังก์ชันแอนิเมชัน
   function animate() {
     requestAnimationFrame(animate);
-    
+
     const deltaTime = clock.getDelta();
-    
+
     if (model) {
       const elapsedTime = clock.getElapsedTime();
-      
+
       // อัปเดต animation mixer ถ้ามี
       if (mixer) {
         mixer.update(deltaTime);
       }
-      
+
       // แอนิเมชันเดินซ้าย-ขวาแถวๆ ชื่อ (ขยับ container) - ขยายให้เดินออกนอกจอ
       const walkRange = 150; // ขยายระยะให้เดินออกนอกจอได้
       const walkSpeed = 0.4;  // ลดความเร็วให้ดูสบายตา
       const walkPosition = Math.sin(elapsedTime * walkSpeed) * walkRange;
       container.style.right = (-50 + walkPosition) + 'px';
-      
+
       // คำนวณความเร็วและทิศทางการเคลื่อนที่
-      const velocity = Math.cos(elapsedTime * walkSpeed) * walkSpeed; 
+      const velocity = Math.cos(elapsedTime * walkSpeed) * walkSpeed;
       // อนุพันธ์ของ sin
-      
+
       // กำหนดขอบเขตที่มองเห็น: -200px ถึง +200px (นอกจอแล้ว)
-      const screenBounds = 200; 
+      const screenBounds = 200;
       const isOutOfScreen = Math.abs(-50 + walkPosition) > screenBounds;
       const isMoving = Math.abs(velocity) > 0.02; // ลด threshold ให้ไวขึ้น
-      
+
       // ควบคุม animation ตามการเคลื่อนที่
       if (model.userData.walkAction && model.userData.idleAction) {
         if (!isOutOfScreen && isMoving) {
@@ -1657,33 +1723,33 @@ function initializeFloatingModel() {
           model.userData.walkAction.paused = true;
         }
       }
-      
+
       // หมุนตัวโมเดลตามทิศทางความเร็ว (ไม่ใช่ตำแหน่ง)
       let targetRotationY = model.rotation.y; // เก็บค่าเดิมไว้
-      
+
       if (isOutOfScreen) {
         // เมื่อออกนอกจอ ให้คงทิศทางเดิม
         // ไม่เปลี่ยนทิศทาง
       } else if (velocity > 0.05) {
-        targetRotationY = -Math.PI/2; // เคลื่อนที่ไปขวา = หันขวา
+        targetRotationY = -Math.PI / 2; // เคลื่อนที่ไปขวา = หันขวา
       } else if (velocity < -0.05) {
-        targetRotationY = Math.PI/2;  // เคลื่อนที่ไปซ้าย = หันซ้าย
+        targetRotationY = Math.PI / 2;  // เคลื่อนที่ไปซ้าย = หันซ้าย
       }
       // ถ้า velocity ใกล้ 0 และไม่ออกนอกจอ = คงทิศทางเดิมไว้
-      
+
       // ใช้ lerp เพื่อให้การหมุนนุ่มนวล (ช้าลงเพื่อไม่ให้กระต่าย)
       model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
-      
+
       // ลดการเคลื่อนไหวเพิ่มเติม (ให้ animation ของโมเดลเด่นขึ้น) + รักษาตำแหน่งลงมา
       const baseY = model.userData.baseY || 0; // ใช้ตำแหน่ง base Y
-      model.position.y = baseY + Math.sin(elapsedTime * 2) * 0.05; 
+      model.position.y = baseY + Math.sin(elapsedTime * 2) * 0.05;
       // รวมกับการกระดกขึ้น-ลง
-      
+
       // ลดการเอียงลง
       model.rotation.x = Math.sin(elapsedTime * 1.5) * 0.02;
       model.rotation.z = Math.sin(elapsedTime * 1) * 0.01;
     }
-    
+
     renderer.render(scene, camera);
   }
 
@@ -1704,7 +1770,7 @@ function initializeExperienceCards() {
   const items = document.querySelectorAll('.experience-item');
 
   const supportsHover = matchMedia('(hover: hover)').matches;
-  const reduceMotion  = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   items.forEach((item) => {
     const inner = item.querySelector('.experience-card-inner');
@@ -1737,7 +1803,7 @@ function initializeExperienceCards() {
       item.addEventListener('mousemove', (e) => {
         const rect = item.getBoundingClientRect();
         const px = (e.clientX - rect.left) / rect.width;   // 0..1
-        const py = (e.clientY - rect.top)  / rect.height;  // 0..1
+        const py = (e.clientY - rect.top) / rect.height;  // 0..1
         const max = 8; // องศาสูงสุด
         const ry = (px - 0.5) * (max * 2);  // ซ้าย/ขวา
         const rx = (0.5 - py) * (max * 2);  // บน/ล่าง
@@ -1757,15 +1823,15 @@ if (document.readyState === 'loading') {
 }
 
 // ===== Copy Citation to Clipboard + Toast =====
-(function(){
+(function () {
   const toast = document.querySelector('#copy-toast');
-  function showToast(msg){
-    if(!toast) return;
+  function showToast(msg) {
+    if (!toast) return;
     toast.textContent = msg; toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 1600);
   }
   document.addEventListener('click', (e) => {
-    const btn = e.target.closest('.copy-btn'); if(!btn) return;
+    const btn = e.target.closest('.copy-btn'); if (!btn) return;
     const targetSel = btn.getAttribute('data-copy'); const node = document.querySelector(targetSel);
     if (!node) return;
     navigator.clipboard.writeText(node.textContent.trim()).then(() => showToast('Copied!'));
