@@ -15,16 +15,13 @@ Do not treat this embedded character as an independently redistributable model p
 
 ## SnoreTrack pillow
 
-`snoretrack-pillow.glb` is the project's original travel pillow model, downloaded
-from `zepteksolutions-alt/snoreTrack`, branch `main`,
-`assets/models/snoretrack_travel_pillow_v1.glb` through GitHub on 2026-09-15.
+`snoretrack-pillow.glb` is the project's own travel pillow model.
 The embedded fabric texture is retained. The sofa is procedural and the sleeping
 human shares the David model above with a separate skeleton pose.
 
 ## TonNam buoy
 
-`tonnam-buoy.glb` is the project's own WaterGuard / TonNam buoy model from
-`asset/waterguard/waterguard.glb` (source asset, not deployed; see the README there), meshopt-compressed with
+`tonnam-buoy.glb` is the project's own WaterGuard / TonNam buoy model, meshopt-compressed with
 glTF Transform 4.5.0 (2.13 MB to 437 KB). Node names and the `Explode` animation are kept.
 The water surface and ripples are procedural.
 
@@ -33,4 +30,4 @@ The water surface and ripples are procedural.
 "A coffee tree" by rvezy, https://sketchfab.com/3d-models/a-coffee-tree-045dba854c8d4b9e8a5dff2d18892df1,
 licensed CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Changes: removed the cobblestone
 ground square, recentred, simplified to about half the triangles and meshopt-compressed
-(`coffee-tree.glb`, 4.68 MB to 478 KB). The source file is kept in `asset/a_coffee_tree.glb`.
+(`coffee-tree.glb`, 4.68 MB to 478 KB).

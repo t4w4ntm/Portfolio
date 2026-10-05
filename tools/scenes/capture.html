@@ -17,7 +17,7 @@
 </script>
 <script type="module">
   const k = new URLSearchParams(location.search).get('v');
-  const m = await import('../../vendor/zeptek-scenes.js');
+  const m = await import('../../vendor/scenes.js');
   m.mount(document.getElementById('v'), k);
   // Once the scene has drawn for a while, send the frame to the local receiver.
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));

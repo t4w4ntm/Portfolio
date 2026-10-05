@@ -9,5 +9,5 @@ astronaut-review/
 visor-review/
 astronaut-*.glb
 
-# Build helper link (see tools/zeptek-scenes/README.md)
-tools/zeptek-scenes/node_modules
+# Build helper link (see tools/scenes/README.md)
+tools/scenes/node_modules

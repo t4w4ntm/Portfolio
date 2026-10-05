@@ -1,6 +1,6 @@
 /* =====================================================================
    Tawan Tapianthong - Portfolio
-   Zeptek studio design language: monochrome studio panels, technical
+   Studio design language: monochrome studio panels, technical
    mono labels, cyan signals and amber details.
    ===================================================================== */
 
@@ -1611,7 +1611,7 @@ html.js .is-ready .line {
 /* ---------------------------------------------------------------------
    12. Projects
    Featured cards on top, then one uniform grid per group
-   (Zeptek Technologies, Personal & University).
+   (now a single grid).
    --------------------------------------------------------------------- */
 .pill__dot--signal {
   background: var(--signal);
@@ -2102,7 +2102,7 @@ html.js .is-ready .line {
   cursor: pointer;
 }
 
-/* Tailwind helpers the Zeptek visuals rely on */
+/* Tailwind helpers the 3D visuals rely on */
 [data-visual] .h-full {
   height: 100%;
 }
@@ -2120,7 +2120,7 @@ html.js .is-ready .line {
 }
 
 /* ---------------------------------------------------------------------
-   Zeptek 3D scenes (copied from the Zeptek site stylesheet)
+   3D project scenes (styles that ship with the scene components)
    --------------------------------------------------------------------- */
 .tonnam-scene, .tonnam-canvas { position: absolute; inset: 0; background: #0f2128; }
 .tonnam-canvas { cursor: grab; touch-action: pan-y; }

@@ -373,12 +373,12 @@
   const badgeList = (items) => (items || []).map((b) => `<span class="award">${esc(b)}</span>`).join('');
 
   /* ------------------------------------------------------------------
-   * Zeptek 3D visuals: the scene bundle (vendor/zeptek-scenes.js, built from
-   * the Zeptek site) loads once the projects come near the viewport.
+   * 3D project visuals: the scene bundle (vendor/scenes.js, see tools/scenes)
+   * loads once the projects come near the viewport.
    * ---------------------------------------------------------------- */
-  // A still frame of each scene (img/zeptek/3d-<visual>.jpg): shown while the scene loads,
+  // A still frame of each scene (img/work/3d-<visual>.jpg): shown while the scene loads,
   // and instead of the live scene on phones.
-  const visualStill = (p) => `img/zeptek/3d-${p.visual}.jpg`;
+  const visualStill = (p) => `img/work/3d-${p.visual}.jpg`;
   const visualPlaceholder = (p) =>
     `<img src="${esc(visualStill(p))}" alt="" loading="lazy" decoding="async" /><span class="visual__loading mono">กำลังโหลด 3D</span>`;
   const phone = matchMedia('(max-width: 680px)');
@@ -389,7 +389,7 @@
     const live = new Map(); // element -> unmount()
     let scenes = null;
     let started = false;
-    const load = () => scenes || (scenes = import('./vendor/zeptek-scenes.js'));
+    const load = () => scenes || (scenes = import('./vendor/scenes.js'));
     // Phones keep a still image in the compact project rows; computers get the live scene.
     const wantsStill = (el) => phone.matches && !!el.closest('.card');
     els.forEach((el) => (el.dataset.placeholder = el.innerHTML));

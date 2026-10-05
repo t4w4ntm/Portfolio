@@ -1,8 +1,8 @@
 import { createRoot } from 'react-dom/client'
-import { ProjectVisual } from '@zp/components/sections/ProjectVisual'
+import { ProjectVisual } from '@src/components/sections/ProjectVisual'
 
 /**
- * Mount one of the Zeptek project visuals into `el`.
+ * Mount one of the project visuals into `el`.
  * kinds: sleep (SnoreTrack), pulse (VR CPR), vision (TUG), water (TonNam), farm (Smart Farm),
  *        quake (vibration monitor art), island (Koh Larn art)
  * Returns an unmount function.

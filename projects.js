@@ -13,7 +13,7 @@
  *   cats       filter categories (see PORTFOLIO_CATEGORIES); the first one is the label
  *              shown on the card
  *   visual     optional live 3D scene shown in the card:
- *              sleep, pulse, vision, water, farm (vendor/zeptek-scenes.js)
+ *              sleep, pulse, vision, water, farm (vendor/scenes.js)
  *   cover      card image (also the placeholder while a visual loads)
  *   youtube    optional { id, poster }: shown first in the dialog
  *   clip       optional local mp4 shown first in the dialog
@@ -50,17 +50,17 @@ window.PORTFOLIO_PROJECTS = [
     title: 'SnoreTrack',
     kicker: 'หมอนลดการกรน',
     cats: ['health', 'hardware'],
-    cover: 'img/zeptek/snoretrack-geneva-booth.jpg',
-    youtube: { id: 'QuqfF_MqSZ8', poster: 'img/zeptek/snoretrack-youtube.jpg' },
+    cover: 'img/work/snoretrack-geneva-booth.jpg',
+    youtube: { id: 'QuqfF_MqSZ8', poster: 'img/work/snoretrack-youtube.jpg' },
     gallery: [
-      'img/zeptek/snoretrack-geneva-booth.jpg',
-      'img/zeptek/snoretrack-geneva-team.jpg',
-      'img/zeptek/snoretrack-1.jpg',
-      'img/zeptek/snoretrack-geneva-presenting.jpg',
-      'img/zeptek/snoretrack-infographic.jpg',
-      'img/zeptek/snoretrack-app-1.jpg',
-      'img/zeptek/snoretrack-app-3.jpg',
-      'img/zeptek/snoretrack-app-4.jpg',
+      'img/work/snoretrack-geneva-booth.jpg',
+      'img/work/snoretrack-geneva-team.jpg',
+      'img/work/snoretrack-1.jpg',
+      'img/work/snoretrack-geneva-presenting.jpg',
+      'img/work/snoretrack-infographic.jpg',
+      'img/work/snoretrack-app-1.jpg',
+      'img/work/snoretrack-app-3.jpg',
+      'img/work/snoretrack-app-4.jpg',
     ],
     badges: ['ออกอากาศทาง Thai PBS', 'รางวัล วช. ปีงบประมาณ 2568', 'จัดแสดงที่เจนีวา'],
     summary: 'หมอนที่ฟังเสียงกรน แล้วสั่นเบาๆ ให้หยุดกรนโดยไม่ต้องตื่น พร้อมแอปที่ให้คะแนนการนอนทุกคืน',
@@ -92,17 +92,17 @@ window.PORTFOLIO_PROJECTS = [
     title: 'VR CPR Training Kit',
     kicker: 'ชุดฝึก CPR ด้วย VR',
     cats: ['health', 'xr'],
-    cover: 'img/zeptek/vrcpr-1.jpg',
-    youtube: { id: 'm16iyV0J610', poster: 'img/zeptek/vrcpr-youtube.jpg' },
+    cover: 'img/work/vrcpr-1.jpg',
+    youtube: { id: 'm16iyV0J610', poster: 'img/work/vrcpr-youtube.jpg' },
     gallery: [
-      'img/zeptek/vrcpr-1.jpg',
-      'img/zeptek/vrcpr-2.jpg',
-      'img/zeptek/vrcpr-game-1.jpg',
-      'img/zeptek/vrcpr-game-2.jpg',
-      'img/zeptek/vrcpr-game-3.jpg',
-      'img/zeptek/vrcpr-game-4.jpg',
-      'img/zeptek/vrcpr-3.jpg',
-      'img/zeptek/vrcpr-4.jpg',
+      'img/work/vrcpr-1.jpg',
+      'img/work/vrcpr-2.jpg',
+      'img/work/vrcpr-game-1.jpg',
+      'img/work/vrcpr-game-2.jpg',
+      'img/work/vrcpr-game-3.jpg',
+      'img/work/vrcpr-game-4.jpg',
+      'img/work/vrcpr-3.jpg',
+      'img/work/vrcpr-4.jpg',
     ],
     badges: ['ทุนวิจัย วช.', 'ทดสอบกับแพทย์ในโรงพยาบาล'],
     summary: 'ฝึกกดหน้าอกกับหุ่นฝึกจริงในโลกเสมือน เห็นแรงกดและจังหวะทันที และดูผลการฝึกของทุกคนได้ในหน้าเดียว',
@@ -129,8 +129,8 @@ window.PORTFOLIO_PROJECTS = [
     title: 'BangkokTwin',
     kicker: 'Digital Twin เมือง · Thesis',
     cats: ['twin'],
-    cover: 'img/zeptek/bangkoktwin-poster.jpg',
-    youtube: { id: 'xWD2bbNT_tE', poster: 'img/zeptek/bangkoktwin-poster.jpg' },
+    cover: 'img/work/bangkoktwin-poster.jpg',
+    youtube: { id: 'xWD2bbNT_tE', poster: 'img/work/bangkoktwin-poster.jpg' },
     gallery: [
       'img/tesis_pic (1).png',
       'img/tesis_pic (2).png',
@@ -138,7 +138,7 @@ window.PORTFOLIO_PROJECTS = [
       'img/tesis_pic (4).png',
       'img/tesis_pic (5).png',
       'img/tesis_pic (7).png',
-      'img/zeptek/bangkoktwin-2.jpg',
+      'img/work/bangkoktwin-2.jpg',
     ],
     badges: ['Thesis', 'Bangkok Design Week 2569'],
     summary: 'เมืองจำลอง 3 มิติของ 3 เขตในกรุงเทพฯ ที่รับข้อมูลสดจากเซนเซอร์ เพื่อช่วยแก้ปัญหาเมืองร้อนและฝุ่น PM2.5',
@@ -169,8 +169,8 @@ window.PORTFOLIO_PROJECTS = [
     title: 'Digital Twin วัดอรุณฯ',
     kicker: 'เฝ้าระวังแผ่นดินไหวโบราณสถาน',
     cats: ['twin'],
-    cover: 'img/zeptek/watarun-1.jpg',
-    gallery: ['img/zeptek/watarun-1.jpg', 'img/zeptek/watarun-3.jpg', 'img/zeptek/watarun-2.jpg'],
+    cover: 'img/work/watarun-1.jpg',
+    gallery: ['img/work/watarun-1.jpg', 'img/work/watarun-3.jpg', 'img/work/watarun-2.jpg'],
     summary: 'แบบจำลอง 3 มิติของพระปรางค์วัดอรุณฯ ที่แสดงแรงสั่นสะเทือนแบบสด และจำลองความเสียหายจากแผ่นดินไหวได้',
     body: `
       <p>ระบบเฝ้าระวังแผ่นดินไหวและแรงสั่นสะเทือนที่มีผลต่อโบราณสถาน หน้าจอแสดงแบบจำลอง 3 มิติของพระปรางค์ คู่กับกราฟการสั่นทั้ง 3 ทิศทางแบบสด ค่าความเร่งสูงสุดของพื้นดิน และสถานะความปลอดภัยของโครงสร้าง</p>
@@ -187,8 +187,8 @@ window.PORTFOLIO_PROJECTS = [
     title: 'Digital Twin เกาะล้าน',
     kicker: 'ศูนย์ควบคุม Smart Eco Island',
     cats: ['twin', 'web'],
-    cover: 'img/zeptek/kohlarn-1.jpg',
-    gallery: ['img/zeptek/kohlarn-1.jpg', 'img/zeptek/kohlarn-2.jpg'],
+    cover: 'img/work/kohlarn-1.jpg',
+    gallery: ['img/work/kohlarn-1.jpg', 'img/work/kohlarn-2.jpg'],
     summary: 'ศูนย์ควบคุมที่รวมสภาพอากาศ คุณภาพอากาศ ระดับน้ำทะเล กล้อง และการเดินทางของทั้งเกาะ ไว้บนแผนที่เดียว',
     body: `
       <p>จัดทำเพื่อนำเสนอแผนพัฒนาเกาะล้านเป็น Smart Eco Island รวมข้อมูลทุกด้านของเกาะไว้บนแผนที่ดาวเทียมในหน้าจอเดียว ทั้งสภาพอากาศ ฝุ่น PM2.5 ระดับน้ำทะเลและคลื่น พร้อมสถานะความปลอดภัยของแต่ละหาด จุดกล้อง สถานที่สำคัญ และตารางเรือกับรถสองแถว</p>
@@ -205,8 +205,8 @@ window.PORTFOLIO_PROJECTS = [
     title: 'ติดตามแผ่นดินไหว มจธ.',
     kicker: 'เฝ้าระวังการสั่นของอาคาร',
     cats: ['twin', 'hardware'],
-    cover: 'img/zeptek/campusquake-1.jpg',
-    gallery: ['img/zeptek/campusquake-1.jpg', 'img/zeptek/campusquake-2.jpg'],
+    cover: 'img/work/campusquake-1.jpg',
+    gallery: ['img/work/campusquake-1.jpg', 'img/work/campusquake-2.jpg'],
     summary: 'เฝ้าระวังการสั่นสะเทือนของอาคารในมหาวิทยาลัยแบบสด พร้อมคำอธิบายแต่ละระดับที่เข้าใจง่าย',
     body: `
       <p>ระบบเฝ้าระวังการสั่นสะเทือนของอาคารการเรียนรู้พหุวิทยาการ (LX) มจธ. ตามมาตรฐานแผ่นดินไหวของไทย เพื่อความปลอดภัยของบุคลากรและนักศึกษา</p>
@@ -219,12 +219,12 @@ window.PORTFOLIO_PROJECTS = [
     title: 'Coffee Smart Farm',
     kicker: 'ระบบติดตามดินสำหรับไร่กาแฟ',
     cats: ['twin', 'hardware', 'web'],
-    cover: 'img/zeptek/smartfarm-2.jpg',
+    cover: 'img/work/smartfarm-2.jpg',
     gallery: [
-      'img/zeptek/smartfarm-2.jpg',
-      'img/zeptek/smartfarm-3.jpg',
-      'img/zeptek/smartfarm-1.jpg',
-      'img/zeptek/smartfarm-4.jpg',
+      'img/work/smartfarm-2.jpg',
+      'img/work/smartfarm-3.jpg',
+      'img/work/smartfarm-1.jpg',
+      'img/work/smartfarm-4.jpg',
       'img/smfarm (2).png',
       'img/smfarm (3).png',
     ],
@@ -245,7 +245,7 @@ window.PORTFOLIO_PROJECTS = [
     title: 'ต้นน้ำ',
     kicker: 'ทุ่นเฝ้าระวังคุณภาพน้ำ',
     cats: ['twin', 'hardware'],
-    cover: 'img/zeptek/tonnam-2.jpg',
+    cover: 'img/work/tonnam-2.jpg',
     badges: ['นำเสนอในงานวันนักประดิษฐ์'],
     summary: 'ทุ่นลอยน้ำพลังงานแสงอาทิตย์ที่ตรวจคุณภาพน้ำตลอดเวลา ไม่ต้องเก็บตัวอย่างไปตรวจเอง',
     body: `
@@ -259,8 +259,8 @@ window.PORTFOLIO_PROJECTS = [
     title: 'TUG Care Board',
     kicker: 'คัดกรองความเสี่ยงหกล้มในผู้สูงอายุ',
     cats: ['health', 'ai'],
-    cover: 'img/zeptek/tug-youtube.jpg',
-    youtube: { id: 'TrH_B7qDBG8', poster: 'img/zeptek/tug-youtube.jpg' },
+    cover: 'img/work/tug-youtube.jpg',
+    youtube: { id: 'TrH_B7qDBG8', poster: 'img/work/tug-youtube.jpg' },
     badges: ['ทุนวิจัย วช.'],
     summary: 'ชุดทดสอบการเดินที่ช่วยคัดกรองว่าผู้สูงอายุคนไหนเสี่ยงหกล้ม จับเวลาและแสดงผลให้อัตโนมัติ',
     body: `
@@ -285,9 +285,9 @@ window.PORTFOLIO_PROJECTS = [
     title: 'CellOut',
     kicker: 'เกมออนไลน์เล่นเป็นทีม',
     cats: ['xr'],
-    cover: 'img/zeptek/cellout-poster.jpg',
-    clip: 'img/zeptek/cellout-trailer.mp4',
-    gallery: ['img/zeptek/cellout-1.jpg', 'img/zeptek/cellout-2.jpg', 'img/zeptek/cellout-3.jpg'],
+    cover: 'img/work/cellout-poster.jpg',
+    clip: 'img/work/cellout-trailer.mp4',
+    gallery: ['img/work/cellout-1.jpg', 'img/work/cellout-2.jpg', 'img/work/cellout-3.jpg'],
     summary: 'เกมออนไลน์ที่เพื่อนๆ ร่วมมือกันแหกคุกในโลกไซไฟ แผนที่สุ่มใหม่ทุกรอบ',
     body: `
       <p>ผู้เล่นรวมทีมในห้องรอ แต่งตัวละครของตัวเอง แล้วบุกเข้าไปในคุกเพื่อเอาของมีค่าและพาทุกคนหนีออกมา แผนที่ถูกสร้างใหม่แบบสุ่มทุกรอบและใหญ่ขึ้นในแต่ละเลเวล</p>
