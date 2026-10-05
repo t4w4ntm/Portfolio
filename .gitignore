@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Local backups and 3D model work files (the site only loads model-web.glb)
+_backup-before-redesign/
+model-backups/
+model-review/
+astronaut-review/
+visor-review/
+astronaut-*.glb
+
+# Build helper link (see tools/zeptek-scenes/README.md)
+tools/zeptek-scenes/node_modules

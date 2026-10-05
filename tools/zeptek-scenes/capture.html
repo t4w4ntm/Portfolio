@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><link rel="stylesheet" href="../../style.css">
+<style>
+  html, body { margin: 0; background: #0c181d; }
+  #v { position: fixed; inset: 0; }
+  .tug-heading, .tug-controls, .tug-camera-tools, .tug-distance, .farm-heading, .farm-controls,
+  .tonnam-heading, .tonnam-readings, .tonnam-controls, .cpr-heading, .cpr-camera, .cpr-toolbar,
+  .cpr-scene-label, .snore-caption, .snore-controls { display: none !important; }
+</style></head>
+<body><div id="v" data-visual></div>
+<script>
+  // Keep the drawing buffer so the frame can be read back for a still image.
+  const orig = HTMLCanvasElement.prototype.getContext;
+  HTMLCanvasElement.prototype.getContext = function (type, attrs) {
+    return orig.call(this, type, Object.assign({}, attrs, { preserveDrawingBuffer: true }));
+  };
+</script>
+<script type="module">
+  const k = new URLSearchParams(location.search).get('v');
+  const m = await import('../../vendor/zeptek-scenes.js');
+  m.mount(document.getElementById('v'), k);
+  // Once the scene has drawn for a while, send the frame to the local receiver.
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  while (!document.querySelector('#v canvas')) await wait(500);
+  await wait(7000);
+  const url = document.querySelector('#v canvas').toDataURL('image/jpeg', 0.86);
+  await fetch('http://127.0.0.1:5501/3d-' + k, { method: 'POST', body: url });
+  document.title = 'captured ' + k;
+</script></body></html>

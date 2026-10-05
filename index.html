@@ -1,1155 +1,665 @@
 <!DOCTYPE html>
-<html lang="th" data-theme="dark">
+<html lang="th" data-theme="light">
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=10, user-scalable=yes">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
-  <title>Tawan - Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tawan Tapianthong - Portfolio</title>
   <meta name="description"
-    content="ผลงานและประสบการณ์ด้านเทคโนโลยีมีเดีย, UX/UI, Interactive Tech, และโปรเจกต์ Digital Twin ของ Tawan Tapianthong" />
-  <meta property="og:title" content="Tawan Tapianthong — Portfolio" />
-  <meta property="og:description" content="รวมผลงาน Projects, Thesis และทักษะด้านเทคโนโลยีมีเดีย" />
+    content="Portfolio ของ Tawan Tapianthong บัณฑิตเทคโนโลยีมีเดีย มจธ. ผลงาน UX/UI, XR, IoT, AI และ Digital Twin" />
+  <meta property="og:title" content="Tawan Tapianthong - Portfolio" />
+  <meta property="og:description" content="รวมผลงาน งานวิจัย และทักษะด้านเทคโนโลยีมีเดีย พร้อมเริ่มงานประจำ" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="th_TH" />
+  <meta property="og:image" content="img/me-portrait.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tawan Tapianthong - Portfolio" />
+  <meta name="twitter:description" content="รวมผลงาน งานวิจัย และทักษะด้านเทคโนโลยีมีเดีย พร้อมเริ่มงานประจำ" />
+  <meta name="twitter:image" content="img/me-portrait.jpg" />
   <meta name="color-scheme" content="light dark" />
-
-
+  <meta name="theme-color" content="#ebebeb" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="icon" href="img/logo.png" />
-  <link rel="apple-touch-icon" href="img/logo.png">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="img/logo.png" />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Orbitron:wght@400;700&display=swap"
+  <!-- Theme before first paint: no flash between light and dark -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var t = localStorage.getItem('zp-theme');
+        if (t === 'dark' || t === 'light') d.setAttribute('data-theme', t);
+      } catch (e) { }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&family=Noto+Sans+Thai:wght@300..800&display=swap"
     rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <meta name="theme-color" content="#0a1020">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tawan Tapianthong — Portfolio">
-  <meta name="twitter:description" content="รวมผลงาน Projects, Thesis และทักษะด้านเทคโนโลยีมีเดีย">
-  <meta name="twitter:image" content="img/logo.png">
-  <script type="application/ld+json">{"@context": "https://schema.org", 
-    "@type": "Person", "name": "Tawan Tapianthong", "url": "", "jobTitle": "Technology Media", 
-    "knowsAbout": ["UX/UI", "Interactive Technology", "AR/VR/MR", "AI", "Web"], "email": 
-    "mailto:tawannn.tawannn.tt@gmail.com"}</script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
 
-  <link rel="canonical" href="">
+  <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "Person", "name": "Tawan Tapianthong", "jobTitle": "Media Technology Graduate", "alumniOf": "King Mongkut's University of Technology Thonburi",
+    "knowsAbout": ["UX/UI", "Interactive Technology", "AR/VR/MR", "AI", "IoT", "Web"],
+    "email": "mailto:tawannn.tapi@gmail.com"}
+  </script>
 </head>
 
 <body>
-  <div id="preloader" aria-live="polite" aria-busy="true">
-    <div class="spinner"></div>
-    <p>Loading Portfolio...</p>
-  </div>
-  <a class="skip-link" href="#home">ข้ามไปยังเนื้อหา</a>
-  <div id="tsparticles" aria-hidden="true"></div>
+  <a class="skip-link" href="#main">ข้ามไปยังเนื้อหา</a>
+  <div class="page-grid" aria-hidden="true"></div>
 
-  <!-- Custom Cursor -->
-  <div class="cursor-dot" data-cursor-dot></div>
-  <div class="cursor-outline" data-cursor-outline></div>
+  <!-- ============================ NAV ============================ -->
+  <header class="nav" data-nav>
+    <div class="container nav__bar">
+      <a class="brand" href="#top" aria-label="Tawan Tapianthong - กลับด้านบน">
+        <span class="brand__name">TAWAN<span class="brand__sub">Tapianthong</span></span>
+      </a>
 
-  <nav aria-label="Primary">
-    <div class="nav-inner">
-      <div class="logo" aria-label="Tawan brand">
-        TAWAN
-        <div id="navbar-model" aria-hidden="true"></div>
-      </div>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="mainmenu" aria-label="เปิดเมนู">
-        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-      </button>
-      <ul id="mainmenu" class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#publications">Research & Publications</a></li>
-        <li><a href="#thesis">Thesis</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <main>
-    <section id="home" class="hero" aria-labelledby="hero-title">
-      <div class="hero-container">
-        <div class="hero-text">
-          <div class="pulsing-glow" aria-hidden="true"></div>
-          <h1 id="hero-title">Hi, I'm
-            <span class="highlight">
-              <span id="firstname-scramble">TAWAN</span> <span id="lastname-scramble"
-                class="lastname">TAPIANTHONG</span>
-            </span>
-          </h1>
-          <h2>TECHNOLOGY MEDIA</h2>
-          <p>
-            สวัสดีครับ ผมทำงานด้านเทคโนโลยีมีเดีย ผสาน UX/UI, Interactive Technology, Data Visualization
-            และการเล่าเรื่องด้วยสื่อดิจิทัล
-            เพื่อสร้างประสบการณ์ที่ทั้งสวยงาม น่าสนใจ และใช้งานได้จริง
-            โดยผมให้ความสำคัญกับการผสมผสานความคิดสร้างสรรค์กับเทคโนโลยีเพื่อตอบโจทย์ผู้ใช้
-          </p>
-          <div class="hero-buttons">
-            <a href="#projects" class="btn btn-primary">View My Work</a>
-            <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-          </div>
-          <div class="hero-stats" role="list">
-            <div class="stat-item" role="listitem">
-              <span>20+</span>
-              <p>Projects & Assignments</p>
-            </div>
-            <div class="stat-item" role="listitem">
-              <span>15+</span>
-              <p>Skills Learned</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-image-container">
-          <div class="image-frame">
-            <img src="img/me2.jpg" alt="ภาพพอร์ตเทรตของ Tawan Tapianthong" width="320" height="400" / decoding="async">
-            <!-- Lightning SVG Elements -->
-            <svg class="lightning-svg" viewBox="0 0 400 450" xmlns="http://www.w3.org/2000/svg">
-              <!-- Lightning bolt 1 - Top Right -->
-              <path class="lightning-bolt bolt-1" d="M320 10 L315 25 L325 30 L318 45 L328 40 L320 55" stroke="#00aaff"
-                stroke-width="2" fill="none" stroke-linecap="round" />
-
-              <!-- Lightning bolt 2 - Right Side -->
-              <path class="lightning-bolt bolt-2" d="M390 120 L375 125 L380 135 L365 140 L375 150 L360 155"
-                stroke="#0088ff" stroke-width="2" fill="none" stroke-linecap="round" />
-
-              <!-- Lightning bolt 3 - Bottom -->
-              <path class="lightning-bolt bolt-3" d="M200 440 L205 425 L195 420 L202 405 L192 410 L200 395"
-                stroke="#00ccff" stroke-width="2" fill="none" stroke-linecap="round" />
-
-              <!-- Lightning bolt 4 - Left Side -->
-              <path class="lightning-bolt bolt-4" d="M10 180 L25 175 L20 165 L35 160 L25 150 L40 145" stroke="#0066ff"
-                stroke-width="2" fill="none" stroke-linecap="round" />
-
-              <!-- Lightning bolt 5 - Top Left -->
-              <path class="lightning-bolt bolt-5" d="M80 15 L85 30 L75 35 L82 50 L72 45 L80 60" stroke="#00aaff"
-                stroke-width="2" fill="none" stroke-linecap="round" />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="content-section" aria-labelledby="about-title">
-      <h2 id="about-title">About Me</h2>
-      <p><strong>ประวัติการศึกษา:</strong> กำลังศึกษาปริญญาตรี คณะสถาปัตยกรรมศาสตร์และการออกแบบ
-        สาขาเทคโนโลยีมีเดีย เอกดิจิทัล มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี ปี 4</p>
-      <p>
-        ในหลักสูตรนี้ ผมได้เรียนรู้การออกแบบและพัฒนาสื่อดิจิทัลหลากหลายรูปแบบ ทั้งงานด้าน UX/UI, Interactive Media,
-        Immersive Technology (VR/AR/MR), การพัฒนาเกมและแอปพลิเคชัน, Motion Graphics, การผลิตคอนเทนต์มัลติมีเดีย
-        ตลอดจนการใช้เทคโนโลยีเพื่อสร้างสรรค์ประสบการณ์ดิจิทัลเชิงโต้ตอบ
-        <br><br>
-        ผมมีทักษะทั้งด้านการออกแบบ (Figma, Photoshop, Illustrator, Premiere Pro) และด้านการพัฒนา (HTML, CSS, JavaScript,
-        Unity, C#, Arduino)
-        รวมถึงสามารถประยุกต์ใช้เทคโนโลยีร่วมกับการเล่าเรื่องและการนำเสนอข้อมูล
-        เพื่อสร้างผลงานที่ตอบโจทย์ทั้งในเชิงศิลป์และเทคนิค
-      </p>
-    </section>
-
-    <section id="skills" class="content-section" aria-labelledby="skills-title">
-      <h2 id="skills-title">Skills</h2>
-      <div class="skills-container">
-        <div class="skill-card"><i class="fa-solid fa-file-word skill-icon"></i><span>Microsoft Office</span></div>
-        <div class="skill-card"><i class="fa-brands fa-python skill-icon"></i><span>Python</span></div>
-        <div class="skill-card"><i class="fa-solid fa-microchip skill-icon"></i><span>Arduino</span></div>
-        <div class="skill-card"><i class="fa-solid fa-code skill-icon"></i><span>C++</span></div>
-        <div class="skill-card"><i class="fa-solid fa-code skill-icon"></i><span>C#</span></div>
-        <div class="skill-card"><i class="fa-brands fa-html5 skill-icon"></i><span>HTML</span></div>
-        <div class="skill-card"><i class="fa-brands fa-css3-alt skill-icon"></i><span>CSS</span></div>
-        <div class="skill-card"><i class="fa-brands fa-js skill-icon"></i><span>JavaScript</span></div>
-        <div class="skill-card"><i class="fa-brands fa-node-js skill-icon"></i><span>Node.js</span></div>
-        <div class="skill-card"><i class="fa-solid fa-database skill-icon"></i><span>SQL</span></div>
-        <div class="skill-card"><i class="fa-brands fa-google skill-icon"></i><span>Firebase</span></div>
-        <div class="skill-card"><i class="fa-brands fa-unity skill-icon"></i><span>Unity</span></div>
-        <div class="skill-card">
-          <img class="themed-icon" data-dark-src="img/Canva_White.png" data-light-src="img/Canva_Black.png" alt="Canva"
-            loading="lazy" decoding="async" fetchpriority="low">
-          <span>Canva</span>
-        </div>
-        <div class="skill-card"><i class="fa-brands fa-figma skill-icon"></i><span>Figma</span></div>
-        <div class="skill-card"><i class="fa-solid fa-wand-magic-sparkles skill-icon"></i><span>Photoshop</span></div>
-        <div class="skill-card"><i class="fa-solid fa-film skill-icon"></i><span>Premiere Pro</span></div>
-        <div class="skill-card"><i class="fa-solid fa-cube skill-icon"></i><span>Maya</span></div>
-        <div class="skill-card"><i class="fa-solid fa-sitemap skill-icon"></i><span>Proteus</span></div>
-        <div class="skill-card"><i class="fa-solid fa-music skill-icon"></i><span>Logic Pro</span></div>
-        <div class="skill-card"><i class="fa-solid fa-chart-line skill-icon"></i><span>SPSS</span></div>
-      </div>
-    </section>
-    <!-- ===== Experience ===== -->
-    <section id="experience" class="experience-section content-section">
-      <div class="container">
-        <h2 class="section-title">Experience</h2>
-
-        <div class="experience-scroll-container">
-          <div class="experience-scroll-track">
-            <!-- 1) Staff, Open House Creative Media — KMUTT -->
-            <div class="experience-card">
-              <div class="experience-image">
-                <img src="img/schoolLogo.png" alt="KMUTT Open House">
-              </div>
-              <div class="experience-content">
-                <h3 class="exp-role">Staff, Open House Creative Media</h3>
-                <p class="exp-org">KMUTT</p>
-                <p class="exp-date">27 Oct 2023 – 30 Oct 2023</p>
-                <ul class="exp-points">
-                  <li>ดูแลบูธ แนะนำหลักสูตรและผลงานนักศึกษา</li>
-                  <li>เดโม่ระบบ VR/เกม ให้ทดลองใช้งาน</li>
-
-                </ul>
-              </div>
-            </div>
-
-            <!-- 2) จิตอาสา, วัดเมตรางค์ -->
-            <div class="experience-card">
-              <div class="experience-image">
-                <img src="img/wad.jpg" alt="วัดเมตรางค์ จิตอาสา">
-              </div>
-              <div class="experience-content">
-                <h3 class="exp-role">จิตอาสา</h3>
-                <p class="exp-org">วัดเมตรางค์</p>
-                <p class="exp-date">23 Dec 2023 – 25 Dec 2023</p>
-                <ul class="exp-points">
-                  <li>ช่วยงานทาสี/จัดอุปกรณ์ศิลปะ</li>
-                  <li>ทำกิจกรรมศิลปะกับชุมชน</li>
-                  <li>ทำงานเป็นทีม จัดการเวลาให้เสร็จตามกำหนด</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- 3) ผู้ช่วยสอน (TA), วิชา Python Programming -->
-            <div class="experience-card">
-              <div class="experience-image">
-                <img src="img/TA.jpg" alt="การสอนวิชา Python Programming">
-              </div>
-              <div class="experience-content">
-                <h3 class="exp-role">ผู้ช่วยสอน (TA)</h3>
-                <p class="exp-org">Python Programming</p>
-                <p class="exp-date">5 May 2025 – 10 May 2025</p>
-                <ul class="exp-points">
-                  <li>ช่วยสอนการเขียนโปรแกรมภาษา Python</li>
-                  <li>ให้คำปรึกษาและแก้ไขปัญหาการเขียนโค้ด</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- 4) นักพัฒนาโครงการ, Coffee IoT Soil Quality -->
-            <div class="experience-card">
-              <div class="experience-image">
-                <img src="img/actdirt.jpg" alt="โครงการ Coffee IoT Soil Quality">
-              </div>
-              <div class="experience-content">
-                <h3 class="exp-role">นักพัฒนาโครงการ</h3>
-                <p class="exp-org">Coffee IoT Soil Quality</p>
-                <p class="exp-date">Jul 2025 – Sept 2025</p>
-                <ul class="exp-points">
-                  <li>พัฒนาเครื่องตรวจวัดคุณภาพดิน (NPK, ความชื้น, pH)</li>
-                  <li>ติดตั้งระบบ IoT ด้วย ESP32 และเชื่อมต่อกับ Firebase</li>
-                  <li>พัฒนาเว็บไซต์เก็บข้อมูลและกรอกแบบฟอร์ม</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Duplicate cards for seamless scrolling -->
-            <div class="experience-card">
-              <div class="experience-image">
-                <img src="img/cover.jpg" alt="KMUTT Open House">
-              </div>
-              <div class="experience-content">
-                <h3 class="exp-role">Staff, Open House Creative Media</h3>
-                <p class="exp-org">KMUTT</p>
-                <p class="exp-date">27 Oct 2023 – 30 Oct 2023</p>
-                <ul class="exp-points">
-                  <li>ดูแลบูธ แนะนำหลักสูตรและผลงานนักศึกษา</li>
-                  <li>เดโม่ระบบ VR/เกม ให้ทดลองใช้งาน</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="experience-card">
-              <div class="experience-image">
-                <img src="img/wad.jpg" alt="วัดเมตรางค์ จิตอาสา">
-              </div>
-              <div class="experience-content">
-                <h3 class="exp-role">จิตอาสา</h3>
-                <p class="exp-org">วัดเมตรางค์</p>
-                <p class="exp-date">23 Dec 2023 – 25 Dec 2023</p>
-                <ul class="exp-points">
-                  <li>ช่วยงานทาสี/จัดอุปกรณ์ศิลปะ</li>
-                  <li>ทำกิจกรรมศิลปะกับชุมชน</li>
-                  <li>ทำงานเป็นทีม จัดการเวลาให้เสร็จตามกำหนด</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- 3) ผู้ช่วยสอน (TA), วิชา Python Programming - Duplicate -->
-            <div class="experience-card">
-              <div class="experience-image">
-                <img src="img/TA.jpg" alt="การสอนวิชา Python Programming">
-              </div>
-              <div class="experience-content">
-                <h3 class="exp-role">ผู้ช่วยสอน (TA)</h3>
-                <p class="exp-org">Python Programming</p>
-                <p class="exp-date">5 May 2025 – 10 May 2025</p>
-                <ul class="exp-points">
-                  <li>ช่วยสอนการเขียนโปรแกรมภาษา Python</li>
-                  <li>ให้คำปรึกษาและแก้ไขปัญหาการเขียนโค้ด</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- 4) นักพัฒนาโครงการ, Coffee IoT Soil Quality - Duplicate -->
-            <div class="experience-card">
-              <div class="experience-image">
-                <img src="img/dirt (1).jpg" alt="โครงการ Coffee IoT Soil Quality">
-              </div>
-              <div class="experience-content">
-                <h3 class="exp-role">นักพัฒนาโครงการ</h3>
-                <p class="exp-org">Coffee IoT Soil Quality</p>
-                <p class="exp-date">Jul 2025 – Sept 2025</p>
-                <ul class="exp-points">
-                  <li>พัฒนาเครื่องตรวจวัดคุณภาพดิน (NPK, ความชื้น, pH)</li>
-                  <li>ติดตั้งระบบ IoT ด้วย ESP32 และเชื่อมต่อกับ Firebase</li>
-                  <li>พัฒนาเว็บไซต์เก็บข้อมูลและกรอกแบบฟอร์ม</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="publications" class="content-section publications" aria-labelledby="pubs-title">
-      <h2 id="pubs-title">Research & Publications</h2>
-      <article class="pub-split" data-pdf="pdf/dev.pdf">
-        <div class="pub-left">
-          <div class="pdf-frame-wrap">
-            <iframe class="pdf-frame" src="pdf/dev.pdf" title="PDF viewer" loading="lazy"></iframe>
-          </div>
-        </div>
-        <div class="pub-right">
-          <div class="pub-meta"><span class="pub-year">2025</span> · <span class="pub-type">IEEE Conference Paper</span>
-          </div>
-          <h3 class="pub-title">Development of a PM2.5 Measurement Device Using Dust Sensors for Air Quality
-            Monitoring</h3>
-          <p class="pub-authors">Mahasak Ketcham, Davids Makararpong, Thittaporn Ganokratanaa, Narumol Chumuang, Worawut
-            Yimyam, Patiyuth Pramkeaw, Setthawut Kitdanarakorn, <strong>Tawan Tapianthong</strong></p>
-          <p class="pub-venue">Proceedings of the 2025 IEEE International Conference on Cybernetics and Innovations
-            (ICCI), Chonburi, Thailand.</p>
-          <div class="pub-actions">
-            <a href="pdf/dev.pdf" class="btn btn-primary" target="_blank" rel="noopener">Read Paper (PDF)</a>
-          </div>
-          <details class="pub-cite">
-            <summary>Citation (APA)</summary>
-            <p>Ketcham, M., Makararpong, D., Ganokratanaa, T., Chumuang, N., Yimyam, W., Pramkeaw, P., Kitdanarakorn,
-              S.,
-              & <strong>Tapianthong, T.</strong> (2025).
-              <em>Development of a PM2.5 Measurement Device Using Dust Sensors for Air Quality Monitoring</em>.
-              In <em>Proceedings of the IEEE International Conference on Cybernetics and Innovations (ICCI)</em>.
-            </p>
-          </details>
-        </div>
-      </article>
-    </section>
-
-    <section id="thesis" class="content-section featured-project" aria-labelledby="thesis-title">
-      <h2 id="thesis-title">Thesis Project</h2>
-      <div class="thesis-container">
-        <div class="thesis-image-slideshow" aria-roledescription="carousel">
-          <div class="slides-wrapper">
-            <div class="slide"><img src="img/tesis_pic (1).png" alt="สเกลเมืองและเลเยอร์ข้อมูล" loading="lazy"
-                decoding="async" fetchpriority="low"></div>
-            <div class="slide"><img src="img/tesis_pic (2).png" alt="Heatmap อุณหภูมิและ PM2.5" loading="lazy"
-                decoding="async" fetchpriority="low"></div>
-            <div class="slide"><img src="img/tesis_pic (3).png" alt="ฉาก 3D บน Unity + Mapbox" loading="lazy"
-                decoding="async" fetchpriority="low"></div>
-            <div class="slide"><img src="img/tesis_pic (4).png" alt="ฉาก 3D บน Unity + Mapbox" loading="lazy"
-                decoding="async" fetchpriority="low"></div>
-            <div class="slide"><img src="img/tesis_pic (5).png" alt="ฉาก 3D บน Unity + Mapbox" loading="lazy"
-                decoding="async" fetchpriority="low"></div>
-            <div class="slide"><img src="img/tesis_pic (7).png" alt="ฉาก 3D บน Unity + Mapbox" loading="lazy"
-                decoding="async" fetchpriority="low"></div>
-          </div>
-          <button class="slide-arrow prev-slide" aria-label="ก่อนหน้า">&#10094;</button>
-          <button class="slide-arrow next-slide" aria-label="ถัดไป">&#10095;</button>
-          <div class="slide-dots"></div>
-        </div>
-        <div class="thesis-details">
-          <h4>ระบบต้นแบบเมืองจำลองดิจิทัลเชิงปฏิสัมพันธ์เพื่อสนับสนุนการตัดสินใจด้านสิ่งแวดล้อม
-            (คลองสาน · ธนบุรี · บางรัก)</h4>
-          <p>
-            โครงงานนี้พัฒนา <strong>Urban Digital Twin</strong> บน <strong>Unity</strong>
-            ที่เชื่อมข้อมูลจริงแบบเรียลไทม์
-            เพื่อสำรวจและสื่อสารผลกระทบของนโยบายสิ่งแวดล้อมต่อพื้นที่เมืองกรุงเทพฯ โดยเน้น <strong>UHI
-              (เกาะความร้อนในเมือง)</strong> และ <strong>PM2.5</strong>.
-            แพลตฟอร์มทำงานเสมือน <em>Virtual Sandbox</em>
-            ให้ทดลอง “เพิ่มพื้นที่สีเขียว / เปลี่ยนวัสดุพื้นผิว / มาตรการลดร้อน”
-            แล้วดูการเปลี่ยนแปลงของอุณหภูมิและคุณภาพอากาศอย่างเข้าใจง่าย
-          </p>
-          <ul style="margin:8px 0 0 18px; line-height:1.6;">
-            <li><strong>Objective:</strong> สร้างต้นแบบ Digital Twin
-              ที่เชื่อมข้อมูลเซ็นเซอร์และ API เพื่อนำไปใช้ประกอบการตัดสินใจเชิงนโยบาย</li>
-            <li><strong>Scope:</strong> พื้นที่นำร่อง 3 เขต (คลองสาน · ธนบุรี · บางรัก)</li>
-            <li><strong>Simulation:</strong> Heatmap อุณหภูมิ, การแสดงผล PM2.5, ทดลอง “What-if” เช่น
-              เพิ่มต้นไม้/เปลี่ยนวัสดุ</li>
-            <li><strong>Outcome:</strong>
-              เครื่องมือสื่อสารข้อมูลซับซ้อนให้ผู้มีส่วนได้ส่วนเสียเข้าใจเร็วขึ้น และเปิดทางสู่การมีส่วนร่วมของประชาชน
-            </li>
-          </ul>
-
-          <div class="tech-icons" aria-label="Tech stack">
-            <i class="fa-brands fa-unity" title="Unity"></i>
-            <i class="fa-solid fa-code" title="C# (Unity)"></i>
-            <i class="fa-solid fa-map" title="Mapbox SDK"></i>
-            <i class="fa-solid fa-database" title="Realtime Data / API"></i>
-            <i class="fa-solid fa-microchip" title="PMS7003 / ESP32"></i>
-            <i class="fa-brands fa-figma" title="Figma (UI/Prototype)"></i>
-            <i class="fa-solid fa-cubes" title="Blender (3D Modeling)"></i>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" class="content-section" aria-labelledby="projects-title">
-      <h2 id="projects-title">Projects</h2>
-
-      <!-- Filter bar -->
-      <div id="projects-filter" class="projects-filter" role="toolbar" aria-label="ตัวกรองโปรเจกต์">
-        <button class="filter-btn is-active" type="button" data-filter="all" aria-pressed="true">All</button>
-        <button class="filter-btn" type="button" data-filter="web" aria-pressed="false">Web</button>
-        <button class="filter-btn" type="button" data-filter="ai" aria-pressed="false">AI</button>
-        <button class="filter-btn" type="button" data-filter="game" aria-pressed="false">Game</button>
-        <button class="filter-btn" type="button" data-filter="arvrmr" aria-pressed="false">AR/VR/MR</button>
-        <button class="filter-btn" type="button" data-filter="hardware" aria-pressed="false">Hardware/IoT</button>
-        <button class="filter-btn" type="button" data-filter="mobile" aria-pressed="false">Mobile</button>
-        <button class="filter-btn" type="button" data-filter="design" aria-pressed="false">Design/Motion</button>
-      </div>
-
-      <div class="projects-grid">
-        <!-- RawCoin — Web Game -->
-        <div class="project-card" data-cats="web,game" data-title="RawCoin — Web Game" data-description='
-       <p><strong>RawCoin</strong> คือเว็บเกมแนว Casual ที่ผู้เล่นควบคุมตัวละครเพื่อเก็บเหรียญในเวลาที่จำกัด</p>
-       <ul style="margin:8px 0 0 18px; line-height:1.6;">
-         <li>ระบบสมัครสมาชิกและเข้าสู่ระบบ</li>
-         <li>บันทึกคะแนนและแสดง Leaderboard แบบเรียลไทม์</li>
-         <li>ควบคุมตัวละครด้วยคีย์บอร์ด (ลูกศร/WASD)</li>
-         <li>ระบบคะแนนและการแข่งขัน</li>
-         <li>UI/UX ที่ตอบสนองเร็วและใช้งานง่าย</li>
-         <li>ออกแบบกราฟิกที่น่ารักและ Animation ที่ลื่นไหล</li>
-       </ul>
-       
-       <div class="tech-icons" aria-label="Tech stack">
-         <i class="fa-brands fa-node-js" title="Node.js"></i>
-         <i class="fa-solid fa-server" title="Express.js"></i>
-         <i class="fa-brands fa-html5" title="HTML5"></i>
-         <i class="fa-brands fa-css3-alt" title="CSS3"></i>
-         <i class="fa-brands fa-js" title="JavaScript"></i>
-         <i class="fa-solid fa-database" title="SQL"></i>
-       </div>' data-clip="clip/rawcoin.mp4">
-          <img src="img/rawlogo.png" alt="RawCoin Web Game" loading="lazy" decoding="async" fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">RawCoin Web Game</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-html5" title="HTML5"></i>
-            <i class="fa-brands fa-css3-alt" title="CSS3"></i>
-            <i class="fa-brands fa-js" title="JavaScript"></i>
-            <i class="fa-brands fa-node-js" title="Node.js"></i>
-            <i class="fa-solid fa-server" title="Express.js"></i>
-            <i class="fa-solid fa-database" title="MySQL/SQL"></i>
-          </div>
-        </div>
-
-        <!-- TictacToe — Concert Ticketing -->
-        <div class="project-card" data-cats="web" data-title="TictTacToe — Concert Ticketing" data-description='
-      <p>เว็บจองและซื้อขายบัตรคอนเสิร์ตแบบครบวงจร</p>
-      <ul style="margin:8px 0 0 18px; line-height:1.6;">
-        <li>สไลด์โปรโมตอีเว้นต์และค้นหาคอนเสิร์ต</li>
-        <li>ระบบจองและซื้อบัตรออนไลน์</li>
-        <li>ตลาดซื้อขายบัตรคอนเสิร์ต</li>
-        <li>ระบบสมาชิกและโปรไฟล์ผู้ใช้</li>
-        <li>ประวัติการซื้อขายและการจัดการบัตร</li>
-        <li>ระบบอัปโหลดโปสเตอร์และรูปภาพของ admin</li>
-      </ul>
-      
-      <div class="tech-icons" aria-label="Tech stack" style="display:flex;gap:10px;flex-wrap:wrap;">
-        <i class="fa-brands fa-html5" title="HTML5"></i>
-        <i class="fa-brands fa-css3-alt" title="CSS3"></i>
-        <i class="fa-brands fa-js" title="JavaScript"></i>
-        <i class="fa-brands fa-node" title="Node.js"></i>
-        <i class="fa-solid fa-server" title="Express"></i>
-        <i class="fa-solid fa-database" title="MySQL"></i>
-        <i class="fa-solid fa-lock" title="Authentication"></i>
-        <i class="fa-solid fa-image" title="File Upload"></i>
-      </div>' data-gallery="img/con (1).png,img/con (2).png,img/con (3).png,img/con (4).png,img/con (5).png,img/con (6).png,
-     img/con (7).png,img/con (8).png,img/con (9).png,img/con (10).png">
-          <img src="img/conlogo.png" alt="Tictactive — Concert Ticketing screenshots" loading="lazy" decoding="async"
-            fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">TictTacToe — เว็บจองตั๋วคอนเสิร์ต</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-html5" title="HTML5"></i>
-            <i class="fa-brands fa-css3-alt" title="CSS3"></i>
-            <i class="fa-brands fa-js" title="JavaScript"></i>
-            <i class="fa-brands fa-node" title="Node.js"></i>
-            <i class="fa-solid fa-server" title="Express"></i>
-            <i class="fa-solid fa-database" title="MySQL"></i>
-            <i class="fa-solid fa-lock" title="Authentication"></i>
-            <i class="fa-solid fa-image" title="File Upload"></i>
-          </div>
-        </div>
-
-        <!-- Money — Realtime Expense Tracker (อัปเดต: มีผู้ช่วยการเงิน AI) -->
-        <div class="project-card" data-cats="web,ai" data-title="Money — Realtime Tracker" data-description='
-  <p><strong>Money</strong> คือเว็บแอปบันทึกรายรับ–รายจ่ายแบบเรียลไทม์</p>
-  <ul style="margin:8px 0 0 18px; line-height:1.6;">
-    <li>บันทึกและแสดงผลข้อมูลการเงินแบบเรียลไทม์</li>
-    <li>ฟิลเตอร์ค้นหาและจัดการรายการ</li>
-    <li>สรุปรายวัน-รายเดือน และงบประมาณตามหมวด</li>
-    <li>แดชบอร์ดกราฟแสดงภาพรวมการใช้จ่าย</li>
-    <li>ระบบแจ้งเตือนเมื่อใช้จ่ายเกินงบ</li>
-  </ul>
-
-  <p style="margin:12px 0 4px;"><strong>AI ผู้ช่วยการเงิน</strong></p>
-  <ul style="margin:8px 0 0 18px; line-height:1.6;">
-    <li><strong>ถาม–ตอบแบบแชท</strong> เฉพาะข้อมูลการเงินในเว็บ เช่น “เดือนนี้เหลือเท่าไหร่”, “หมวดไหนใช้เกินงบ”, “แนวโน้มสัปดาห์นี้เป็นอย่างไร”</li>
-    <li>วิเคราะห์และให้คำแนะนำการใช้จ่าย</li>
-    <li><strong>ทำงานกับข้อมูลจริง</strong> ดึงข้อมูลจากตาราง/สรุปในระบบ แล้วสรุปผลเป็นภาษาคน (รองรับสั่งงานด้วยปุ่มฟังก์ชัน เช่น “ดูงบหมวดอาหาร”)</li>
-    <li>เสนอแนะการจัดการงบประมาณ</li>
-    <li>รักษาความเป็นส่วนตัวของข้อมูล</li>
-  </ul>
-
-  
-  <div class="tech-icons" aria-label="Tech stack">
-    <i class="fa-brands fa-html5" title="HTML5"></i>
-    <i class="fa-brands fa-css3-alt" title="CSS3"></i>
-    <i class="fa-brands fa-js" title="JavaScript"></i>
-    <i class="fa-solid fa-cloud" title="Cloud Backend"></i>
-    <i class="fa-solid fa-file-excel" title="Data Storage"></i>
-    <i class="fa-solid fa-chart-pie" title="Chart.js"></i>
-    <i class="fa-solid fa-robot" title="AI Chat Assistant"></i>
-    <i class="fa-solid fa-brain" title="AI Integration"></i>
-    <i class="fa-solid fa-shield-halved" title="Privacy"></i>
-  </div>' data-gallery="img/mon1.png,img/mon2.png,img/mon3.png,img/mon4.png">
-          <img src="img/mon.png" alt="Money — Realtime Tracker" loading="lazy" decoding="async" fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">Money — Realtime Tracker</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-html5" title="HTML5"></i>
-            <i class="fa-brands fa-css3-alt" title="CSS3"></i>
-            <i class="fa-brands fa-js" title="JavaScript"></i>
-            <i class="fa-solid fa-cloud" title="Apps Script"></i>
-            <i class="fa-solid fa-file-excel" title="Google Sheets"></i>
-            <i class="fa-solid fa-chart-pie" title="Chart.js"></i>
-            <i class="fa-solid fa-robot" title="AI Chat"></i>
-            <i class="fa-solid fa-brain" title="LLM"></i>
-            <i class="fa-solid fa-shield-halved" title="Privacy"></i>
-          </div>
-        </div>
-
-
-        <!-- CoffeeFarm -->
-        <div class="project-card" data-cats="web" data-title="CoffeeFarm — ระบบบันทึกข้อมูลเกษตรกรกาแฟ (เชียงราย)"
-          data-description='
-       <p><strong>CoffeeFarm</strong> คือเว็บระบบบันทึกข้อมูลสำหรับเกษตรกรผู้ปลูกกาแฟในจังหวัดเชียงราย</p>
-       <ul style="margin:8px 0 0 18px; line-height:1.6;">
-         <li>แบบฟอร์มบันทึกข้อมูลเกษตรกรและแปลงกาแฟ</li>
-         <li>ระบบแผนที่สำหรับเลือกพิกัดแปลง</li>
-         <li>อัปโหลดและจัดการรูปภาพแปลงและผลผลิต</li>
-         <li>ระบบฐานข้อมูลแบบเรียลไทม์</li>
-         <li>ค้นหาและกรองข้อมูลย้อนหลัง</li>
-         <li>Export ข้อมูลเป็นไฟล์ CSV</li>
-       </ul>
-       
-       <div class="tech-icons" aria-label="Tech stack">
-         <i class="fa-brands fa-html5" title="HTML5"></i>
-         <i class="fa-brands fa-css3-alt" title="CSS3"></i>
-         <i class="fa-brands fa-js" title="JavaScript"></i>
-         <i class="fa-solid fa-fire" title="NoSQL Database"></i>
-         <i class="fa-solid fa-cloud" title="Cloud Storage"></i>
-         <i class="fa-solid fa-map-location-dot" title="Maps API"></i>
-         <i class="fa-solid fa-database" title="Realtime Database"></i>
-         <i class="fa-solid fa-file-csv" title="CSV Export"></i>
-       </div>'
-          data-gallery="img/dirtweb (1).png,img/dirtweb (2).png,img/dirtweb (3).png,img/dirtweb (4).png,img/dirtweb (5).png">
-          <img src="img/dirtweb (1).png" alt="CoffeeFarm — ระบบบันทึกข้อมูลเกษตรกรกาแฟ (เชียงราย)" loading="lazy"
-            decoding="async" fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">CoffeeFarm — Chiang Rai</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-html5" title="HTML5"></i>
-            <i class="fa-brands fa-css3-alt" title="CSS3"></i>
-            <i class="fa-brands fa-js" title="JavaScript"></i>
-            <i class="fa-solid fa-fire" title="NoSQL DB"></i>
-            <i class="fa-solid fa-cloud" title="Cloud Storage"></i>
-            <i class="fa-solid fa-map-location-dot" title="Maps API"></i>
-            <i class="fa-solid fa-database" title="Realtime DB"></i>
-            <i class="fa-solid fa-file-csv" title="CSV"></i>
-          </div>
-        </div>
-
-        <!-- Smart Farm IoT Dashboard -->
-        <div class="project-card" data-cats="web,hardware" data-title="Smart Farm — IoT Dashboard" data-description='
-       <p><strong>Smart Farm</strong> คือระบบ IoT สำหรับฟาร์มอัจฉริยะ มีเซนเซอร์วัดสภาพแวดล้อมและเว็บแดชบอร์ดแสดงข้อมูลแบบเรียลไทม์</p>
-       <ul style="margin:8px 0 0 18px; line-height:1.6;">
-         <li>เซนเซอร์วัดค่า N-P-K, pH, EC, ความชื้น และอุณหภูมิ</li>
-         <li>ระบบ AI Advisor ให้คำแนะนำการดูแลพืช</li>
-         <li>แดชบอร์ดแสดงค่า KPIs และกราฟแบบเรียลไทม์</li>
-         <li>ระบบแจ้งเตือนเมื่อค่าผิดปกติ</li>
-         <li>เก็บประวัติข้อมูลและส่งออกรายงาน</li>
-         <li>รองรับหลายโหนด (Multi-node) และพลังงานแสงอาทิตย์</li>
-       </ul>
-       
-       <div class="tech-icons" aria-label="Tech stack">
-         <i class="fa-brands fa-html5" title="HTML5"></i>
-         <i class="fa-brands fa-css3-alt" title="CSS3"></i>
-         <i class="fa-brands fa-js" title="JavaScript"></i>
-         <i class="fa-solid fa-microchip" title="ESP32/Arduino"></i>
-         <i class="fa-solid fa-wifi" title="WiFi/LoRa"></i>
-         <i class="fa-solid fa-chart-line" title="Real-time Charts"></i>
-         <i class="fa-solid fa-database" title="Time Series DB"></i>
-         <i class="fa-solid fa-robot" title="AI Advisor"></i>
-         <i class="fa-solid fa-solar-panel" title="Solar Power"></i>
-       </div>' data-gallery="img/smfarm (1).png,img/smfarm (2).png,img/smfarm (3).png">
-          <img src="img/smfarm (1).png" alt="Smart Farm IoT Dashboard" loading="lazy" decoding="async"
-            fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">Smart Farm — IoT Dashboard</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-html5" title="HTML5"></i>
-            <i class="fa-brands fa-css3-alt" title="CSS3"></i>
-            <i class="fa-brands fa-js" title="JavaScript"></i>
-            <i class="fa-solid fa-microchip" title="ESP32"></i>
-            <i class="fa-solid fa-wifi" title="WiFi/LoRa"></i>
-            <i class="fa-solid fa-chart-line" title="Charts"></i>
-            <i class="fa-solid fa-database" title="Database"></i>
-            <i class="fa-solid fa-robot" title="AI"></i>
-            <i class="fa-solid fa-solar-panel" title="Solar"></i>
-          </div>
-        </div>
-
-        <!-- MR Ranad Ek -->
-        <div class="project-card" data-cats="arvrmr" data-title="MR Ranad Ek" data-description='
-       <p><strong>Mixed Reality ระนาดเอก</strong> — ต้นแบบสื่อการเรียนรู้ที่ผสานโลกจริงกับวัตถุเสมือน ผู้ใช้สวมแว่น VR/MR แล้วเห็นระนาดเอกเสมือนซ้อนในสภาพแวดล้อมจริง 
-        สามารถตีลูกระนาดด้วยคอนโทรลเลอร์หรือ Hand Tracking ได้แบบโต้ตอบทันที เหมาะสำหรับการอนุรักษ์และเริ่มฝึกทักษะดนตรีไทยอย่างเข้าถึงง่าย</p>
-       <ul style="margin:8px 0 0 18px; line-height:1.6">
-         <li>ฝึกตีพื้นฐานพร้อมเสียงตอบสนองแบบทันที</li>
-         <li>ผสานโลกจริงผ่าน Passthrough ให้เห็นมือ/พื้นที่จริงขณะฝึก</li>
-         <li>ออกแบบบน Unity 3D รองรับ Meta Quest</li>
-       </ul>
-       <p style="margin:12px 0 4px"><strong>Tech Stack</strong></p>
-       <div class="tech-icons" aria-label="Tech stack">
-         <i class="fa-brands fa-unity" title="Unity"></i>
-         <i class="fa-solid fa-vr-cardboard" title="VR/MR (Quest)"></i>
-         <i class="fa-solid fa-cube skill-icon" title="Blender (3D Modeling)"></i>
-         <i class="fa-solid fa-file-audio" title="Audio / Sound Design"></i>
-         <i class="fa-solid fa-code" title="C# Scripting"></i>
-       </div>' data-clip="clip/ranad.mp4">
-          <img src="img/ranad.png" alt="MR Ranad Ek" loading="lazy" decoding="async" fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">MR Ranad Ek</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-unity" title="Unity"></i>
-            <i class="fa-solid fa-vr-cardboard" title="VR/MR"></i>
-            <i class="fa-solid fa-cube" title="Blender"></i>
-            <i class="fa-solid fa-file-audio" title="Audio"></i>
-            <i class="fa-solid fa-code" title="C#"></i>
-          </div>
-        </div>
-
-        <!-- Jump & Dodge — Processing Game -->
-        <div class="project-card" data-cats="game" data-title="Jump & Dodge — Processing Game" data-description='
-        <p><strong>Jump & Dodge</strong> เกม 2D ทำด้วย <strong>Processing (Java)</strong> ผู้เล่นควบคุมบล็อกสี่เหลี่ยมกระโดดหลบสิ่งกีดขวางบนฉากที่เลื่อนตลอดเวลา</p>
-
-        <ul style="margin:8px 0 0 18px; line-height:1.6;">
-          <li><strong>คอนโทรล</strong>: ↑ / W / Space เพื่อกระโดด • <em>R</em> เริ่มใหม่ • <em>P</em> หยุดชั่วคราว</li>
-          <li><strong>คะแนน &amp; High Score</strong>: บวก 1 ตามเวลาที่ผ่านไป บันทึกสถิติสูงสุดลงไฟล์ </li>
-          <li><strong>ยากขึ้นอัตโนมัติ</strong>: ความเร็วฉากและอัตราการเกิดสิ่งกีดขวางเพิ่มตามคะแนน</li>
-          <li><strong>โครงสร้างโค้ด</strong>: แยกคลาส <em>Player</em> / <em>Obstacle</em> / <em>Rect</em> ชัดเจน ขยายฟีเจอร์ได้ง่าย</li>
+      <nav class="nav__links" aria-label="Primary">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <!-- <li><a href="#experience">Experience</a></li> -->
+          <li><a href="#publications">Research</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#lab">AI Lab</a></li>
         </ul>
+      </nav>
 
-        
-        <div class="tech-icons" aria-label="Tech stack" style="display:flex;gap:10px;flex-wrap:wrap;">
-          <i class="fa-brands fa-java" title="Processing / Java"></i>
-          <i class="fa-solid fa-gamepad" title="Game Logic"></i>
-          <i class="fa-solid fa-keyboard" title="Keyboard Input"></i>
-          <i class="fa-solid fa-floppy-disk" title="File I/O (Highscore)"></i>
-          <i class="fa-solid fa-gauge" title="Timing / Difficulty Scale"></i>
-        </div>
+      <div class="nav__actions">
+        <a class="btn btn--ink btn--sm nav__cta" href="#contact">ติดต่อผม <i class="fa-solid fa-arrow-right"
+            aria-hidden="true"></i></a>
+        <button class="icon-btn nav__burger" type="button" aria-expanded="false" aria-controls="mobile-menu"
+          aria-label="เปิดเมนู">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="nav__progress" aria-hidden="true"><span></span></div>
+  </header>
 
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
-          
-        </div>' data-clip="clip/progame.mp4">
-          <img src="img/progame.png" alt="Jump &amp; Dodge — Processing Game (กระโดดหลบสิ่งกีดขวาง)" loading="lazy"
-            decoding="async" fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">Jump & Dodge</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-java" title="Processing / Java"></i>
-            <i class="fa-solid fa-gamepad" title="Game Logic"></i>
-            <i class="fa-solid fa-keyboard" title="Keyboard Input"></i>
-            <i class="fa-solid fa-floppy-disk" title="Highscore Save"></i>
-            <i class="fa-solid fa-gauge" title="Difficulty Scale"></i>
-          </div>
-        </div>
-
-        <!-- Saku — Motion Graphic -->
-        <div class="project-card" data-cats="design" data-title="Saku — Food Motion Graphic (Adobe After Effects)"
-          data-description='
-      <p>โมชันกราฟิกเล่าเรื่อง <strong>“สาคูไส้หมู”</strong> ตั้งแต่วัตถุดิบ–ขั้นตอนทำ–จัดเสิร์ฟ
-         โทนสีเขียวใบตอง/ขาวครีม ให้ความรู้สึกสะอาดและเป็นไทยร่วมสมัย</p>
-      <p><strong>คอนเซ็ปต์ภาพ</strong>: ใช้ <em>Shape Layers</em> + <em>Trim Paths</em> สร้างเมล็ดสาคูเคลื่อนไหว,
-         , <em>Motion Blur</em> เพิ่มความนุ่ม, จัดจังหวะด้วย <em>Graph Editor</em></p>
-      <ul style="margin:8px 0 0 18px; line-height:1.6;">
-        <li><strong>ความยาว</strong>: ~2 นาที</li>
-        <li><strong>เสียง</strong>: Foley เสียงเมล็ดสาคูกระทบ/นึ่ง + ดนตรีโทนอุ่น</li>
-        <li><strong>ซับไตเติล</strong>: TH/EN (Open/Closed Caption)</li>
-      </ul>
-      
-      <div class="tech-icons" aria-label="Tech stack" style="display:flex;gap:10px;flex-wrap:wrap;">
-        <i class="fa-brands fa-adobe" title="Adobe Suite"></i>
-        <i class="fa-solid fa-wand-magic-sparkles" title="After Effects — Shape/Trim/Puppet"></i>
-        <i class="fa-solid fa-music" title="Sound Design / Mix"></i>
-        <i class="fa-solid fa-closed-captioning" title="TH/EN Captions"></i>
-        <i class="fa-solid fa-film" title="H.264 Export 1080p"></i>
-      </div>' data-clip="clip/sa.mp4">
-          <img src="img/saku.png" alt="Saku — Food Motion Graphic (After Effects)" loading="lazy" decoding="async"
-            fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">Saku — Motion Graphic</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-adobe" title="Adobe"></i>
-            <i class="fa-solid fa-wand-magic-sparkles" title="After Effects"></i>
-            <i class="fa-solid fa-music" title="Sound"></i>
-            <i class="fa-solid fa-closed-captioning" title="Captions"></i>
-            <i class="fa-solid fa-film" title="H.264"></i>
-          </div>
-        </div>
-
-        <!-- SchoolFit — AR Fitness -->
-        <div class="project-card" data-cats="arvrmr,mobile" data-title="SchoolFit — AR Fitness App" data-description='
-               <p><strong>SchoolFit</strong> แอปต้นแบบที่ผสาน <strong>Unity</strong> กับ <strong>Augmented Reality</strong> สำหรับตารางเรียน/กิจกรรม และ <strong>AR Exercise</strong> ฝึกกายบริหารซ้อนทับโลกจริง</p>
-               <ul style="margin:8px 0 0 18px; line-height:1.6;">
-                 <li>Interactive UI สำหรับจัดการตาราง</li>
-                 <li>ออกแบบ UX/UI ด้วย Figma</li>
-                 <li>Unity 3D + AR Foundation</li>
-                 <li>รองรับ iOS/Android</li>
-               </ul>
-               
-               <div class="tech-icons" aria-label="Tech stack">
-                 <i class="fa-brands fa-figma" title="Figma"></i>
-                 <i class="fa-brands fa-unity" title="Unity"></i>
-                 <i class="fa-solid fa-vr-cardboard" title="AR Foundation"></i>
-                 <i class="fa-solid fa-mobile-screen" title="Mobile App"></i>
-                 <i class="fa-solid fa-dumbbell" title="Fitness Module"></i>
-               </div>' data-clip="clip/ar.mp4"
-          data-figma="https://www.figma.com/proto/RLPIshCWig3DBX42kNBouh/SchoolFit?node-id=17-2&node-type=canvas&t=rnUR6c0aBP7fThhr-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1">
-          <img src="img/schoolLogo.png" alt="SchoolFit AR Fitness App" loading="lazy" decoding="async"
-            fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">SchoolFit (AR Fitness)</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-figma" title="Figma"></i>
-            <i class="fa-brands fa-unity" title="Unity"></i>
-            <i class="fa-solid fa-vr-cardboard" title="AR Foundation"></i>
-            <i class="fa-solid fa-mobile-screen" title="Mobile"></i>
-            <i class="fa-solid fa-dumbbell" title="Fitness"></i>
-          </div>
-        </div>
-
-        <!-- Cataract Screening Robot -->
-        <div class="project-card" data-cats="ai,hardware" data-title="Cataract Screening Robot — AI Vision"
-          data-description='
-      <p> หุ่นยนต์ต้นแบบสำหรับคัดกรองโรคต้อกระจก รับภาพดวงตาจากผู้ใช้ แล้วให้โปรแกรมจำแนกว่า “ปกติ” หรือ “ต้อกระจก” แบบอัตโนมัติ</p>
-
-      <ul style="margin:8px 0 0 18px; line-height:1.6;">
-        <li>ถ่ายภาพดวงตาและวิเคราะห์อัตโนมัติ</li>
-        <li>จำแนกระหว่างดวงตาปกติและต้อกระจก</li>
-        <li>อินเตอร์เฟซที่ใช้งานง่าย</li>
-        <li>ระบบฮาร์ดแวร์สำหรับจัดตำแหน่ง</li>
-      </ul>
-      
-      <div class="tech-icons" aria-label="Tech stack" style="display:flex;gap:10px;flex-wrap:wrap;">
-        <i class="fa-brands fa-python" title="Python"></i>
-        <i class="fa-solid fa-eye" title="OpenCV"></i>
-        <i class="fa-solid fa-brain" title="AI Vision"></i>
-        <i class="fa-solid fa-diagram-project" title="Machine Learning"></i>
-        <i class="fa-regular fa-window-maximize" title="GUI"></i>
-      </div>' data-image="img/tokajok3.jpg">
-          <img src="img/tokajok3.jpg" alt="Cataract screening robot demo" loading="lazy" decoding="async"
-            fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">หุ่นยนต์ตรวจต้อกระจก (AI)</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-python" title="Python"></i>
-            <i class="fa-solid fa-eye" title="OpenCV"></i>
-            <i class="fa-solid fa-brain" title="AI Vision"></i>
-            <i class="fa-solid fa-diagram-project" title="Machine Learning"></i>
-            <i class="fa-regular fa-window-maximize" title="GUI"></i>
-          </div>
-        </div>
-
-        <!-- AI Image Colorizer (GAN) -->
-        <div class="project-card" data-cats="ai" data-title="AI Image Colorizer (GAN)" data-description='
-       <p><strong>AI Image Colorizer</strong> ระบบเติมสีอัตโนมัติให้ภาพขาว-ดำด้วย AI</p>
-       <ul style="margin:8px 0 0 18px;line-height:1.6">
-         <li>เติมสีภาพขาว-ดำให้เป็นสีอัตโนมัติ</li>
-         <li>รองรับภาพความละเอียดสูง</li>
-         <li>ผลลัพธ์ที่สมจริงและสวยงาม</li>
-         <li>เหมาะสำหรับการฟื้นฟูภาพเก่า</li>
-       </ul>
-    
-       <div class="tech-icons" aria-label="Tech stack">
-         <i class="fa-brands fa-python" title="Python"></i>
-         <i class="fa-solid fa-fire"    title="Deep Learning Framework"></i>
-         <i class="fa-solid fa-bolt"    title="AI Library"></i>
-         <i class="fa-solid fa-diagram-project" title="Generative AI"></i>
-         <i class="fa-solid fa-network-wired"   title="Neural Network"></i>
-       </div>
-       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
-         
-       </div>' data-image="img/colorz.png">
-          <img src="img/colorz.png" alt="AI Image Colorizer (GAN)" loading="lazy" decoding="async"
-            fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">AI Image Colorizer (GAN)</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-python" title="Python"></i>
-            <i class="fa-solid fa-fire" title="Deep Learning"></i>
-            <i class="fa-solid fa-bolt" title="AI Library"></i>
-            <i class="fa-solid fa-diagram-project" title="Generative AI"></i>
-            <i class="fa-solid fa-network-wired" title="Neural Network"></i>
-          </div>
-        </div>
-
-        <!-- AI & Prompt Racing -->
-        <div class="project-card" data-cats="ai,game" data-title="AI & Prompt Racing — Autonomous Car Control"
-          data-description='
-       <p><strong>AI & Prompt Racing</strong> ระบบควบคุมรถยนต์อัตโนมัติในสนาม Unity</p>
-       <ul style="margin:8px 0 0 18px; line-height:1.6;">
-         <li>AI สำหรับการควบคุมรถยนต์อัตโนมัติ</li>
-         <li>ขับตามเส้นกลางถนนได้อย่างแม่นยำ</li>
-         <li>ระบบตัดสินใจอัจฉริยะ</li>
-         <li>ทดสอบในสภาพแวดล้อม Unity</li>
-         <li>พัฒนาด้วยความช่วยเหลือของ AI</li>
-       </ul>
-       
-       <div class="tech-icons" aria-label="Tech stack" style="display:flex;gap:10px;flex-wrap:wrap;">
-         <i class="fa-brands fa-python" title="Python"></i>
-         <i class="fa-solid fa-car" title="Unity Car Simulation"></i>
-         <i class="fa-solid fa-brain" title="AI Model"></i>
-         <i class="fa-brands fa-unity" title="Unity"></i>
-         <i class="fa-solid fa-code" title="Prompt Engineering"></i>
-       </div>
-       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
-         
-       </div>' data-clip="clip/31sec.mp4">
-          <img src="img/car.png" alt="AI & Prompt Racing" loading="lazy" decoding="async" fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">AI & Prompt Racing</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-python" title="Python"></i>
-            <i class="fa-solid fa-car" title="Unity Car Sim"></i>
-            <i class="fa-solid fa-brain" title="AI"></i>
-            <i class="fa-brands fa-unity" title="Unity"></i>
-            <i class="fa-solid fa-code" title="Prompt Eng"></i>
-          </div>
-        </div>
-
-        <!-- BCI Claw Machine — SSVEP-based Brain Control -->
-        <div class="project-card" data-cats="ai,game,hardware" data-title="BCI Claw Machine — SSVEP Control in Unity"
-          data-description='
-      <p><strong>BCI Claw Machine</strong> เกมตู้คีบตุ๊กตาที่ควบคุมด้วย <strong>คลื่นสมอง (BCI)</strong> โดยใช้เทคนิค <em>SSVEP</em> — ผู้เล่นเพียง “จ้อง” สิ่งเร้า (ปุ่ม/ไฟกระพริบ) ที่ความถี่ต่างกัน ระบบจะอ่านสัญญาณ EEG แบบเรียลไทม์และแปลเป็นคำสั่งบังคับตู้คีบใน Unity</p>
-
-      <ul style="margin:8px 0 0 18px; line-height:1.6;">
-        <li><strong>สิ่งเร้า SSVEP 2–4 คำสั่ง</strong> (ตัวอย่าง: 8/10/12/14&nbsp;Hz = Grab / Left / Right / Drop) ปรับจำนวน/ความถี่ได้ตามดีไซน์การทดลอง</li>
-        <li><strong>Real-Time EEG</strong> รับสัญญาณจากอุปกรณ์ EEG → กรองสัญญาณ (Band-pass, Notch) → ดึงคุณลักษณะ (FFT/PSD หรือ CCA) → จัดประเภท (เช่น LDA)</li>
-        <li><strong>สื่อสารกับ Unity</strong> ผ่าน LSL/UDP/TCP แยกเธรดรับคำสั่ง ไม่บล็อค main thread ของเกม มี <em>confidence threshold</em> ก่อนยืนยันคำสั่ง</li>
-        <li><strong>เกมเพลย์</strong> เคลื่อนตู้คีบซ้าย-ขวาด้วยสายตา และสั่งหยิบ/ปล่อยตุ๊กตา มีตัวจับเวลาและนับคะแนนเมื่อวางถูกสี/ตำแหน่ง</li>
-        <li><strong>ลด Latency</strong> โหลดโมเดลเพียงครั้งเดียว ไม่โหลดซ้ำในลูป, ลด sleep, และลดการคัดลอกข้อมูลซ้ำซ้อน</li>
-      </ul>
-
-      <p style="margin:12px 0 4px;"><strong>Pipeline</strong></p>
-      <ol style="margin:8px 0 0 18px; line-height:1.6;">
-        <li>สิ่งเร้าใน Unity กระพริบตามความถี่เป้าหมาย (เช่น 8/10/12/14&nbsp;Hz)</li>
-        <li>EEG Acquisition (Occipital: Oz, O1, O2, POz …) → Preprocess (6–30&nbsp;Hz + Notch 50&nbsp;Hz)</li>
-        <li>Feature (FFT/CCA) → Classifier (LDA ฯลฯ) → กรองด้วย Threshold (เช่น &gt; 0.6)</li>
-        <li>ส่งคำสั่งไป Unity (left/right/grab/drop) → อนิเมชัน/เสียง/คะแนนแบบเรียลไทม์</li>
+  <div class="menu" id="mobile-menu" hidden>
+    <div class="container menu__inner">
+      <ol class="menu__list">
+        <li><a href="#about"><span>About</span></a></li>
+        <li><a href="#skills"><span>Skills</span></a></li>
+        <!-- <li><a href="#experience"><span>Experience</span></a></li> -->
+        <li><a href="#publications"><span>Research</span></a></li>
+        <li><a href="#projects"><span>Projects</span></a></li>
+        <li><a href="#lab"><span>AI Lab</span></a></li>
+        <li><a href="#contact"><span>Contact</span></a></li>
       </ol>
+      <div class="menu__foot">
+        <a class="btn btn--ink" href="#contact">ติดต่อผม <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
 
-      
-      <div class="tech-icons" aria-label="Tech stack" style="display:flex;gap:10px;flex-wrap:wrap;">
-        <i class="fa-brands fa-unity" title="Unity"></i>
-        <i class="fa-brands fa-python" title="Python (Signal Processing)"></i>
-        <i class="fa-solid fa-brain" title="BCI / SSVEP"></i>
-        <i class="fa-solid fa-wave-square" title="EEG / FFT / CCA"></i>
-        <i class="fa-solid fa-network-wired" title="LSL / UDP / TCP"></i>
-        <i class="fa-solid fa-gamepad" title="Gameplay"></i>
-        <i class="fa-solid fa-microchip" title="EEG Hardware"></i>
-      </div>' data-clip="clip/bci.mp4">
-          <img src="img/bci.png" alt="BCI Claw Machine — SSVEP Control in Unity" loading="lazy" decoding="async"
-            fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">BCI Claw Machine — SSVEP</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-brands fa-unity" title="Unity"></i>
-            <i class="fa-brands fa-python" title="Python"></i>
-            <i class="fa-solid fa-brain" title="BCI / SSVEP"></i>
-            <i class="fa-solid fa-wave-square" title="EEG / Signal Processing "></i>
-            <i class="fa-solid fa-network-wired" title="LSL / UDP / TCP"></i>
-            <i class="fa-solid fa-gamepad" title="Gameplay"></i>
+  <main id="main">
+    <!-- ============================ HERO ============================ -->
+    <section id="top" class="hero" aria-labelledby="hero-title">
+      <div class="hero__blueprint" aria-hidden="true"></div>
+
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <p class="pill" data-reveal><span class="pill__dot pill__dot--signal"></span>Open to work · พร้อมเริ่มงานประจำ</p>
+
+          <h1 id="hero-title" class="hero__title">
+            <span class="line-mask"><span class="line" data-line>TAWAN</span></span>
+            <span class="line-mask"><span class="line line--thin" data-line data-scramble>TAPIANTHONG</span></span>
+          </h1>
+
+          <p class="hero__lead" data-reveal>
+            สวัสดีครับ ผมเป็นบัณฑิตเทคโนโลยีมีเดีย มจธ. ที่ทำได้ทั้งออกแบบและพัฒนา ตั้งแต่ UX/UI, XR, เกม
+            ไปจนถึงอุปกรณ์ IoT และ Digital Twin ที่ใช้งานได้จริง
+          </p>
+
+          <div class="hero__cta" data-reveal>
+            <a class="btn btn--ink" href="#projects">ดูผลงาน <i class="fa-solid fa-arrow-down"
+                aria-hidden="true"></i></a>
+            <a class="btn btn--ghost" href="#contact">ติดต่อผม</a>
           </div>
+
         </div>
 
-        <!-- Dirt Tester — Smart Soil -->
-        <div class="project-card" data-cats="hardware" data-title="Dirt Tester — Smart Soil Multi-Parameter"
-          data-description="
-      <p><strong>แนวคิด:</strong> อุปกรณ์ตรวจวัดดินแบบพกพา วัด N–P–K, ความชื้น, อุณหภูมิ, pH และ EC พร้อมจอแสดงผลและแบตเตอรี่ในตัว</p>
-      <p><strong>เทคโนโลยี/ฮาร์ดแวร์:</strong> ESP32, RS485, TFT LCD, Li-ion Battery, 3D Printed Case</p>
-      <ul>
-        <li>โปรโตคอล <code>Modbus RTU</code> อ่านค่าจาก NPK Sensor</li>
-        <li>เฟิร์มแวร์: Arduino IDE (C/C++)</li>
-      </ul>
-   
-      <div class='tech-icons' aria-label='Tech stack' style='display:flex;gap:10px;flex-wrap:wrap;'>
-        <i class='fa-solid fa-microchip' title='ESP32'></i>
-        <i class='fa-solid fa-wave-square' title='RS485 / Modbus'></i>
-        <i class='fa-solid fa-desktop' title='Arduino IDE'></i>
-        <i class='fa-solid fa-tv' title='TFT LCD'></i>
-        <i class='fa-solid fa-cube' title='3D Printing'></i>
-      </div>" data-image="img/dirttest.png">
-          <img src="img/dirttest.png" alt="เครื่องตรวจดินแบบพกพา" loading="lazy" decoding="async" fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">เครื่องวัดค่าดิน (NPK/PH/EC)</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-solid fa-microchip" title="ESP32"></i>
-            <i class="fa-solid fa-wave-square" title="RS485/Modbus"></i>
-            <i class="fa-solid fa-desktop" title="Arduino IDE"></i>
-            <i class="fa-solid fa-tv" title="TFT LCD"></i>
-            <i class="fa-solid fa-cube" title="3D Printing"></i>
+        <div class="hero__stage" data-reveal data-stage>
+          <canvas id="hero-canvas" aria-hidden="true"></canvas>
+          <div class="stage__loader" data-stage-loader>
+            <span class="spinner"></span>
+            <span class="mono">Loading 3D</span>
           </div>
+          <span class="stage__tag stage__tag--tl mono">[ MINI-TAWAN ]</span>
+          <span class="stage__tag stage__tag--tr mono" data-stage-readout>WALK · 0.00 m</span>
+          <p class="sr-only">ฉาก 3D: ตัวละครจำลองของตะวันเดินวนรอบโลโก้ตัว T ที่ลอยอยู่กลางฉาก</p>
         </div>
-
-        <!-- Alcohol Breathalyzer -->
-        <div class="project-card" data-cats="hardware" data-title="Alcohol Breathalyzer — Portable BAC Meter"
-          data-description="
-      <p><strong>แนวคิด:</strong> เครื่องเป่าแอลกอฮอล์พกพา แสดงค่า BAC บนจอ TFT พร้อมระบบเตือน</p>
-      <p><strong>เทคโนโลยี/ฮาร์ดแวร์:</strong> ESP32, MQ-3 Sensor, TFT LCD, Buzzer, Li-ion Battery</p>
-      <ul>
-        <li>Calibration ชดเชยอุณหภูมิ/เวลาวอร์มอัพ</li>
-        <li>โหมด Hold/Live และเก็บค่า Peak</li>
-      </ul>
-      
-      <div class='tech-icons' aria-label='Tech stack' style='display:flex;gap:10px;flex-wrap:wrap;'>
-        <i class='fa-solid fa-microchip' title='ESP32'></i>
-        <i class='fa-solid fa-wind' title='MQ-3 Alcohol Sensor'></i>
-        <i class='fa-solid fa-desktop' title='Arduino IDE'></i>
-        <i class='fa-solid fa-tv' title='TFT LCD'></i>
-        <i class='fa-solid fa-bell' title='Buzzer Alert'></i>
-      </div>" data-image="img/al3.jpg">
-          <img src="img/al3.jpg" alt="Alcohol breathalyzer" loading="lazy" decoding="async" fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">เครื่องเป่าแอลกอฮอล์</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-solid fa-microchip" title="ESP32"></i>
-            <i class="fa-solid fa-wind" title="MQ-3"></i>
-            <i class="fa-solid fa-desktop" title="Arduino IDE"></i>
-            <i class="fa-solid fa-tv" title="TFT LCD"></i>
-            <i class="fa-solid fa-bell" title="Buzzer"></i>
-          </div>
-        </div>
-
-        <!-- DIY Bluetooth Gamepad — ESP32 BLE HID -->
-        <div class="project-card" data-cats="hardware,mobile" data-title="DIY Bluetooth Gamepad — ESP32 BLE HID"
-          data-description='
-      <p><strong>DIY Bluetooth Gamepad</strong> จอยเกมที่ประกอบเองด้วย <em>ESP32</em> เชื่อมต่อแบบ <strong>BLE HID</strong> ให้คอม/มือถือมองเห็นเป็นจอยเกมมาตรฐาน ไม่ต้องลงไดรเวอร์ เพิ่มสวิตช์ 4 ปุ่ม + จอยสติ๊กอนาล็อก (X/Y + ปุ่มกด)</p>
-
-      <ul style="margin:8px 0 0 18px; line-height:1.6;">
-        <li><strong>อินพุต</strong>: จอยสติ๊ก 2 แกน (10-bit) + ปุ่ม 4 ปุ่ม (A/B/X/Y) + ปุ่มคลิกที่จอย</li>
-        <li><strong>เฟิร์มแวร์</strong>: <em>BLE HID Gamepad</em> รายงานแกน/ปุ่มที่ 100&nbsp;Hz, <em>debounce</em> ซอฟต์แวร์ และ <em>dead-zone</em> จอยสติ๊ก</li>
-        <li><strong>เพาเวอร์</strong>: Li-ion 3.7V (มีบอร์ดชาร์จ), sleep mode เมื่อไม่ใช้งาน</li>
-        <li><strong>การจับคู่</strong>: Windows/Android/iOS/macOS เลือกได้, กดค้างปุ่ม <em>Pair</em> เข้าโหมดจับคู่</li>
-        <li><strong>แผนต่อยอด</strong>: โปรไฟล์หลายชุด (FPS/Driving), รีแมปปุ่มในเว็บตั้งค่า, OTA update</li>
-      </ul>
-
-      
-      <div class="tech-icons" aria-label="Tech stack" style="display:flex;gap:10px;flex-wrap:wrap;">
-        <i class="fa-solid fa-microchip" title="ESP32"></i>
-        <i class="fa-brands fa-bluetooth" title="Bluetooth LE (HID)"></i>
-        <i class="fa-solid fa-gamepad" title="HID Gamepad"></i>
-        <i class="fa-solid fa-desktop" title="Arduino IDE"></i>
-        <i class="fa-solid fa-battery-full" title="Li-ion Power"></i>
-        <i class="fa-solid fa-screwdriver-wrench" title="DIY Hardware"></i>
       </div>
 
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
-        <!-- ใส่ลิงก์เพิ่มได้ เช่น schematic หรือคู่มือ -->
-        <!-- <a href="pdf/diy-gamepad-schematic.pdf" target="_blank" class="btn btn-sm" rel="noopener">Schematic</a> -->
-      </div>' data-clip="clip/joy.mp4">
-          <img src="img/joy.png" alt="DIY Bluetooth Gamepad — ESP32 + Joystick + Buttons" loading="lazy"
-            decoding="async" fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">DIY Bluetooth Gamepad (ESP32)</div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-solid fa-microchip" title="ESP32"></i>
-            <i class="fa-brands fa-bluetooth" title="BLE"></i>
-            <i class="fa-solid fa-gamepad" title="HID Gamepad"></i>
-            <i class="fa-solid fa-desktop" title="Arduino IDE"></i>
-            <i class="fa-solid fa-battery-full" title="Li-ion"></i>
-          </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span>UX/UI Design</span><span>Interactive Technology</span><span>AR · VR · MR</span>
+          <span>Internet of Things</span><span>AI &amp; Computer Vision</span><span>Digital Twin</span>
+          <span>Game Development</span><span>Motion Graphics</span>
+          <span>UX/UI Design</span><span>Interactive Technology</span><span>AR · VR · MR</span>
+          <span>Internet of Things</span><span>AI &amp; Computer Vision</span><span>Digital Twin</span>
+          <span>Game Development</span><span>Motion Graphics</span>
         </div>
-        <!-- Drone Training — MATLAB & Simulink -->
-        <div class="project-card" data-cats="hardware,ai" data-title="Drone Training Lab — MATLAB & Simulink"
-          data-description='
-    <p><strong>Drone Training Lab</strong> ห้องทดลองฝึกสอนโดรนภายในตาข่ายนิรภัย ใช้ <strong>MATLAB &amp; Simulink</strong> ออกแบบ/ทดสอบตัวควบคุมและเส้นทางบิน ตั้งแต่แบบจำลองจนถึงทดสอบจริง</p>
-    <ul style="margin:8px 0 0 18px; line-height:1.6;">
-      <li><strong>Modeling &amp; Control:</strong> สร้างแบบจำลอง UAV และออกแบบตัวควบคุม (PID/LQR) พร้อมทดสอบ <em>MIL/SIL/HIL</em></li>
-      <li><strong>Trajectory &amp; Guidance:</strong> วางเส้นทางบิน (hover, line tracking) และตรวจสอบข้อจำกัดความปลอดภัย</li>
-      <li><strong>Implementation:</strong> ส่งออกโค้ดไปยังชุดควบคุม/ไมโครคอนโทรลเลอร์และทดสอบในกรงทดสอบจริง</li>
-      <li><strong>Outcome:</strong> โดรนสามารถบินโฮเวอร์นิ่งและติดตามเส้นในพื้นที่ทดลองได้อย่างเสถียร</li>
-    </ul>
-    <div class="tech-icons" aria-label="Tech stack">
-      <i class="fa-solid fa-sitemap" title="Simulink"></i>
-      <i class="fa-solid fa-robot" title="Control Systems"></i>
-      <i class="fa-solid fa-microchip" title="Embedded/HIL"></i>
-    </div>' data-gallery="img/drone1.jpg,img/drone2.jpg" data-image="img/drone1.jpg">
-          <img src="img/drone1.jpg" alt="Drone Training Lab — ทดสอบโดรนในกรงนิรภัย" loading="lazy" decoding="async"
-            fetchpriority="low" />
-          <div class="project-overlay"><span>ดูรายละเอียด</span></div>
-          <div class="project-title">Drone Training </div>
-          <div class="project-tech-inline" aria-label="Tech stack">
-            <i class="fa-solid fa-sitemap" title="Simulink"></i>
-            <i class="fa-solid fa-robot" title="Control Systems"></i>
-            <i class="fa-solid fa-microchip" title="Embedded/HIL"></i>
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <!-- ② Section ใหม่: วางต่อจาก #projects -->
-    <section id="ai-color" class="content-section" aria-labelledby="ai-color-title">
-      <h2 id="ai-color-title">AI Image Colorizer</h2>
+    <!-- ============================ 01 ABOUT ============================ -->
+    <section id="about" class="section" aria-labelledby="about-title">
+      <div class="container">
+        <header class="sec-head" data-reveal>
+          <div class="sec-head__meta">
+            <span class="mono muted">Who I am</span>
+          </div>
+          <h2 id="about-title" class="sec-head__title">About</h2>
+          
+        </header>
 
-      <!-- แถบควบคุม -->
-      <div class="ai-color-controls">
-        <div class="upload-chooser">
-          <input id="color-file" type="file" accept="image/*" hidden>
-          <button id="pick-file" class="btn btn-secondary" type="button">
-            <i class="fa-solid fa-file-arrow-up"></i> เลือกรูปจากเครื่อง
-          </button>
-          <button id="run-colorize" class="btn btn-primary" type="button" disabled>
-            <i class="fa-solid fa-palette"></i> ลงสี
-          </button>
-          <button id="clear-colorize" class="btn" type="button" data-variant="danger" disabled>
-            <i class="fa-solid fa-rotate-left"></i> ล้าง
-          </button>
-        </div>
-      </div>
-
-      <!-- พรีวิว 2 กล่อง: ซ้าย (Dropzone+ต้นฉบับ), ขวา (ผลลัพธ์) -->
-      <div class="ai-color-preview">
-        <!-- กล่องซ้าย = dropzone + ภาพต้นฉบับ -->
-        <div id="color-dropzone" class="preview-dropzone dropzone" role="button" tabindex="0"
-          aria-label="ลากไฟล์มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์">
-          <figure>
-            <img id="color-input-preview" alt="ภาพต้นฉบับ (ขาวดำ)" />
-            <figcaption>ภาพต้นฉบับ (ขาว-ดำ)</figcaption>
+        <div class="about">
+          <figure class="portrait tilt" data-tilt data-reveal>
+            <img class="portrait__photo" src="img/me-portrait.jpg" alt="ภาพพอร์ตเทรตของ Tawan Tapianthong" width="843"
+              height="1265" loading="lazy" decoding="async" />
+            <figcaption class="portrait__chips">
+              <span class="chip chip--solid"><span class="dot dot--cyan"></span>KMUTT · Media Technology</span>
+              <span class="chip">Graduated · Digital major</span>
+            </figcaption>
+            <span class="tilt__glare" aria-hidden="true"></span>
           </figure>
 
-          <!-- ฮินต์วางไฟล์ (จะแอบอัตโนมัติเมื่อมีภาพ) -->
-          <div class="dz-hint">
-            <i class="fa-regular fa-images"></i>
-            <p>ลากรูปมาวางที่นี่ หรือคลิก</p>
-            <small>รองรับ .jpg .png .webp</small>
+          <div class="about__story">
+            <p class="about__lede" data-reveal>
+              จบปริญญาตรี สาขาเทคโนโลยีมีเดีย เอกดิจิทัล คณะสถาปัตยกรรมศาสตร์และการออกแบบ
+              มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี และมีผลงานที่ใช้งานจริงทั้งด้านสุขภาพ เมือง และการเกษตร
+            </p>
+            <p data-reveal>
+              ผมออกแบบและพัฒนาสื่อดิจิทัลได้หลากหลายรูปแบบ ทั้ง UX/UI, Interactive Media, Immersive Technology
+              (VR/AR/MR), เกมและแอปพลิเคชัน, Motion Graphics ไปจนถึงอุปกรณ์และระบบติดตามข้อมูลที่ใช้งานจริง
+              ทั้งในโรงพยาบาล ไร่กาแฟ โบราณสถาน และเมือง
+            </p>
+            <p data-reveal>
+              ถนัดทั้งฝั่งออกแบบและฝั่งพัฒนา จึงพาไอเดียไปจนถึงของที่ใช้งานได้จริงได้ในทีมเดียว
+              และสื่อสารเรื่องซับซ้อนให้คนทั่วไปเข้าใจง่าย ตอนนี้พร้อมเริ่มงานประจำ
+              และยินดีคุยเรื่องตำแหน่งงานด้านการออกแบบและพัฒนาประสบการณ์ดิจิทัลครับ
+            </p>
           </div>
         </div>
 
-        <!-- กล่องขวา = ผลลัพธ์ -->
-        <figure>
-          <img id="color-output-preview" alt="ภาพหลังลงสี" />
-          <figcaption>ผลลัพธ์</figcaption>
-        </figure>
+        <h3 class="sub-title" data-reveal>สิ่งที่ผมทำ</h3>
+        <ul class="pillars">
+          <li class="panel pillar spotlight" data-reveal>
+            <span class="pillar__icon"><i class="fa-solid fa-pen-ruler" aria-hidden="true"></i></span>
+            <h4>Design &amp; UX</h4>
+            <p>ออกแบบหน้าจอ ประสบการณ์ผู้ใช้ และงานโมชัน ตั้งแต่ wireframe จนถึง prototype</p>
+            <span class="mono pillar__label">ตัวอย่าง</span>
+            <span class="pillar__links">
+              <button type="button" class="tag" data-open-project="schoolfit-ar-fitness-app">SchoolFit</button>
+              <button type="button" class="tag" data-open-project="ticttactoe-concert-ticketing">TictTacToe</button>
+              <button type="button" class="tag"
+                data-open-project="saku-food-motion-graphic-adobe-after-effects">Saku</button>
+            </span>
+          </li>
+          <li class="panel pillar spotlight" data-reveal>
+            <span class="pillar__icon"><i class="fa-solid fa-vr-cardboard" aria-hidden="true"></i></span>
+            <h4>XR &amp; Games</h4>
+            <p>สร้างโลกเสมือนและเกมที่โต้ตอบได้จริง ทั้ง VR, MR และเกมออนไลน์</p>
+            <span class="mono pillar__label">ตัวอย่าง</span>
+            <span class="pillar__links">
+              <button type="button" class="tag" data-open-project="vrcpr">VR CPR</button>
+              <button type="button" class="tag" data-open-project="mr-ranad-ek">MR Ranad Ek</button>
+              <button type="button" class="tag" data-open-project="cellout">CellOut</button>
+            </span>
+          </li>
+          <li class="panel pillar spotlight" data-reveal>
+            <span class="pillar__icon"><i class="fa-solid fa-microchip" aria-hidden="true"></i></span>
+            <h4>Digital Twin &amp; IoT</h4>
+            <p>ประกอบอุปกรณ์วัดค่า ติดตั้งในพื้นที่จริง และแสดงข้อมูลสดบนแบบจำลองและแดชบอร์ด</p>
+            <span class="mono pillar__label">ตัวอย่าง</span>
+            <span class="pillar__links">
+              <button type="button" class="tag" data-open-project="bangkoktwin">BangkokTwin</button>
+              <button type="button" class="tag" data-open-project="watarun">วัดอรุณฯ</button>
+              <button type="button" class="tag" data-open-project="smart-farm-iot-dashboard">Smart Farm</button>
+            </span>
+          </li>
+          <li class="panel pillar spotlight" data-reveal>
+            <span class="pillar__icon"><i class="fa-solid fa-brain" aria-hidden="true"></i></span>
+            <h4>AI &amp; Health</h4>
+            <p>นำ AI และอุปกรณ์อัจฉริยะมาแก้ปัญหาจริง โดยเฉพาะด้านสุขภาพ</p>
+            <span class="mono pillar__label">ตัวอย่าง</span>
+            <span class="pillar__links">
+              <button type="button" class="tag" data-open-project="snoretrack">SnoreTrack</button>
+              <button type="button" class="tag" data-open-project="tug">TUG Care</button>
+              <button type="button" class="tag" data-open-project="cataract-screening-robot-ai-vision">Cataract AI</button>
+            </span>
+          </li>
+        </ul>
       </div>
-
-      <!-- สถานะ -->
-      <div id="color-status" class="ai-color-status" aria-live="polite"></div>
-
     </section>
 
+    <!-- ============================ 02 SKILLS ============================ -->
+    <section id="skills" class="section" aria-labelledby="skills-title">
+      <div class="container">
+        <header class="sec-head" data-reveal>
+          <div class="sec-head__meta">
+            <span class="mono muted">Toolkit</span>
+          </div>
+          <h2 id="skills-title" class="sec-head__title">Skills</h2>
+          <p class="sec-head__aside">เครื่องมือที่ใช้จริงในโปรเจกต์ ลากบนลูกโลกเพื่อหมุนดูได้</p>
+        </header>
 
+        <div class="skills">
+          <div class="skill-globe panel" data-reveal>
+            <div class="skill-globe__sphere" data-skill-sphere aria-hidden="true"></div>
+            <span class="skill-globe__tag mono">[ 20 TOOLS ]</span>
+            <span class="skill-globe__hint mono">DRAG TO SPIN</span>
+          </div>
 
-    <section id="contact" class="content-section" aria-labelledby="contact-title">
-      <h2 id="contact-title">Get in Touch</h2>
-      <p class="contact-subtitle">
-        พร้อมร่วมงานและคุยไอเดียเสมอ ถ้าคุณมีโปรเจกต์หรืออยากแลกเปลี่ยนความคิด
-        <br />ทักมาได้เลยครับ
-      </p>
-      <div class="contact-links">
-        <a href="mailto: tawannn.tapi@gmail.com" class="contact-item">
-          <i class="fas fa-envelope" aria-hidden="true"></i>
-          <span>tawannn.tapi@gmail.com</span>
-        </a>
-        <a href="tel:0996352894" class="contact-item">
-          <i class="fas fa-phone" aria-hidden="true"></i>
-          <span>099 635 2894</span>
-        </a>
-        <!-- <a href="https://www.linkedin.com/in/tawan-tapianthong-115642379/" target="_blank" rel="noopener"
-          class="contact-item">
-          <i class="fab fa-linkedin" aria-hidden="true"></i>
-          <span>LinkedIn</span>
-        </a> -->
-        <a href="https://github.com/t4w4ntm" target="_blank" rel="noopener" class="contact-item">
-          <i class="fab fa-github" aria-hidden="true"></i>
-          <span>GitHub</span>
-        </a>
+          <div class="skill-groups">
+            <div class="skill-group panel" data-reveal>
+              <p class="mono skill-group__label"><span class="dot dot--cyan"></span>Development</p>
+              <ul class="skill-list">
+                <li class="skill-chip"><i class="fa-brands fa-python"></i>Python</li>
+                <li class="skill-chip"><i class="fa-solid fa-code"></i>C++</li>
+                <li class="skill-chip"><i class="fa-solid fa-hashtag"></i>C#</li>
+                <li class="skill-chip"><i class="fa-brands fa-html5"></i>HTML</li>
+                <li class="skill-chip"><i class="fa-brands fa-css3-alt"></i>CSS</li>
+                <li class="skill-chip"><i class="fa-brands fa-js"></i>JavaScript</li>
+                <li class="skill-chip"><i class="fa-brands fa-node-js"></i>Node.js</li>
+                <li class="skill-chip"><i class="fa-solid fa-database"></i>SQL</li>
+                <li class="skill-chip"><i class="fa-solid fa-fire"></i>Firebase</li>
+                <li class="skill-chip"><i class="fa-brands fa-unity"></i>Unity</li>
+              </ul>
+            </div>
+            <div class="skill-group panel" data-reveal>
+              <p class="mono skill-group__label"><span class="dot dot--amber"></span>Design &amp; Media</p>
+              <ul class="skill-list">
+                <li class="skill-chip"><i class="fa-brands fa-figma"></i>Figma</li>
+                <li class="skill-chip"><i class="fa-solid fa-wand-magic-sparkles"></i>Photoshop</li>
+                <li class="skill-chip"><i class="fa-solid fa-film"></i>Premiere Pro</li>
+                <li class="skill-chip"><i class="fa-solid fa-palette"></i>Canva</li>
+                <li class="skill-chip"><i class="fa-solid fa-cube"></i>Maya</li>
+                <li class="skill-chip"><i class="fa-solid fa-music"></i>Logic Pro</li>
+              </ul>
+            </div>
+            <div class="skill-group panel" data-reveal>
+              <p class="mono skill-group__label"><span class="dot dot--ink"></span>Hardware &amp; Data</p>
+              <ul class="skill-list">
+                <li class="skill-chip"><i class="fa-solid fa-microchip"></i>Arduino</li>
+                <li class="skill-chip"><i class="fa-solid fa-sitemap"></i>Proteus</li>
+                <li class="skill-chip"><i class="fa-solid fa-chart-line"></i>SPSS</li>
+                <li class="skill-chip"><i class="fa-solid fa-file-word"></i>Microsoft Office</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
-      <form action="https://formspree.io/f/mqadevvo" method="POST" class="contact-form" autocomplete="on">
-        <input type="text" name="name" placeholder="ชื่อของคุณ" autocomplete="name" required>
-        <input type="email" name="email" placeholder="อีเมลของคุณ" autocomplete="email" inputmode="email"
-          spellcheck="false" required>
-        <textarea name="message" placeholder="ข้อความ" rows="5" maxlength="2000" required></textarea>
-        <input type="text" name="_gotcha" style="display:none">
-        <input type="hidden" name="_subject" value="New message from portfolio site">
-        <button type="submit" class="btn btn-primary">ส่งข้อความ</button>
-        <p class="form-status" aria-live="polite" style="margin-top:10px;"></p>
-      </form>
+    </section>
 
+    <!-- EXPERIENCE (hidden for now). To show it again, remove this comment wrapper and
+         restore the "Experience" links in the nav, mobile menu and footer.
+    <section id="experience" class="section" aria-labelledby="experience-title">
+      <div class="container">
+        <header class="sec-head" data-reveal>
+          <div class="sec-head__meta">
+            <span class="mono muted">Timeline</span>
+          </div>
+          <h2 id="experience-title" class="sec-head__title">Experience</h2>
+          <p class="sec-head__aside">งานจริง งานสอน และงานอาสา เรียงจากล่าสุด</p>
+        </header>
+
+        <ol class="timeline">
+          <li class="tl-item" data-reveal>
+            <p class="tl-date mono">Jul - Sep 2025</p>
+            <div class="tl-body">
+              <h3>นักพัฒนาโครงการ</h3>
+              <p class="tl-org">Coffee IoT Soil Quality</p>
+              <ul>
+                <li>พัฒนาเครื่องตรวจวัดคุณภาพดิน (NPK, ความชื้น, pH)</li>
+                <li>ติดตั้งระบบ IoT ด้วย ESP32 และเชื่อมต่อกับ Firebase</li>
+                <li>พัฒนาเว็บไซต์เก็บข้อมูลและกรอกแบบฟอร์ม</li>
+              </ul>
+              <span class="tl-tags"><span class="tag tag- -static">IoT</span><span
+                  class="tag tag- -static">ESP32</span><span class="tag tag- -static">Firebase</span></span>
+            </div>
+            <figure class="tl-media"><img src="img/actdirt.jpg" alt="โครงการ Coffee IoT Soil Quality" loading="lazy"
+                decoding="async" /></figure>
+          </li>
+          <li class="tl-item" data-reveal>
+            <p class="tl-date mono">May 2025</p>
+            <div class="tl-body">
+              <h3>ผู้ช่วยสอน (TA)</h3>
+              <p class="tl-org">Python Programming</p>
+              <ul>
+                <li>ช่วยสอนการเขียนโปรแกรมภาษา Python</li>
+                <li>ให้คำปรึกษาและแก้ไขปัญหาการเขียนโค้ด</li>
+              </ul>
+              <span class="tl-tags"><span class="tag tag- -static">Teaching</span><span
+                  class="tag tag- -static">Python</span></span>
+            </div>
+            <figure class="tl-media"><img src="img/TA.jpg" alt="การสอนวิชา Python Programming" loading="lazy"
+                decoding="async" /></figure>
+          </li>
+          <li class="tl-item" data-reveal>
+            <p class="tl-date mono">Dec 2023</p>
+            <div class="tl-body">
+              <h3>จิตอาสา</h3>
+              <p class="tl-org">วัดเมตรางค์</p>
+              <ul>
+                <li>ช่วยงานทาสีและจัดอุปกรณ์ศิลปะ</li>
+                <li>ทำกิจกรรมศิลปะกับชุมชน</li>
+                <li>ทำงานเป็นทีม จัดการเวลาให้เสร็จตามกำหนด</li>
+              </ul>
+              <span class="tl-tags"><span class="tag tag- -static">Community</span><span
+                  class="tag tag- -static">Teamwork</span></span>
+            </div>
+            <figure class="tl-media"><img src="img/wad.jpg" alt="กิจกรรมจิตอาสาที่วัดเมตรางค์" loading="lazy"
+                decoding="async" /></figure>
+          </li>
+          <li class="tl-item" data-reveal>
+            <p class="tl-date mono">Oct 2023</p>
+            <div class="tl-body">
+              <h3>Staff, Open House Creative Media</h3>
+              <p class="tl-org">KMUTT</p>
+              <ul>
+                <li>ดูแลบูธ แนะนำหลักสูตรและผลงานนักศึกษา</li>
+                <li>เดโมระบบ VR และเกมให้ผู้เข้าชมทดลองใช้งาน</li>
+              </ul>
+              <span class="tl-tags"><span class="tag tag- -static">Event</span><span class="tag tag- -static">VR
+                  demo</span></span>
+            </div>
+            <figure class="tl-media"><img src="img/cover.jpg" alt="เดโม VR ที่งาน KMUTT Open House" loading="lazy"
+                decoding="async" /></figure>
+          </li>
+        </ol>
+      </div>
+    </section>
+    -->
+
+    <!-- ============================ 04 RESEARCH ============================ -->
+    <section id="publications" class="section" aria-labelledby="pubs-title">
+      <div class="container">
+        <header class="sec-head" data-reveal>
+          <div class="sec-head__meta">
+            <span class="mono muted">Publication</span>
+          </div>
+          <h2 id="pubs-title" class="sec-head__title">Research</h2>
+          <p class="sec-head__aside">ผลงานวิจัยที่ตีพิมพ์และนำเสนอในงานประชุมวิชาการ IEEE</p>
+        </header>
+
+        <article class="paper panel" data-reveal>
+          <figure class="paper__visual">
+            <img src="img/icci.jpg" alt="การนำเสนอบทความในงาน IEEE ICCI 2025" loading="lazy" decoding="async" />
+            <figcaption class="chip chip--solid"><span class="dot dot--cyan"></span>นำเสนอที่ IEEE ICCI 2025</figcaption>
+          </figure>
+
+          <div class="paper__meta">
+            <p class="mono paper__eyebrow">2025 · IEEE Conference Paper</p>
+            <h3 class="paper__title">Development of a PM2.5 Measurement Device Using Dust Sensors for Air Quality
+              Monitoring</h3>
+            <p class="paper__authors">Mahasak Ketcham, Davids Makararpong, Thittaporn Ganokratanaa, Narumol Chumuang,
+              Worawut Yimyam, Patiyuth Pramkeaw, Setthawut Kitdanarakorn, <mark>Tawan Tapianthong</mark></p>
+            <p class="paper__venue">Proceedings of the 2025 IEEE International Conference on Cybernetics and
+              Innovations (ICCI)</p>
+
+            <div class="paper__actions">
+              <a href="pdf/dev.pdf" class="btn btn--ink" target="_blank" rel="noopener noreferrer">อ่านบทความ (PDF) <i
+                  class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+              <button type="button" class="btn btn--ghost" data-copy="#apa-cite"><i class="fa-regular fa-copy"
+                  aria-hidden="true"></i> คัดลอก Citation</button>
+            </div>
+
+            <details class="paper__cite">
+              <summary class="mono">Citation (APA)</summary>
+              <p id="apa-cite">Ketcham, M., Makararpong, D., Ganokratanaa, T., Chumuang, N., Yimyam, W., Pramkeaw,
+                P., Kitdanarakorn, S., &amp; Tapianthong, T. (2025). Development of a PM2.5 Measurement Device Using
+                Dust Sensors for Air Quality Monitoring. In Proceedings of the IEEE International Conference on
+                Cybernetics and Innovations (ICCI).</p>
+            </details>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================ 05 PROJECTS ============================ -->
+    <section id="projects" class="section" aria-labelledby="projects-title">
+      <div class="container">
+        <header class="sec-head" data-reveal>
+          <div class="sec-head__meta">
+            <span class="mono muted">Selected work</span>
+          </div>
+          <h2 id="projects-title" class="sec-head__title">Projects</h2>
+          <p class="sec-head__aside">ผลงานที่เคยทำ กดที่แต่ละชิ้นเพื่อดูวิดีโอ ภาพ และรายละเอียด</p>
+        </header>
+
+        <p class="work-label mono" data-reveal><span class="dot dot--amber"></span>ผลงานเด่น</p>
+        <div class="featured" id="project-featured"></div>
+
+        <div class="work-toolbar" data-reveal>
+          <div>
+            <p class="work-label mono"><span class="dot dot--cyan"></span>ผลงานทั้งหมด</p>
+            <p class="work-toolbar__count" data-grid-count></p>
+          </div>
+          <div class="filter" id="projects-filter" role="toolbar" aria-label="ตัวกรองโปรเจกต์"></div>
+        </div>
+
+        <div class="cards" id="project-grid" aria-live="polite"></div>
+        <noscript>
+          <p class="noscript">เปิด JavaScript เพื่อดูรายการโปรเจกต์ทั้งหมด</p>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ============================ 06 AI LAB ============================ -->
+    <section id="lab" class="section" aria-labelledby="lab-title">
+      <div class="container">
+        <header class="sec-head" data-reveal>
+          <div class="sec-head__meta">
+            <span class="mono muted">Live demo</span>
+          </div>
+          <h2 id="lab-title" class="sec-head__title">AI Lab</h2>
+          <p class="sec-head__aside">ลองลงสีภาพขาว-ดำด้วยโมเดล GAN ของผมได้เลย แล้วลากแถบเพื่อเทียบก่อนและหลัง</p>
+        </header>
+
+        <div class="lab" data-reveal>
+          <div class="lab__bar">
+            <span class="lab__lights" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="mono">AI Colorizer · Hugging Face Space</span>
+            <span class="mono lab__state" data-lab-state><span class="dot dot--signal"></span>Ready</span>
+          </div>
+
+          <div class="lab__grid">
+            <div id="color-dropzone" class="drop" role="button" tabindex="0"
+              aria-label="ลากไฟล์ภาพมาวางที่นี่ หรือกดเพื่อเลือกไฟล์">
+              <img id="color-input-preview" alt="ภาพต้นฉบับ" />
+              <div class="drop__hint">
+                <span class="drop__icon"><i class="fa-regular fa-image" aria-hidden="true"></i></span>
+                <p>ลากรูปมาวางที่นี่ หรือกดเพื่อเลือก</p>
+                <small class="mono">JPG · PNG · WEBP</small>
+              </div>
+              <span class="drop__label mono">01 · Input</span>
+            </div>
+
+            <div class="compare" id="color-compare">
+              <div class="compare__empty">
+                <span class="drop__icon"><i class="fa-solid fa-palette" aria-hidden="true"></i></span>
+                <p>ผลลัพธ์จะแสดงที่นี่</p>
+              </div>
+              <img class="compare__before" id="color-before" alt="ภาพก่อนลงสี" />
+              <img class="compare__after" id="color-output-preview" alt="ภาพหลังลงสี" />
+              <span class="compare__handle" aria-hidden="true"><i class="fa-solid fa-left-right"></i></span>
+              <input class="compare__range" type="range" min="0" max="100" value="50"
+                aria-label="เลื่อนเพื่อเทียบภาพก่อนและหลังลงสี" id="compare-range" disabled />
+              <span class="drop__label mono">02 · Output</span>
+            </div>
+          </div>
+
+          <div class="lab__actions">
+            <input id="color-file" type="file" accept="image/*" hidden />
+            <button id="pick-file" class="btn btn--ghost" type="button"><i class="fa-solid fa-arrow-up-from-bracket"
+                aria-hidden="true"></i> เลือกรูป</button>
+            <button id="run-colorize" class="btn btn--ink" type="button" disabled><i class="fa-solid fa-palette"
+                aria-hidden="true"></i> ลงสี</button>
+            <a id="download-colorize" class="btn btn--ghost" download="colorized.png" hidden><i
+                class="fa-solid fa-download" aria-hidden="true"></i> ดาวน์โหลด</a>
+            <button id="clear-colorize" class="btn btn--quiet" type="button" disabled><i class="fa-solid fa-rotate-left"
+                aria-hidden="true"></i> ล้าง</button>
+            <p id="color-status" class="lab__status mono" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ 07 CONTACT ============================ -->
+    <section id="contact" class="section section--contact" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact" data-reveal>
+          <div class="contact__glow" aria-hidden="true"></div>
+          <div class="contact__intro">
+            <p class="mono contact__index">Contact</p>
+            <h2 id="contact-title" class="contact__title">Let's build<br /><span class="thin">something.</span></h2>
+            <p class="contact__lead">ตอนนี้พร้อมเริ่มงานประจำ ถ้าทีมของคุณกำลังมองหาคนที่ทำได้ทั้งออกแบบและพัฒนา หรืออยากคุยเรื่องโปรเจกต์ ทักมาได้เลยครับ</p>
+
+            <ul class="contact__rows">
+              <li>
+                <span class="mono">Email</span>
+                <a href="mailto:tawannn.tapi@gmail.com">tawannn.tapi@gmail.com</a>
+                <button type="button" class="icon-btn icon-btn--dark" data-copy-text="tawannn.tapi@gmail.com"
+                  aria-label="คัดลอกอีเมล"><i class="fa-regular fa-copy" aria-hidden="true"></i></button>
+              </li>
+              <li>
+                <span class="mono">Phone</span>
+                <a href="tel:0996352894">099 635 2894</a>
+              </li>
+            </ul>
+          </div>
+
+          <form action="https://formspree.io/f/mqadevvo" method="POST" class="console" novalidate>
+            <p class="mono console__head"><span class="dot dot--signal"></span>ส่งข้อความถึงผม</p>
+            <label class="field">
+              <span class="mono field__label">01 · ชื่อ</span>
+              <input type="text" name="name" autocomplete="name" placeholder="ชื่อของคุณ" required />
+            </label>
+            <label class="field">
+              <span class="mono field__label">02 · อีเมล</span>
+              <input type="email" name="email" autocomplete="email" inputmode="email" spellcheck="false"
+                placeholder="you@example.com" required />
+            </label>
+            <label class="field">
+              <span class="mono field__label">03 · ข้อความ</span>
+              <textarea name="message" rows="4" maxlength="2000" placeholder="เล่าไอเดียหรือโปรเจกต์ของคุณ"
+                required></textarea>
+            </label>
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true" />
+            <input type="hidden" name="_subject" value="New message from portfolio site" />
+            <div class="console__foot">
+              <button type="submit" class="btn btn--light">ส่งข้อความ <i class="fa-solid fa-arrow-right"
+                  aria-hidden="true"></i></button>
+              <p class="form-status mono" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Tawan Tapianthong. All Rights Reserved.</p>
+  <!-- ============================ FOOTER ============================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="#top"><span class="brand__name">TAWAN<span class="brand__sub">Tapianthong</span></span></a>
+          <p>บัณฑิตเทคโนโลยีมีเดียที่ผสานการออกแบบ ซอฟต์แวร์ และฮาร์ดแวร์ เพื่อสร้างประสบการณ์ดิจิทัลที่ใช้งานได้จริง พร้อมเริ่มงานประจำ</p>
+        </div>
+        <nav class="footer__col" aria-label="Footer">
+          <p class="mono muted">Index</p>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <!-- <li><a href="#experience">Experience</a></li> -->
+            <li><a href="#publications">Research</a></li>
+          </ul>
+        </nav>
+        <div class="footer__col">
+          <p class="mono muted">Work</p>
+          <ul>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#lab">AI Lab</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <p class="mono muted">Elsewhere</p>
+          <ul>
+            <li><a href="mailto:tawannn.tapi@gmail.com">Email</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="footer__mark" aria-hidden="true">TAWAN</p>
+
+      <div class="footer__bar mono">
+        <span>&copy; <span data-year>2025</span> Tawan Tapianthong</span>
+        <a href="#top" class="footer__top">กลับด้านบน <i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a>
+      </div>
+    </div>
   </footer>
 
-  <button class="theme-toggle-fixed" id="theme-toggle" aria-label="สลับธีม" aria-pressed="false"
-    title="สลับ Light/Dark">
-    <i class="fa-solid fa-sun" data-icon="sun" aria-hidden="true"></i>
+  <!-- ============================ PROJECT DIALOG ============================ -->
+  <dialog class="sheet" id="project-dialog" aria-labelledby="sheet-title">
+    <div class="sheet__inner">
+      <div class="sheet__media" id="sheet-media"></div>
+      <div class="sheet__info">
+        <div class="sheet__top">
+          <p class="mono sheet__kicker" id="sheet-kicker"></p>
+          <button type="button" class="icon-btn" data-sheet-close aria-label="ปิดหน้าต่าง"><i class="fa-solid fa-xmark"
+              aria-hidden="true"></i></button>
+        </div>
+        <h2 class="sheet__title" id="sheet-title"></h2>
+        <div class="sheet__badges" id="sheet-badges"></div>
+        <p class="sheet__summary" id="sheet-summary"></p>
+        <div class="sheet__body prose" id="sheet-body"></div>
+        <p class="mono sheet__label">จุดเด่น</p>
+        <ul class="checks checks--light" id="sheet-features"></ul>
+        <p class="mono sheet__label" id="sheet-steps-label">วิธีการทำงาน</p>
+        <ol class="steps" id="sheet-steps"></ol>
+        <div class="sheet__links" id="sheet-links"></div>
+        <div class="sheet__nav">
+          <button type="button" class="btn btn--quiet" data-sheet-prev><i class="fa-solid fa-arrow-left"
+              aria-hidden="true"></i> ก่อนหน้า</button>
+          <span class="mono muted" id="sheet-count"></span>
+          <button type="button" class="btn btn--quiet" data-sheet-next>ถัดไป <i class="fa-solid fa-arrow-right"
+              aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <button class="theme-fab" id="theme-toggle" type="button" aria-label="สลับโหมดสว่าง/มืด" aria-pressed="false">
     <i class="fa-solid fa-moon" data-icon="moon" aria-hidden="true"></i>
+    <i class="fa-solid fa-sun" data-icon="sun" aria-hidden="true"></i>
   </button>
 
-  <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-content">
-      <button class="close-button" aria-label="ปิดหน้าต่าง">&times;</button>
-      <div id="modal-media" class="modal-media" aria-label="Project media"></div>
-      <h2 id="modal-title"></h2>
-      <p id="modal-description"></p>
-    </div>
-  </div>
+  <div class="toast mono" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/loaders/GLTFLoader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js" defer></script>
+  <script src="projects.js" defer></script>
   <script src="script.js" defer></script>
+  <script type="module" src="scene.js"></script>
 </body>
 
 </html>
